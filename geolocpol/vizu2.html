@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Loading data from server</title>
+        <script type="text/javascript" src="js/lib/d3.js"></script>
+
+        <style>
+	        body {font-family: monospace; line-height: 160%; font-size: 18px; }
+	        ul {list-style: none; margin: 0; padding: 0;}
+	        li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; margin: 0;}
+        </style>
+
+    </head>
+    <body>
+
+    <script>
+
+    var callbackError;
+    var callbackData;
+
+    var width = 900;
+    var height = 450;
+
+    //var list = d3.select("body").append("ul");
+
+    var svg = d3.select("body").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+
+    var data = [];
+    var years = [];
+    var pollutants = [];
+    var countries = [];
+
+    d3.csv("data/air_emissions_1990_2014.csv",
+        function(datas) {
+          datas.forEach(function(d) {
+		     var pollutant = d["Pollutant"]; 
+        	 var year = d["YEA"]; 
+        	 var country = d["Country"]; 
+        	 if (!data[country])
+        	 	data[country]=[];
+
+        	 if (!data[country][pollutant])
+        	 	data[country][pollutant]={};
+
+        	 if (!data[country][pollutant][year])
+        	 	data[country][pollutant][year]={};
+
+        	 data[country][pollutant][year]=d;
+
+        	 if (!years.includes(year)){
+        	 	years.push(year);
+        	 }
+         	 if (!countries.includes(country)){
+        	 	countries.push(country);
+        	 }
+         	 if (!pollutants.includes(pollutant)){
+        	 	pollutants.push(pollutant);
+        	 }
+		  });
+
+		   var nbyears = years.length;
+		   var stepWidthYear = (width-40)/(nbyears+2);
+
+		    //console.log(years);
+
+		    svg.selectAll("text").data(years).enter().append("text")
+		      .text(function(d){ return d;})
+		      .attr("y", function (d) { return height-50;})
+		      .attr("x", function(d,i){return 20 + i*stepWidthYear;})
+		      .style("font-size", function(d,i){return 12;})
+		      .style("font-family", "helvetica");
+
+            //pie charts!!!
+            //avec vu année par année
+
+            //puis map view!
+    	
+         /*list.selectAll("ul")
+         .data(data)
+         .enter()
+         .append("li")
+         .text(function(d) { return d.petalLength; })*/
+    	 
+    	});
+
+     // svg.selectAll("rect").data(data).enter().append("rect")
+     //  .attr("y", function(d) { return 120-d ;})
+     //  .attr("x", function(d, i) { return i*90 ;})
+     //  .style("font-size", 36)
+     //  .style("font-family", "monospace")
+
+    </script>
+
+    </body>
+</html>
+
+<!-- 
+LES CHAMPS :
+COU
+Country
+Flag Codes
+Flags
+POL
+Pollutant
+PowerCode
+PowerCode Code 
+Reference Period
+Reference Period Code
+Unit 
+Unit Code
+VAR
+Value
+Variable
+YEA
+Year
+ -->

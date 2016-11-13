@@ -1,0 +1,41 @@
+{
+  "extras": {
+    "Better": "Smaller", 
+    "Indicator": "E1"
+  }, 
+  "description": "Data sourced from Herefordshire Council's data sheets on Air Pollution site https://www.herefordshire.gov.uk/environmental-protection/pollution-control/pollution-control-air-quality.\r\n ", 
+  "license": {
+    "url": "http://reference.data.gov.uk/id/open-government-licence", 
+    "type": "uk-ogl", 
+    "title": "UK Open Government Licence (OGL)"
+  }, 
+  "title": "Nitrogen Dioxide Emissions 2010 - 2014", 
+  "keywords": [
+    "air pollution", 
+    "environment"
+  ], 
+  "resources": [
+    {
+      "url": "https://datahub.io/dataset/ea44c421-00fc-493b-808c-16b8d57c038f/resource/479f7fb9-1ae1-42bf-af5e-ba43635d3e85/download/natural-resources---n02-all.csv", 
+      "title": "Nitrogen Dioxide (ug/m3) 2010 - 2014", 
+      "description": "This data covers 16 monitoring sites across the county", 
+      "name": "nitrogen-dioxide-ug-m3-2010-2014", 
+      "format": "CSV"
+    }, 
+    {
+      "url": "https://datahub.io/dataset/ea44c421-00fc-493b-808c-16b8d57c038f/resource/c2e3381b-6811-4351-afca-a57b8c3206fb/download/natural-resources---n02-export.csv", 
+      "title": "Nitrogen Dioxide Emissions (ug/m3) 2010 - 2014", 
+      "description": "Median calculation for data across 16 sites ", 
+      "name": "nitrogen-dioxide-emissions-ug-m3-2010-2014", 
+      "format": "CSV"
+    }, 
+    {
+      "url": "https://datahub.io/dataset/ea44c421-00fc-493b-808c-16b8d57c038f/resource/43b56481-9246-45d0-afc3-d7c3d512a3c9/download/n02.json", 
+      "title": "Nitrogen Dioxide Emissions  (ug/m3) 2010 - 2014", 
+      "description": "Data in JSON format", 
+      "name": "nitrogen-dioxide-emissions-ug-m3-2010-2014", 
+      "format": "JSON"
+    }
+  ], 
+  "name": "nitrogen-dioxide-emissions-2010-2014"
+}
