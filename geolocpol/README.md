@@ -4,7 +4,7 @@ Universite Claude Bernard Lyon I
 
 It is based on d3.js
 
-Pour lancer le projet :
+Pour lancer le projet : 
 installer python
 Pour python < 3.
 python -m SimpleHTTPServer
