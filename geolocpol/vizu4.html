@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Loading data from server</title>
+        <script type="text/javascript" src="js/lib/d3.js"></script>
+        <script type="text/javascript" src="js/lib/topojson.js"></script>
+
+        <style>
+                .subunit.FXC,.subunit.FXX { fill: #dcd; }
+
+                .subunit.FR,
+                .subunit-label.FR {
+                  display: none;
+                }
+
+                .subunit-boundary {
+                  fill: none;
+                  stroke: #777;
+                  stroke-dasharray: 2,2;
+                  stroke-linejoin: round;
+                }
+
+                .subunit-boundary.FXC, .subunit-boundary.FXX {
+                  stroke: #aaa;
+                }
+
+                .subunit-label {
+                  fill: #777;
+                  fill-opacity: .5;
+                  font-size: 20px;
+                  font-weight: 300;
+                  text-anchor: middle;
+                }
+
+                .place,
+                .place-label {
+                  fill: #444;
+                }
+
+                text {
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                  font-size: 10px;
+                  pointer-events: none;
+                }
+
+        </style>
+
+    </head>
+    <body>
+
+    <script type="text/javascript">
+        var width = 1160,
+            height = 860;
+
+        var projection = d3.geo.albers()
+            .center([4, 46.5])
+            .rotate([0, 0])
+            .parallels([70, 60])
+            .scale(1000 * 5)
+            .translate([width / 2, height / 2]);
+
+        var path = d3.geo.path()
+            .projection(projection)
+            .pointRadius(2);
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        d3.json("geodata/fr/fr.json", function(error, fr) {
+          var subunits = topojson.feature(fr, fr.objects.subunits),
+              places = topojson.feature(fr, fr.objects.places);
+
+          svg.selectAll(".subunit")
+              .data(subunits.features)
+              .enter().append("path")
+              .attr("class", function(d) { return "subunit " + d.id; })
+              .attr("d", path);
+
+          svg.append("path")
+              .datum(topojson.mesh(fr, fr.objects.subunits, function(a, b) { return a !== b }))
+              .attr("d", path)
+              .attr("class", "subunit-boundary");
+
+
+          svg.selectAll(".subunit-label")
+              .data(subunits.features)
+              .enter().append("text")
+              .attr("class", function(d) { return "subunit-label " + d.id; })
+              .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+              .attr("dy", ".35em")
+              .text(function(d) { console.log(d); return d.properties.name; });
+
+          svg.append("path")
+              .datum(places)
+              .attr("d", path)
+              .attr("class", "place");
+
+          svg.selectAll(".place-label")
+              .data(places.features)
+            .enter().append("text")
+              .attr("class", "place-label")
+              .attr("transform", function(d) { return "translate(" + projection(d.geometry.coordinates) + ")"; })
+              .attr("x", function(d) { return d.geometry.coordinates[0] > -1 ? 6 : -6; })
+              .attr("dy", ".35em")
+              .style("text-anchor", function(d) { return d.geometry.coordinates[0] > -1 ? "start" : "end"; })
+              .text(function(d) { console.log(d); return d.properties.name; });
+        });
+
+    </script>
+
+    </body>
+</html>
+
+
+<!--
+USE OSM?
+var map = L.map('map').setView([51.505, -0.09], 13);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+L.marker([51.5, -0.09]).addTo(map)
+    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    .openPopup();
+
+    TODO remove outremer ou prendre france metro
+    */-->

@@ -1,0 +1,20 @@
+{
+  "name": "geolocapol",
+  "version": "1.0.0",
+  "description": "A project of data visualization to identify polluted places around France over the past years",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "geolocalisation",
+    "pollution"
+  ],
+  "author": "Jules Sauvinet",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "path": "^0.12.7",
+    "topojson": "^2.0.0"
+  }
+}

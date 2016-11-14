@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Loading data from server</title>
+        <script type="text/javascript" src="js/lib/d3.js"></script>
+        <script type="text/javascript" src="js/lib/topojson.js"></script>
+
+        <style>
+          body {font-family: monospace; line-height: 160%; font-size: 18px; }
+          ul {list-style: none; margin: 0; padding: 0;}
+          li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; margin: 0;}
+
+            path {
+              stroke: #d1c9b8;
+              stroke-width: 0.5px;
+              fill: #F5F5F5;
+            }
+
+        </style>
+
+    </head>
+    <body>
+
+    <script type="text/javascript">
+        var width = 900;
+        var height = 600;
+
+        var projection = d3.geo.mercator();
+
+        var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+        var path = d3.geo.path()
+        .projection(projection);
+
+        d3.json("geodata/world.geojson", function(error, data) {
+        svg.selectAll(".countries")
+          .data(topojson.feature(data, data.objects.countries).features)
+          .enter().append("path")
+          .attr("class", function(d) { return "countries " + d.id; })
+          .attr("d", path);
+        });
+
+
+    </script>
+
+    </body>
+</html>
+
+
+<!--
+USE OSM?
+var map = L.map('map').setView([51.505, -0.09], 13);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+L.marker([51.5, -0.09]).addTo(map)
+    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    .openPopup();
+    */-->
