@@ -23,7 +23,7 @@
 
     var svg = d3.select("body").append("svg")
       .attr("width", width)
-      .attr("height", height)
+      .attr("height", height);
 
     var data = [];
     var years = [];
@@ -42,7 +42,7 @@
 	var yearsValueForm = [];
 
 
-    d3.csv("data/air_emissions_1990_2014.csv",
+    d3.csv("data/world/air_emissions_1990_2014.csv",
         function(datas) {
 	          datas.forEach(function(d) {
 			     var pollutant = d["Pollutant"]; 
