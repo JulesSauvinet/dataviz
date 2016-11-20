@@ -87,6 +87,7 @@
           .attr("d", path)
           .attr("class", "subunit-boundary");
 
+        console.log(topojson.mesh(uk, uk.objects.subunits, function(a, b) { return a === b && a.id === "IRL"; }));
       svg.append("path")
           .datum(topojson.mesh(uk, uk.objects.subunits, function(a, b) { return a === b && a.id === "IRL"; }))
           .attr("d", path)
@@ -121,7 +122,7 @@
     var pollutants = [];
     var countries = [];
 
-    d3.csv("data/air_emissions_1990_2014.csv",
+    /*d3.csv("data/air_emissions_1990_2014.csv",
         function(datas) {
           datas.forEach(function(d) {
 		     var pollutant = d["Pollutant"]; 
@@ -149,7 +150,7 @@
         	 }
 		  });
     	 
-    	});
+    	});*/
 
     </script>
 
