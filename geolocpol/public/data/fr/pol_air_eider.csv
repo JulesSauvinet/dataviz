@@ -758,75 +758,6 @@ FRANCHE COMTE	43	AI08Chloroforme - Seuil de collecte des données	kg/an	ND	ND	ND
 FRANCHE COMTE	43	AI081,2-dichloroéthane - Quantités annuelles émises	t/an	ND	ND	ND	ND	ND	ND	13.892	7.919	11.354	7.849
 FRANCHE COMTE	43	AI081,2-dichloroéthane - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	ND	ND	1.0	1.0	1.0	1.0
 FRANCHE COMTE	43	AI081,2-dichloroéthane - Seuil de collecte des données	t/an	ND	ND	ND	ND	ND	ND	1.0	1.0	1.0	1.0
-France entière		AI08Ammoniac - Quantités annuelles émises	t/an	ND	ND	ND	ND	13666.534	17462.792	18092.844	18969.768	19589.814	18171.27
-France entière		AI08Ammoniac - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	454.0	674.0	805.0	810.0	832.0	838.0
-France entière		AI08Ammoniac - Seuil de collecte des données	t/an	100.0	100.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0
-France entière		AI08Cadmium - Quantités annuelles émises	kg/an	ND	ND	ND	ND	3988.568	4502.05	2640.265	3047.216	2221.621	1106.9
-France entière		AI08Cadmium - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	89.0	89.0	73.0	78.0	63.0	46.0
-France entière		AI08Cadmium - Seuil de collecte des données	kg/an	30.0	30.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0
-France entière		AI08Monoxyde de carbone (CO) - Quantités annuelles émises	t/an	ND	ND	ND	ND	219499.513	226394.889	237817.235	232347.434	223474.203	222465.318
-France entière		AI08Monoxyde de carbone - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	53.0	51.0	52.0	53.0	49.0	39.0
-France entière		AI08Monoxyde de carbone - Seuil de collecte des données	t/an	500.0	500.0	500.0	500.0	500.0	500.0	500.0	500.0	500.0	500.0
-France entière		AI08Composés Organiques Volatils (COV) non méthaniques - Quantités annuelles émises	t/an	ND	ND	ND	ND	141999.226	132675.074	117494.504	109372.13	110992.723	91790.14
-France entière		AI08Composés Organiques Volatils (COV) non méthaniques - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	350.0	355.0	334.0	318.0	668.0	612.0
-France entière		AI08Composés Organiques Volatils (COV) non méthaniques - Seuil de collecte des données	t/an	1000.0	1000.0	100.0	100.0	100.0	100.0	100.0	100.0	30.0	30.0
-France entière		AI08Fluorure d'hydrogène (HF) - Quantités annuelles émises	t/an	ND	ND	ND	ND	736.376	1116.735	1073.591	1141.933	961.431	977.167
-France entière		AI08Fluorure d'hydrogène (HF) - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	26.0	32.0	28.0	28.0	25.0	22.0
-France entière		AI08Fluorure d'hydrogène (HF) - Seuil de collecte des données	t/an	10.0	10.0	5.0	5.0	5.0	5.0	5.0	5.0	5.0	5.0
-France entière		AI08Sulfure d'hydrogène (H2S) - Quantités annuelles émises	t/an	ND	ND	ND	ND	257.912	283.694	287.556	317.558	184.324	227.679
-France entière		AI08Sulfure d'hydrogène (H2S) - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	11.0	10.0	9.0	8.0	7.0	4.0
-France entière		AI08Sulfure d'hydrogène (H2S) - Seuil de collecte des données	t/an	3.0	3.0	3.0	3.0	3.0	3.0	3.0	3.0	3.0	3.0
-France entière		AI08Chlorure d'hydrogène - Quantités annuelles émises	t/an	ND	ND	ND	ND	3404.292	4743.172	3333.577	3440.976	3420.769	3759.024
-France entière		AI08Chlorure d'hydrogène - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	69.0	64.0	51.0	53.0	42.0	33.0
-France entière		AI08Chlorure d'hydrogène - Seuil de collecte des données	t/an	250.0	250.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0
-France entière		AI08Acide cyanhydrique (HCN) - Quantités annuelles émises	t/an	ND	ND	ND	ND	68.413	21.45	18.661	14.398	13.659	14.846
-France entière		AI08Acide cyanhydrique (HCN) - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	4.0	11.0	7.0	9.0	8.0	10.0
-France entière		AI08Acide cyanhydrique (HCN) - Seuil de collecte des données	t/an	5.0	5.0	0.2	0.2	0.2	0.2	0.2	0.2	0.2	0.2
-France entière		AI08Mercure (et ses composants) - Quantités annuelles émises	kg/an	ND	ND	ND	ND	4173.234	4135.461	4065.768	2871.483	3041.958	2449.075
-France entière		AI08Mercure (et ses composants) - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	86.0	89.0	78.0	67.0	68.0	71.0
-France entière		AI08Mercure (et ses composants) - Seuil de collecte des données	kg/an	30.0	30.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0
-France entière		AI08Chlorure de vinyle monomère (MVC) - Quantités annuelles émises	t/an	ND	ND	ND	ND	507.494	440.384	340.197	300.119	290.722	274.672
-France entière		AI08Chlorure de vinyle monomère (MVC) - Nombre d'étab. concernés	Nombre	ND	ND	ND	ND	11.0	10.0	10.0	11.0	10.0	9.0
-France entière		AI08Chlorure de vinyle monomère (MVC) - Seuil de collecte des données	t/an	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0
-France entière		AI08Oxyde d'azote (NOX y compris NO2) - Quantités annuelles émises	t/an	ND	ND	ND	ND	301714.683	308861.766	271254.576	256145.068	223815.067	204441.681
-France entière		AI08Oxyde d'azote (NOX y compris NO2) - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	362.0	352.0	312.0	302.0	284.0	273.0
-France entière		AI08Oxyde d'azote (NOX y compris NO2) - Seuil de collecte des données	t/an	2000.0	2000.0	100.0	100.0	100.0	100.0	100.0	100.0	100.0	100.0
-France entière		AI08Plomb (et ses composés) - Quantités annuelles émises	kg/an	ND	ND	ND	ND	81261.473	70017.544	66578.43	65174.946	44205.373	28801.906
-France entière		AI08Plomb (et ses composés) - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	57.0	58.0	50.0	51.0	44.0	28.0
-France entière		AI08Plomb (et ses composés) - Seuil de collecte des données	kg/an	300.0	300.0	200.0	200.0	200.0	200.0	200.0	200.0	200.0	200.0
-France entière		AI08Poussières - Quantités annuelles émises	t/an	ND	ND	ND	ND	41763.69	36675.766	34403.005	35126.933	27438.104	21952.86
-France entière		AI08Poussières - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	78.0	71.0	76.0	82.0	68.0	56.0
-France entière		AI08Poussières - Seuil de collecte des données	t/an	300.0	300.0	150.0	150.0	150.0	150.0	150.0	150.0	150.0	150.0
-France entière		AI08Oxydes de soufre (SOX) - Quantités annuelles émises	t/an	ND	ND	ND	ND	371872.295	369388.991	337336.699	323757.267	288260.172	232621.688
-France entière		AI08Oxydes de soufre (SOX) - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	209.0	209.0	195.0	185.0	178.0	162.0
-France entière		AI08Oxydes de soufre (SOX) - Seuil de collecte des données	t/an	5000.0	5000.0	150.0	150.0	150.0	150.0	150.0	150.0	150.0	150.0
-France entière		AI08Arsenic - Quantités annuelles émises	kg/an	ND	ND	ND	ND	5539.99	4878.005	5985.0	5849.886	6196.739	2554.677
-France entière		AI08Arsenic - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	44.0	47.0	48.0	50.0	43.0	39.0
-France entière		AI08Arsenic - Seuil de collecte des données	kg/an	ND	ND	20.0	20.0	20.0	20.0	20.0	20.0	20.0	20.0
-France entière		AI08Dioxyde de carbone (CO2) - Quantités annuelles émises	t/an	ND	ND	ND	ND	2.3490325338E8	1.70937100702E8	1.68001721968E8	1.66921951151E8	1.57651365997E8	1.59988838466E8
-France entière		AI08Dioxyde de carbone - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	1229.0	1197.0	1320.0	1307.0	1250.0	1226.0
-France entière		AI08Dioxyde de carbone - Seuil de collecte des données	t/an	ND	ND	10000.0	10000.0	10000.0	10000.0	10000.0	10000.0	10000.0	10000.0
-France entière		AI08Dichlorométhane (DCM) - Quantités annuelles émises	t/an	ND	ND	ND	ND	2438.699	2551.592	2131.711	2455.169	1453.674	905.108
-France entière		AI08Dichlorométhane - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	104.0	122.0	125.0	101.0	77.0	69.0
-France entière		AI08Dichlorométhane - Seuil de collecte des données	t/an	ND	ND	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0
-France entière		AI08Protoxyde d'azote (N2O) - Quantités annuelles émises	t/an	ND	ND	ND	ND	27860.309	26796.288	22448.098	22363.815	17346.494	84633.598
-France entière		AI08Protoxyde d'azote - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	112.0	111.0	99.0	94.0	87.0	92.0
-France entière		AI08Protoxyde d'azote - Seuil de collecte des données	t/an	ND	ND	10.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0
-France entière		AI08Benzène - Quantités annuelles émises	t/an	ND	ND	ND	ND	ND	ND	852.716	874.04	612.146	469.155
-France entière		AI08Benzène - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	ND	ND	43.0	48.0	43.0	44.0
-France entière		AI08Benzène - Seuil de collecte des données	t/an	ND	ND	ND	ND	ND	ND	1.0	1.0	1.0	1.0
-France entière		AI08Perchloroéthylène (PER) - Quantités annuelles émises	t/an	ND	ND	ND	ND	ND	ND	584.914	515.012	399.913	351.437
-France entière		AI08Perchloroéthylène - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	ND	ND	35.0	35.0	32.0	30.0
-France entière		AI08Perchloroéthylène - Seuil de collecte des données	t/an	ND	ND	ND	ND	ND	ND	2.0	2.0	2.0	2.0
-France entière		AI08Trichloroéthylène (TRI) - Quantités annuelles émises	t/an	ND	ND	ND	ND	ND	ND	766.517	697.674	361.971	227.461
-France entière		AI08Trichloroéthylène - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	ND	ND	64.0	54.0	35.0	25.0
-France entière		AI08Trichloroéthylène - Seuil de collecte des données	t/an	ND	ND	ND	ND	ND	ND	2.0	2.0	2.0	2.0
-France entière		AI08Chloroforme - Quantités annuelles émises	kg/an	ND	ND	ND	ND	ND	ND	182249.0	182694.675	144225.0	164755.0
-France entière		AI08Chloroforme - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	ND	ND	18.0	15.0	11.0	13.0
-France entière		AI08Chloroforme - Seuil de collecte des données	kg/an	ND	ND	ND	ND	ND	ND	500.0	500.0	500.0	500.0
-France entière		AI081,2-dichloroéthane - Quantités annuelles émises	t/an	ND	ND	ND	ND	ND	ND	812.059	876.183	849.396	439.908
-France entière		AI081,2-dichloroéthane - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	ND	ND	12.0	12.0	12.0	8.0
-France entière		AI081,2-dichloroéthane - Seuil de collecte des données	t/an	ND	ND	ND	ND	ND	ND	1.0	1.0	1.0	1.0
 HAUTE NORMANDIE	23	AI08Ammoniac - Quantités annuelles émises	t/an	0.0	0.0	0.0	646.6	1148.584	1042.362	622.86	1099.867	1029.052	850.382
 HAUTE NORMANDIE	23	AI08Ammoniac - Nombre d'établissements concernés	Nombre	0.0	0.0	0.0	4.0	17.0	17.0	17.0	15.0	15.0	15.0
 HAUTE NORMANDIE	23	AI08Ammoniac - Seuil de collecte des données	t/an	100.0	100.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0	10.0
@@ -1655,5 +1586,3 @@ RHONE-ALPES	82	AI08Chloroforme - Seuil de collecte des données	kg/an	ND	ND	ND	N
 RHONE-ALPES	82	AI081,2-dichloroéthane - Quantités annuelles émises	t/an	ND	ND	ND	ND	ND	ND	132.7	88.5	30.46	30.51
 RHONE-ALPES	82	AI081,2-dichloroéthane - Nombre d'établissements concernés	Nombre	ND	ND	ND	ND	ND	ND	1.0	1.0	1.0	1.0
 RHONE-ALPES	82	AI081,2-dichloroéthane - Seuil de collecte des données	t/an	ND	ND	ND	ND	ND	ND	1.0	1.0	1.0	1.0
-Producteur : MEEM (DGPR).
-Source : IREP (Registre français des émissions polluantes).

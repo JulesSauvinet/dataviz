@@ -1,0 +1,1 @@
+topojson -o regionswithprop.json --shapefile-encoding utf-8 --id-property code_insee --properties nom=nom --properties nom_cl=nom_cl --properties surf_km2=surf_km2 regions.json
