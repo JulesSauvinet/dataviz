@@ -51,6 +51,19 @@
                   pointer-events: none;
                 }
 
+                div.tooltip {
+                    position: absolute;
+                    text-align: center;
+                    width: 100px;
+                    height: 40px;
+                    padding: 2px;
+                    font: 12px sans-serif;
+                    background: lightsteelblue;
+                    border: 0px;
+                    border-radius: 8px;
+                    pointer-events: none;
+                }
+
         </style>
 
     </head>
@@ -75,6 +88,10 @@
             .attr("width", width)
             .attr("height", height);
 
+        var div = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
         d3.json("geodata/fr/fr.json", function(error, fr) {
           var subunits = topojson.feature(fr, fr.objects.subunits),
               places = topojson.feature(fr, fr.objects.places);
@@ -93,6 +110,7 @@
             d3.json("geodata/fr/regFr2.json", function(error, regs) {
 
                 var regions = topojson.feature(regs, regs.objects.regions);
+                var idReg =  [];
 
                 if (error) return console.error(error);
 
@@ -101,11 +119,15 @@
                         .data(regions.features)
                         .enter().append("path")
                         .attr("class", function (d, i) {
-                            console.log(i);
-                            return "regions-subunit regions-subunit"+i ;
+                            return "regions-subunit" ;
+                        })
+                        .attr("id", function (d, i) {
+                            idReg.push(d.id);
+                            return "regions-subunit"+d.id ;
                         })
                         .attr("d", path);
 
+                //console.log(idReg);
                 svg.append("path")
                         .datum(topojson.mesh(regs,regs.objects.regions))
                         .attr("d", path)
@@ -156,39 +178,49 @@
 
                 var regs = svg.selectAll('.regions-subunit').data(regions.features).enter();*/
 
-                svg.selectAll('.properties-label')
+                /*svg.selectAll('.properties-label')
                         .data(regions.features)
                         .enter()
-                        .append('text')/*.attr('style', 'display:none;')*/
+                        .append('text')
                         .text(function(d) {return d.properties.nom; })
                         .attr("class", "properties-label")
-                        /*.attr('x', function(d) { return 50; })
-                        .attr('y', function(d) { return 50; })*/
+                        .attr("id", function (d, i) {
+                            return "properties-label"+d.id ;
+                        })
                         .attr("transform", function (d) {
                             return "translate(" + path.centroid(d) + ")";
                         })
-                        .attr('style', 'display:none;');
+                        .attr('style', 'display:none;');*/
 
-                for (var r=0; r<=26;r++){
-                    var rId = r;
-                    svg.selectAll('.regions-subunit'+rId).on('mouseover', function( d, i) {
-
+                idReg.forEach(function (id ){
+                    svg.select('#regions-subunit'+id).on('mouseover', function( d, i) {
+                        //console.log(d.id);
                         d3.select(this).style("fill", "red").style( "opacity", 0.5);
-                        svg.selectAll(".properties-label").filter(function(e) {
-                            return d.properties.nom === e.properties.nom;
-                        })
+                        /*svg.select("#properties-label"+d.id)
                                 .attr('style', 'display:inline;')
                                 .style("font-size", function(d,i){return 16;})
                                 .style("font-weight", function(d,i){return "bold";})
-                                .style("font-family", "monospace");
+                                .style("font-family", "monospace");*/
+
+                        div.transition()
+                                .duration(200)
+                                .style("opacity", .9);
+                        console.log(d);
+                        div.html(d.properties.nom + "<br/>"  + d.properties.nom_cl)
+                                .style("left", (d3.event.pageX) + "px")
+                                .style("top", (d3.event.pageY - 28) + "px");
 
                     });
-                    svg.selectAll('.regions-subunit'+rId).on("mouseout", function( data, index) {
+                    svg.select('#regions-subunit'+id).on("mouseout", function( data, index) {
                         d3.select(this).transition().duration(100).style("fill", "floralwhite").style( "opacity", 0.9);
                         //svg.selectAll("text").transition().duration(100).attr('style', 'display:none;');
-                        svg.selectAll(".properties-label").transition().duration(100).attr('style', 'display:none;');
+                        //svg.select("#properties-label"+id).transition().duration(100).attr('style', 'display:none;');
+                        div.transition()
+                                .duration(300)
+                                .style("opacity", 0);
                     });
-                }
+                });
+
 
             });
         });
