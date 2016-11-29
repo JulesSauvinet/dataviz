@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="js/topojson.js"></script>
+    <style>
+
+        body { margin:0;position:fixed;top:0;right:0;bottom:0;left:0; }
+
+        .regions {
+            stroke: darkgrey;
+            stroke-width: 1px;
+        }
+        .regions:hover {
+            fill: #666;
+        }
+        .hidden {
+            display: none;
+        }
+        div.tooltip {
+            color: #222;
+            background-color: #fff;
+            padding: .5em;
+            text-shadow: #f5f5f5 0 1px 0;
+            border-radius: 2px;
+            opacity: 0.9;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+<script>
+    var width = 700,
+            height = 580;
+
+    var svg = d3.select( "body" )
+            .append( "svg" )
+            .attr( "width", width )
+            .attr( "height", height );
+
+    var projection = d3.geo.conicConformal().center([2.454071, 46.279229]).scale(3000)
+            .translate([width/2, height/2]);
+
+    var path = d3.geo.path()
+            .projection(projection);
+
+    var length = 100,
+            color = d3.scale.linear().domain([1,length])
+                    .interpolate(d3.interpolateHcl)
+                    .range([d3.rgb("#FBF2B7"), d3.rgb('#FF0000')]);
+
+    var tooltip = d3.select('body').append('div')
+            .attr('class', 'hidden tooltip');
+
+    d3.csv("data/fr/GrippeFrance2014.csv", function(data) {
+
+        d3.json("geodata/fr/regions.json", function(regions) {
+
+            d3.json("geodata/fr/waterwaystopo.json", function(waw) {
+
+                var dateMonth = "11/14";
+
+                for (var i = 0; i < data.length; i++) {
+                    data[i]["11/14"] = parseFloat(data[i]["02/11/14"]) + parseFloat(data[i]["09/11/14"]) + parseFloat(data[i]["16/11/14"]) + parseFloat(data[i]["23/11/14"]) + parseFloat(data[i]["30/11/14"]);
+                }
+                //color.domain([0, d3.max(data, function(d) { return parseFloat(d["somme2014"]);})]);
+                color.domain([d3.min(data, function (d) {
+                    return parseFloat(d["11/14"]);
+                }), d3.max(data, function (d) {
+                    return parseFloat(d["11/14"]);
+                })]);
+
+
+                //On fusionne les donnees avec le GeoJSON
+                for (var i = 0; i < data.length; i++) {
+                    for (var j = 0; j < regions.features.length; j++) {
+                        //console.log(regions.features[j].properties.nom);
+                        //console.log(data[i].region);
+                        if (regions.features[j].properties.nom === data[i].region) {
+                            regions.features[j].properties.grippe = data[i];
+                        }
+                    }
+                }
+
+                svg.selectAll("path")
+                        .data(regions.features)
+                        .enter()
+                        .append("path")
+                        .attr("class", function (d, i) {
+                            return "regions";
+                        })
+                        .attr("d", path)
+                        .style("fill", function (d) {
+                            if (d.properties.grippe) {
+                                var value = parseFloat(d.properties.grippe["11/14"]);
+                                return "white";//color(value);
+                            }
+                        }).on('mousemove', function (d) {
+                            var mouse = d3.mouse(svg.node()).map(function (d) {
+                                return parseInt(d);
+                            });
+                            var toDisplay = d.properties.nom + " : </br>"
+                            if (d.properties.grippe)
+                                toDisplay += "Cas de grippe en " + dateMonth + " : " + d.properties.grippe[dateMonth];
+                            else
+                                toDisplay += "Cas de grippe en " + dateMonth + " : " + "Non défini";
+
+                            tooltip.classed('hidden', false)
+                                    .attr('style', 'left:' + (mouse[0] + 15) +
+                                            'px; top:' + (mouse[1] - 35) + 'px')
+                                    .html(toDisplay);
+                        })
+                        .on('mouseout', function () {
+                            tooltip.classed('hidden', true);
+                        });
+
+
+                /*svg.selectAll(".steu")
+                 .data(zre.features)
+                 .enter()
+                 .append("path")
+                 .attr("class", function (d, i) {
+                 return "steu";
+                 })
+                 .attr("d", path)
+                 .style("fill", function (d) {
+                 //console.log(d);
+                 return "lightblue";
+                 });*/
+
+                svg.selectAll(".waw")
+                        .data(topojson.feature(waw, waw.objects.waterwaysfr).features)
+                        .enter().append("path")
+                        .attr("class", function(d) { return "waw"; })
+                        .attr("d", path)
+                        .style("stroke",  "lightblue")
+                        .style("stroke-width", "1px");
+                        /*
+                      .style("fill", function (d) {
+                            return "lightblue";
+                        });*/
+
+            });
+        });
+    });
+
+</script>
+</body>
