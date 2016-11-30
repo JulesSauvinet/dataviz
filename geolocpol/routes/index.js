@@ -19,10 +19,13 @@ router.get('/vizu4', function(req, res) {
   res.render('vizu4.html');
 });
 router.get('/vizu5', function(req, res) {
-  res.render('vizu5.html');
+  res.render('tp4_1.html');
 });
 router.get('/vizu6', function(req, res) {
   res.render('vizu6.html');
+});
+router.get('/vizu7', function(req, res) {
+  res.render('vizu7.html');
 });
 router.get('/tp4', function(req, res) {
   res.render('tp4_1.html');

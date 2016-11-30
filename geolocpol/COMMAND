@@ -12,3 +12,10 @@ ogr2ogr zre.json ZRE.shp
 
 
 topojson -o zre2.json --shapefile-encoding utf-8 --id-property CodeNatZon --properties nom=NomZone zre.json
+
+CONVERT LAMBERT COORD
+ogr2ogr \
+    -f GeoJSON \
+    -t_srs EPSG:4326 \
+    output.json \
+    input.shp
