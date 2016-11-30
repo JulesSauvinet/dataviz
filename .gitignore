@@ -1,0 +1,10 @@
+geolocpol/public/geodata_raw
+geolocpol/public/data_raw
+geolocpol/public/data/fr/*.xlsx
+geolocpol/public/geodata/fr/coursdeau.json
+geolocpol/public/geodata/fr/zre.json
+geolocpol/public/geodata/fr/zre2.json
+geolocpol/public/geodata/fr/me.json
+geolocpol/public/geodata/fr/steu.json
+geolocpol/node_modules
+geolocpol/.idea
