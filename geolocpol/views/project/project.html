@@ -7,6 +7,19 @@
 
     #mapleft{width: 600px; position:absolute; left : 75px; top:100px;}
     #mapright{width: 600px; position:absolute; left : 725px; top:100px;}
+
+    .titlemap{
+        font-family: "Helvetica Neue",serif;
+        font-size: 20px;
+        text-anchor: middle;
+    }
+
+    #yeardiv {
+        position: absolute;
+        left :25px;
+        top :80px;
+    }
+
     .background {
         fill: #fff;
         stroke: #ccc;
@@ -24,12 +37,15 @@
     footer{position : absolute; bottom : 10px;}
 </style>
 <body>
-<h2>Density of population - NUTS 3 regions</h2>
+
 <div id="mapleft"></div>
 <div id="mapright"></div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src="https://d3js.org/queue.v1.min.js"></script>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/github-light.css">
 <!--script type="text/javascript" src="js/tooltip.js"></script-->
 
 <script>
@@ -37,17 +53,20 @@
             height = 800;
 
     //Map de gauche
-    var projection1 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([300 , 300]);
+    var projection1 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([300 , 330]);
     var path1 = d3.geo.path().projection(projection1);
     var svg1 = d3.select("#mapleft").append("svg").attr("width", 600).attr("height", 500);
 
     //Map de droite
-    var projection2 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([300 , 300]);
+    var projection2 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([300 , 330]);
     var path2 = d3.geo.path().projection(projection2);
     var svg2 = d3.select("#mapright").append("svg").attr("width", 600).attr("height", 500);
 
     var color1 = d3.scale.linear().domain([0,100]).range(['yellow', 'red']);
     var color2 = d3.scale.linear().domain([0,100]).range(['lightgreen', 'darkgreen']);
+
+    var title1 = /*d3.select("#mapleft")*/svg1.append("text");
+    var title2 = /*d3.select("#mapright")*/svg2.append("text");
 
     function updateViz(year, stats, europe){
         /*color.domain([d3.min(grippedata, function(d) { return parseFloat(d[weeks[value]]);}), d3.max(grippedata, function(d) { return parseFloat(d[weeks[value]]);})]);*/
@@ -185,15 +204,26 @@
 
         carte1.exit().remove();
         carte2.exit().remove();
+
     }
 
     function processData(error,density, europe) {
 
         if (error) throw error;
 
-        var year = d3.select("#slider")[0][0].value
+        var year = d3.select("#slider")[0][0].value;
         d3.select('#year').html(year);
         drawMaps(year, density, europe);
+
+        title1.attr("x", 300)
+                .attr("y", 25)
+                .attr("class", "titlemap")
+                .text("Pollution");
+
+        title2.attr("x", 300)
+                .attr("y", 25)
+                .attr("class", "titlemap")
+                .text("Density");
 
         //color.domain([0, d3.max(data, function(d) { return parseFloat(d["somme2014"]);})]);
         d3.select("#slider").on("input", function() {
@@ -210,6 +240,7 @@
 </script>
 
 <div id="yeardiv">
+    <h4>Année</h4>
     <input id="slider" type="range" value="2014" min="1990" max="2014" step="1" />
     <span id="year"></span>
 </div>
