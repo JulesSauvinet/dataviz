@@ -2,6 +2,11 @@
 <meta charset="utf-8">
 <title>Crimes recorded by the police - NUTS 3 regions</title>
 <style>
+
+    body{height : 800px;width:1550px;}
+
+    #mapleft{width: 600px; position:absolute; left : 75px; top:100px;}
+    #mapright{width: 600px; position:absolute; left : 725px; top:100px;}
     .background {
         fill: #fff;
         stroke: #ccc;
@@ -16,57 +21,63 @@
         -moz-border-radius:10px;
         border-radius:10px;
     }
+    footer{position : absolute; bottom : 10px;}
 </style>
 <body>
 <h2>Density of population - NUTS 3 regions</h2>
-<div id="map"></div>
+<div id="mapleft"></div>
+<div id="mapright"></div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src="https://d3js.org/queue.v1.min.js"></script>
 <!--script type="text/javascript" src="js/tooltip.js"></script-->
 
 <script>
-    var width = 1200,
-            height = 600;
+    var width = 1550,
+            height = 800;
 
-    var projection = d3.geo.stereographic()
-            .center([3.9,43.0])
-            .scale(1300)
-            .translate([width / 4 , height / 2+100]);
-    var path = d3.geo.path()
-            .projection(projection);
-    var svg = d3.select("#map").append("svg")
-            .attr("width", 1160)
-            .attr("height", 600);
+    //Map de gauche
+    var projection1 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([300 , 300]);
+    var path1 = d3.geo.path().projection(projection1);
+    var svg1 = d3.select("#mapleft").append("svg").attr("width", 600).attr("height", 500);
 
-    var color = d3.scale.linear().domain([0,100]).range(['yellow', 'red']);
+    //Map de droite
+    var projection2 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([300 , 300]);
+    var path2 = d3.geo.path().projection(projection2);
+    var svg2 = d3.select("#mapright").append("svg").attr("width", 600).attr("height", 500);
 
-    function processData(error,stats, europe) {
+    var color1 = d3.scale.linear().domain([0,100]).range(['yellow', 'red']);
+    var color2 = d3.scale.linear().domain([0,100]).range(['lightgreen', 'darkgreen']);
 
-        if (error) throw error;
+    function updateViz(year, stats, europe){
+        /*color.domain([d3.min(grippedata, function(d) { return parseFloat(d[weeks[value]]);}), d3.max(grippedata, function(d) { return parseFloat(d[weeks[value]]);})]);*/
+        d3.select('#year').html(year);
+        drawMaps(year, stats, europe);
+    }
+
+    function drawMaps(year, stats, europe) {
 
         data = {};
+
         stats.forEach(function (d) {
             //if (d.unit === 'T' && d.airpol === 'NH3' && d.airsect ==='SE1_CIH') {
-            data[d["geo"]] = d['2014'];
+            data[d["geo"]] = d[year];
             //}
         });
-        console.log(data);
 
-        svg.selectAll(".region")
-                .data(topojson.feature(europe, europe.objects.regions).features)
-                .enter()
-                .append("path")
+        var carte1 = svg1.selectAll(".region1")
+                .data(topojson.feature(europe, europe.objects.regions).features);
+
+        // code en cas de mise a jour de la carte / de changement de semaine
+        carte1.attr("class", "update region1")
                 .filter(function (d) {
                     return !isNaN(parseFloat(data[d.properties.NUTS_ID]));
                 })
-                .attr("class", "region")
-                .attr("d", path)
                 .style("stroke", "#999")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
                     if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
-                        return color(100000 * data[d.properties.NUTS_ID] / d.properties.POPULATION);
+                        return color1(100000 * data[d.properties.NUTS_ID] / d.properties.POPULATION);
                     else
                         return "#999";
                 })
@@ -76,6 +87,87 @@
                     else
                         return 0;
                 });
+
+        // code pour la creation de la carte quand les donnees sont chargees la 1e fois.
+        carte1.enter()
+                .append("path")
+                .filter(function (d) {
+                    return !isNaN(parseFloat(data[d.properties.NUTS_ID]));
+                })
+                .attr("class", "enter region1")
+                .attr("d", path1)
+                .style("stroke", "#999")
+                .style("stroke-width", 0.2)
+                .style("fill", function (d) {
+                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                        return color1(100000 * data[d.properties.NUTS_ID] / d.properties.POPULATION);
+                    else
+                        return "#999";
+                })
+                .style("opacity", function (d) {
+                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                        return 1;
+                    else
+                        return 0;
+                });
+                /*.on('mousemove', function(d) {
+                    fillTooltip(d, currentWeek);
+                })
+                .on('mouseout', function() {
+                    tooltip.classed('hidden', true);
+                });*/
+
+        var carte2 = svg2.selectAll(".region2")
+                .data(topojson.feature(europe, europe.objects.regions).features);
+
+        // code en cas de mise a jour de la carte / de changement de semaine
+        carte2.attr("class", "update region2")
+                .filter(function (d) {
+                    return !isNaN(parseFloat(data[d.properties.NUTS_ID]));
+                })
+                .style("stroke", "#999")
+                .style("stroke-width", 0.2)
+                .style("fill", function (d) {
+                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                        return color2(100000 * data[d.properties.NUTS_ID] / d.properties.POPULATION);
+                    else
+                        return "#999";
+                })
+                .style("opacity", function (d) {
+                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                        return 1;
+                    else
+                        return 0;
+                });
+
+        // code pour la creation de la carte quand les donnees sont chargees la 1e fois.
+        carte2.enter()
+                .append("path")
+                .filter(function (d) {
+                    return !isNaN(parseFloat(data[d.properties.NUTS_ID]));
+                })
+                .attr("class", "enter region2")
+                .attr("d", path2)
+                .style("stroke", "#999")
+                .style("stroke-width", 0.2)
+                .style("fill", function (d) {
+                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                        return color2(100000 * data[d.properties.NUTS_ID] / d.properties.POPULATION);
+                    else
+                        return "#999";
+                })
+                .style("opacity", function (d) {
+                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                        return 1;
+                    else
+                        return 0;
+                });
+        /*.on('mousemove', function(d) {
+         fillTooltip(d, currentWeek);
+         })
+         .on('mouseout', function() {
+         tooltip.classed('hidden', true);
+         });*/
 
         /*.call(d3.helper.tooltip(function (d, i) {
          return tooltipText(d);
@@ -90,6 +182,23 @@
          + "<br/> pop: " + d.properties.POPULATION
          + "<br/> crimes: " + crimes;
          }*/
+
+        carte1.exit().remove();
+        carte2.exit().remove();
+    }
+
+    function processData(error,density, europe) {
+
+        if (error) throw error;
+
+        var year = d3.select("#slider")[0][0].value
+        d3.select('#year').html(year);
+        drawMaps(year, density, europe);
+
+        //color.domain([0, d3.max(data, function(d) { return parseFloat(d["somme2014"]);})]);
+        d3.select("#slider").on("input", function() {
+            updateViz(this.value, density, europe);
+        });
     }
 
     queue()   // permet de charger les fichiers de manière asynchrone
@@ -100,5 +209,9 @@
 
 </script>
 
+<div id="yeardiv">
+    <input id="slider" type="range" value="2014" min="1990" max="2014" step="1" />
+    <span id="year"></span>
+</div>
 
 <footer>Source: <a href="http://http://ec.europa.eu/eurostat/data/database">eurostat</a></footer>

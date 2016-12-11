@@ -222,8 +222,8 @@
 		drawMap(1, regionsdata);
 		//color.domain([0, d3.max(data, function(d) { return parseFloat(d["somme2014"]);})]);
 		d3.select("#slider").on("input", function() {
-			updateViz(+this.value, regionsdata);
-		});
+         updateViz(+this.value, regionsdata);
+       });
 
 		var legend = svg.append("g")
 					      .attr("class", "legend")
