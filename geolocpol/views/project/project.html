@@ -42,6 +42,22 @@
         padding: 4px;
     }
 
+    fieldset {
+        margin-bottom: 20px;
+        border: 1px solid lightgray;
+    }
+    fieldset > label,
+    span > label {
+        margin-left: 10px;
+        font-size: 14px;
+    }
+    label.selected {
+        color: black;
+    }
+    label.notSelected {
+        color: lightgray;
+    }
+
     .background {
         fill: #fff;
         stroke: #ccc;
@@ -65,19 +81,18 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src="https://d3js.org/queue.v1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 <link rel="stylesheet" href="css/style2.css">
 <link rel="stylesheet" href="css/github-light.css">
 <!--script type="text/javascript" src="js/tooltip.js"></script-->
-<!--TODO CHANGER LE STYLE (creer un style adapté), et LES POSITION SONT TOUTES EN ABSOLUES DONC PASSER EN RELATIF -->
 <script>
-
+    //TODO CHANGER LE STYLE (creer un style adapté), et LES POSITION SONT TOUTES EN ABSOLUES DONC PASSER EN RELATIF
     //TODO GERER LES SCALES DE COLOR
     //TODO GERER LES VALEURS MANQUANTES
+    //TODO PONDERER POLLUTIONS SELON TAILLE PAYS ET POPULATION??
 
-
-    var width = 1550,
-            height = 800;
+    var width = 1550, height = 800;
 
     //Map de gauche
     var projection1 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([350 , 330]);
@@ -95,90 +110,41 @@
     var title1 = /*d3.select("#mapleft")*/svg1.append("text");
     var title2 = /*d3.select("#mapright")*/svg2.append("text");
 
-    function updateViz(year, data1, data2, data3, europe){
-        /*color.domain([d3.min(grippedata, function(d) { return parseFloat(d[weeks[value]]);}), d3.max(grippedata, function(d) { return parseFloat(d[weeks[value]]);})]);*/
+    var curYear = '2014';
+
+    function updateViz(year, data1, data2, europe){
+        curYear=year;
         d3.select('#year').html(year);
-        drawMaps(year, data1, data2, data3, europe);
+
+        drawMap1(year,data1,europe);
+        drawMap2(year,data2,europe)
     }
 
-    function drawMaps(year, data1, data2, data3, europe) {
-
-        //pollution
-        dataMap1 = {};
-        data1.forEach(function (d) {
-            //if (d.unit === 'T' && d.airpol === 'NH3' && d.airsect ==='SE1_CIH') {
-            dataMap1[d["geo"]] = d[year];
-            //}
-        });
-
+    //TODO predre le max sur le temps ou ponctuellement -> depend si on veux
+    //TODO voir l'evolution dans le temps ou comparer l'impact de la carte 2 sur la carte 1
+    //TODO FUSIONNER LES DATA POUR LA MISE A JOUR
+    function drawMap2(year,data2,europe) {
         //densité
         dataMap2 = {};
         data2.forEach(function (d) {
             //if (d.unit === 'T' && d.airpol === 'NH3' && d.airsect ==='SE1_CIH') {
-            dataMap2[d["geo"]] = d[year];
+            if (d["geo"] !== 'EU28')
+                dataMap2[d["geo"]] = d[year];
             //}
         });
+        min2 = d3.min(data2, function(d) { return parseFloat(d[year]);});
+        max2 = d3.max(data2, function(d) { return parseFloat(d[year]);});
 
-        var carte1 = svg1.selectAll(".region1")
-                .data(topojson.feature(europe, europe.objects.regions).features);
-
-        // code en cas de mise a jour de la carte / de changement de semaine
-        carte1.attr("class", "update region1")
-                /*.filter(function (d) {
-                    return !isNaN(parseFloat(data[d.properties.NUTS_ID]));
-                })*/
-                .style("stroke", "#999")
-                .style("stroke-width", 0.2)
-                .style("fill", function (d) {
-                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
-                        return color1(dataMap1[d.properties.NUTS_ID]);
-                    else
-                        return "lightgrey";
-                })
-                .style("opacity", function (d) {
-                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
-                        return 1;
-                    else
-                        return 0;
-                });
-
-        // code pour la creation de la carte quand les donnees sont chargees la 1e fois.
-        carte1.enter()
-                .append("path")
-                /*.filter(function (d) {
-                    return !isNaN(parseFloat(data[d.properties.NUTS_ID]));
-                })*/
-                .attr("class", "enter region1")
-                .attr("d", path1)
-                .style("stroke", "#999")
-                .style("stroke-width", 0.2)
-                .style("fill", function (d) {
-                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
-                        return color1(100000 * dataMap1[d.properties.NUTS_ID] / d.properties.POPULATION);
-                    else
-                        return "lightgrey";
-                })
-                .style("opacity", function (d) {
-                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
-                        return 1;
-                    else
-                        return 0;
-                });
-                /*.on('mousemove', function(d) {
-                    fillTooltip(d, currentWeek);
-                })
-                .on('mouseout', function() {
-                    tooltip.classed('hidden', true);
-                });*/
+        //color2.domain([min2,max2]);
 
         var carte2 = svg2.selectAll(".region2")
                 .data(topojson.feature(europe, europe.objects.regions).features);
 
         // code en cas de mise a jour de la carte / de changement de semaine
         carte2.attr("class", "update region2")
-                /*.filter(function (d) {
-                    return !isNaN(parseFloat(data[d.properties.NUTS_ID]));
-                })*/
+                .filter(function (d) {
+                    return !isNaN(parseFloat(dataMap2[d.properties.NUTS_ID]));
+                })
                 .style("stroke", "lightgrey")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
@@ -197,9 +163,9 @@
         // code pour la creation de la carte quand les donnees sont chargees la 1e fois.
         carte2.enter()
                 .append("path")
-                /*.filter(function (d) {
-                    return !isNaN(parseFloat(data[d.properties.NUTS_ID]));
-                })*/
+                .filter(function (d) {
+                    return !isNaN(parseFloat(dataMap2[d.properties.NUTS_ID]));
+                })
                 .attr("class", "enter region2")
                 .attr("d", path2)
                 .style("stroke", "#999")
@@ -237,26 +203,148 @@
          + "<br/> crimes: " + crimes;
          }*/
 
-        carte1.exit().remove();
         carte2.exit().remove();
-
     }
 
-    //TODO pas statique
-    var NH3 = [];
-    var NMVOC = [];
-    var NOX = [];
-    var PM10 = [];
-    var PM2_5 = [];
-    var SOX = [];
+    function drawMap1(year,data1,europe){
+        //pollution
+        dataMap1 = {};
+        dataRange = [];
+        data1.forEach(function (d) {
+            //if (d.unit === 'T' && d.airpol === 'NH3' && d.airsect ==='SE1_CIH') {
+            if (d["geo"] !== 'EU28'){
+                dataMap1[d["geo"]] = d[year];
+                dataRange.push(d[year]);
+            }
+            //}
+        });
 
-    function processData(error,pollution,density, pesticides, europe) {
+        min1 = d3.min(dataRange, function(d) { return parseFloat(d);});
+        max1 = d3.max(dataRange, function(d) { return parseFloat(d);});
+        color1.domain([min1,max1]);
+
+        var carte1 = svg1.selectAll(".region1")
+                .data(topojson.feature(europe, europe.objects.regions).features);
+
+        // code en cas de mise a jour de la carte / de changement d'annee
+        carte1.attr("class", "update region1")
+                .filter(function (d) {
+                    return !isNaN(parseFloat(dataMap1[d.properties.NUTS_ID]));
+                })
+                .style("stroke", "#999")
+                .style("stroke-width", 0.2)
+                .style("fill", function (d) {
+                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
+                        return color1(dataMap1[d.properties.NUTS_ID]);
+
+                    else
+                        return "lightgrey";
+                })
+                .style("opacity", function (d) {
+                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
+                        return 1;
+                    else
+                        return 0;
+                });
+
+        // code pour la creation de la carte quand les donnees sont chargees la 1e fois.
+        carte1.enter()
+                .append("path")
+                .filter(function (d) {
+                    return !isNaN(parseFloat(dataMap1[d.properties.NUTS_ID]));
+                })
+                .attr("class", "enter region1")
+                .attr("d", path1)
+                .style("stroke", "#999")
+                .style("stroke-width", 0.2)
+                .style("fill", function (d) {
+                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
+                        return color1(dataMap1[d.properties.NUTS_ID]);
+                    else
+                        return "lightgrey";
+                })
+                .style("opacity", function (d) {
+                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
+                        return 1;
+                    else
+                        return 0;
+                });
+        /*.on('mousemove', function(d) {
+         fillTooltip(d, currentWeek);
+         })
+         .on('mouseout', function() {
+         tooltip.classed('hidden', true);
+         });*/
+        carte1.exit().remove();
+    }
+
+    function updateMap1(year, pollutions, europe) {
+        var pollution = createPolData(pollutions);
+        drawMap1(year, pollution,europe);
+    }
+
+    function updateMap2(year, data, europe) {
+        drawMap2(year, data,europe);
+    }
+
+    function createPolData(pollutions){
+        var choice;
+        d3.selectAll(".radiopol").each(function(d){
+            rb = d3.select(this);
+            if(rb.property("checked")){
+                choice= rb.property("value");
+            }
+        });
+        var pollution = pollutions.filter(function(d,i){return d.airpol === choice});
+        return pollution;
+    }
+
+    var pollutants = [];
+
+    function processData(error,pollutions,density, pesticides, europe) {
 
         if (error) throw error;
 
+        /********************* le slider des années **********************/
         var year = d3.select("#slider")[0][0].value;
+        curYear=year;
         d3.select('#year').html(year);
-        drawMaps(year, pollution, density, pesticides, europe);
+        /*************** On créé la liste des polluants *******************/
+        var idx =0;
+        pollutions.forEach(function(p){
+           if (!pollutants.includes(p.airpol)) {
+               var state = false;
+               if (idx===0)
+                   state = true;
+               pollutants.push(p.airpol);
+           }
+        });
+
+        /********************* le div des polluants **********************/
+        var fieldset = d3.select("#pollutiondiv").append("form");
+        fieldset.append("legend").html("<h4>Choix polluant</h4>");
+        var radioSpan = fieldset.selectAll(".radio").data(pollutants);
+
+        radioSpan.enter().append("span")
+                .attr("class", "radio");
+
+        radioSpan.append("input")
+                .attr({
+                    type: "radio",
+                    name: "pol",
+                    class : "radiopol",
+                    id : function(d,i) { return 'polradio' + i;}
+                })
+                .property({
+                    checked: function(d,i) { return (i ===0); },
+                    value: function(d) { return d }
+                });
+        radioSpan.append("label")
+                .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
+
+
+        /****** On récupère la liste pollution en fonction du polluant (radio bouton) choisi *******/
+        var pollution = createPolData(pollutions);
 
         title1.attr("x", 350)
                 .attr("y", 25)
@@ -270,8 +358,54 @@
 
         //color.domain([0, d3.max(data, function(d) { return parseFloat(d["somme2014"]);})]);
         d3.select("#slider").on("input", function() {
-            updateViz(this.value, pollution, density, pesticides, europe);
+            updateViz(this.value, pollution, density, europe);
         });
+
+        d3.selectAll("input[type=radio][name=pol]")
+                .on("change", function() {
+                    var elem = d3.select(this);
+                    var pol = elem.property("value");
+                    pollution = createPolData(pollutions);
+                    var year = d3.select("#slider")[0][0].value;
+                    updateMap1(year, pollution, europe);
+                    //updateDaySelection();
+                    //renderAll();
+                });
+
+        d3.selectAll("input[type=radio][name=mesure]")
+                .on("change", function() {
+                    var elem = d3.select(this);
+                    var mesure = elem.property("value");
+                    //s
+                    var year = d3.select("#slider")[0][0].value;
+                    var dataMap2 = [];
+                    switch (mesure) {
+                        case "auto":
+                            dataMap2=density;
+                            break;
+                        case "prod":
+                            dataMap2=density;
+                            break;
+                        case "charb":
+                            dataMap2=density;
+                            break;
+                        case "dens":
+                            dataMap2=density;
+                            break;
+                        case "todo":
+                            dataMap2=density;
+                            break;
+                        case "pest":
+                            console.log("pesticide");
+                            dataMap2=pesticides;
+                            break;
+                    }
+                    updateMap2(year, dataMap2, europe);
+                });
+
+        drawMap1(year, pollution,  europe);
+        drawMap2(year, density,  europe);
+
     }
 
     queue()   // permet de charger les fichiers de manière asynchrone
@@ -284,36 +418,27 @@
 
 </script>
 
+<!----------- SLIDER DES ANNEES (TODO mettre en dynamique les années) ------------->
 <div id="yeardiv">
     <h4>Année</h4>
     <input id="slider" type="range" value="2000" min="1990" max="2014" step="1" />
     <span id="year"></span>
 </div>
 
-<div id="pollutiondiv">
-    <!--TODO passer en pas statique avec jquery?-->
-    <h4>Choix polluant</h4>
-    <ul>
-        <li><input type="checkbox" id="polcheck1"> NH3</li>
-        <li><input type="checkbox" id="polcheck2"> NMVOC</li>
-        <li><input type="checkbox" id="polcheck3"> NOX</li>
-        <li><input type="checkbox" id="polcheck4"> PM10</li>
-        <li><input type="checkbox" id="polcheck5"> PM2_5</li>
-        <li><input type="checkbox" id="polcheck6"> SOX</li>
-    </ul>
-</div>
 
+<!--------------- RADIOLIST POLLUANTS ------------------>
+<div id="pollutiondiv"></div>
+
+<!--------------- RADIOLIST POLLUANTS ------------------>
 <div id="mesurediv">
-    <!--TODO passer en pas statique avec jquery?-->
+    <!--TODO passer en dynamique-->
     <h4>Choix mesure</h4>
-    <ul>
-        <li><input type="checkbox" id="polmesure1"> Densité Population</li>
-        <li><input type="checkbox" id="polmesure2"> Production electricite</li>
-        <li><input type="checkbox" id="polmesure3"> Parc auto</li>
-        <li><input type="checkbox" id="polmesure4"> Production charbon</li>
-        <li><input type="checkbox" id="polmesure5"> Vente pesticide</li>
-        <li><input type="checkbox" id="polmesure6"> TODO</li>
-    </ul>
+    <input type="radio" name="mesure" value = "dens" id="polmesure1" checked> Densité Population <br>
+    <input type="radio" name="mesure" value = "prod"  id="polmesure2"> Production electricite <br>
+    <input type="radio" name="mesure" value = "auto" id="polmesure3"> Parc auto <br>
+    <input type="radio" name="mesure" value = "charb" id="polmesure4"> Production charbon <br>
+    <input type="radio" name="mesure" value = "pest" id="polmesure5"> Vente pesticide <br>
+    <input type="radio" name="mesure" value = "todo" id="polmesure6"> TODO
 </div>
 
 
