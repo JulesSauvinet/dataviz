@@ -5,8 +5,8 @@
 
     body{height : 800px;width:1550px;}
 
-    #mapleft{width: 600px; position:absolute; left : 75px; top:100px;}
-    #mapright{width: 600px; position:absolute; left : 725px; top:100px;}
+    #mapleft{width: 600px; position:absolute; left : 125px; top:100px;}
+    #mapright{width: 600px; position:absolute; left : 775px; top:100px;}
 
     .titlemap{
         font-size: 20px;
@@ -21,7 +21,25 @@
     #yeardiv {
         position: absolute;
         left :25px;
+        border:1pt solid black;
         top :40px;
+        padding: 4px;
+    }
+
+    #pollutiondiv{
+        position: absolute;
+        left :25px;
+        border:1pt solid black;
+        top :150px;
+        padding: 4px;
+    }
+
+    #mesurediv{
+        position: absolute;
+        left :725px;
+        border:1pt solid black;
+        top :150px;
+        padding: 4px;
     }
 
     .background {
@@ -48,21 +66,21 @@
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src="https://d3js.org/queue.v1.min.js"></script>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style2.css">
 <link rel="stylesheet" href="css/github-light.css">
 <!--script type="text/javascript" src="js/tooltip.js"></script-->
-
+<!--TODO CHANGER LE STYLE (creer un style adapté), et LES POSITION SONT TOUTES EN ABSOLUES DONC PASSER EN RELATIF -->
 <script>
     var width = 1550,
             height = 800;
 
     //Map de gauche
-    var projection1 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([300 , 330]);
+    var projection1 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([350 , 330]);
     var path1 = d3.geo.path().projection(projection1);
     var svg1 = d3.select("#mapleft").append("svg").attr("width", 600).attr("height", 500);
 
     //Map de droite
-    var projection2 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([300 , 330]);
+    var projection2 = d3.geo.stereographic().center([3.9,43.0]).scale(900).translate([350 , 330]);
     var path2 = d3.geo.path().projection(projection2);
     var svg2 = d3.select("#mapright").append("svg").attr("width", 600).attr("height", 500);
 
@@ -219,12 +237,12 @@
         d3.select('#year').html(year);
         drawMaps(year, density, europe);
 
-        title1.attr("x", 300)
+        title1.attr("x", 350)
                 .attr("y", 25)
                 .attr("class", "titlemap")
                 .text("Pollution");
 
-        title2.attr("x", 300)
+        title2.attr("x", 350)
                 .attr("y", 25)
                 .attr("class", "titlemap")
                 .text("Density");
@@ -248,5 +266,31 @@
     <input id="slider" type="range" value="2014" min="1990" max="2014" step="1" />
     <span id="year"></span>
 </div>
+
+<div id="pollutiondiv">
+    <!--TODO passer en pas statique avec jquery?-->
+    <h4>Choix polluant</h4>
+    <ul>
+        <li><input type="checkbox" id="polcheck1"> Ammoniac</li>
+        <li><input type="checkbox" id="polcheck2"> Dioxyde d'Azote</li>
+        <li><input type="checkbox" id="polcheck3"> Monoxyde de Carbone</li>
+        <li><input type="checkbox" id="polcheck4"> Plomb</li>
+        <li><input type="checkbox" id="polcheck5"> TODO</li>
+    </ul>
+</div>
+
+<div id="mesurediv">
+    <!--TODO passer en pas statique avec jquery?-->
+    <h4>Choix mesure</h4>
+    <ul>
+        <li><input type="checkbox" id="polmesure1"> Densité Population</li>
+        <li><input type="checkbox" id="polmesure2"> Production electricite</li>
+        <li><input type="checkbox" id="polmesure3"> Parc auto</li>
+        <li><input type="checkbox" id="polmesure4"> Production charbon</li>
+        <li><input type="checkbox" id="polmesure5"> Vente pesticide</li>
+        <li><input type="checkbox" id="polmesure6"> TODO</li>
+    </ul>
+</div>
+
 
 <footer>Source: <a href="http://http://ec.europa.eu/eurostat/data/database">eurostat</a></footer>
