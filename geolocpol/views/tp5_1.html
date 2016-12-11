@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://d3js.org/queue.v1.min.js"></script>
+  <style>
+      body { margin:0;position:fixed;top:0;right:0;bottom:0;left:0; }
+        .regions {
+            stroke: #fff;
+            stroke-width: 2px;
+        }
+        .regions:hover {
+            fill: #666;
+        }
+        .hidden {
+            display: none;
+        }
+        .enter {
+            /*fill: green;*/
+          }
+
+        .update {
+          /*fill: #333;*/
+        }
+        div.tooltip {
+            color: #222;
+            background-color: #fff;
+            padding: .5em;
+            text-shadow: #f5f5f5 0 1px 0;
+            border-radius: 2px;
+            opacity: 0.9;
+            position: absolute;
+        }
+        #weekdiv {
+            position: absolute;
+            left :25px;
+            top :40px;
+        }
+
+      .axis path,
+      .axis line {
+          fill: none;
+          stroke: none;
+      }
+
+      .axis text {
+          font-size: 12px;
+          fill: #AAAAAA;
+          font-weight: 400;
+      }
+      .legendTitle {
+          font-size: 14px;
+          fill: #4F4F4F;
+          font-weight: 300;
+      }
+
+  </style>
+</head>
+
+<body>
+  <script>
+    var width = 700,
+        height = 580;
+
+    var svg = d3.select( "body" )
+      .append( "svg" )
+      .attr( "width", width )
+      .attr( "height", height );
+
+    var projection = d3.geo.conicConformal().center([2.454071, 46.279229]).scale(3000)
+          .translate([width/2, height/2]);
+
+    var path = d3.geo.path()
+                 .projection(projection);
+
+    var color = d3.scale.linear()
+      .interpolate(d3.interpolateHcl)
+      .range(["rgb(237,248,233)", "rgb(0,109,44)"]);
+
+	/*var color = d3.scale.quantize()  
+	    			.range(["rgb(237,248,233)",
+					  "rgb(186,228,179)",
+	                  "rgb(116,196,118)",
+	                  "rgb(49,163,84)",
+	                  "rgb(0,109,44)"]);*/
+    var color = d3.scale.linear()
+      .interpolate(d3.interpolateHcl)
+      .range(['rgb(204,255,204)', 'rgb(0,102,0)']);
+
+    var tooltip = d3.select('body').append('div')
+                .attr('class', 'hidden tooltip');
+
+ 	var weeks = [];
+
+
+	 function fillTooltip(d, currentWeek){
+      var mouse = d3.mouse(svg.node()).map(function(d) {
+          return parseInt(d);
+      });
+      var toDisplay =  d.properties.nom + " : </br>"
+
+      if (d.properties.grippe){
+       if (!d.properties.grippe[currentWeek])
+         toDisplay+="Cas de grippe la semaine du " + weeks[currentWeek] + " : " + "Non défini";
+       else 
+      	 toDisplay+= "Cas de grippe la semaine du " + weeks[currentWeek] + " : " + d.properties.grippe[currentWeek+1];
+      }
+      else {
+         toDisplay+="Pas de données sur la grippe pour cette région";
+      }
+        
+      tooltip.classed('hidden', false)
+          .attr('style', 'left:' + (mouse[0] + 15) +
+                  'px; top:' + (mouse[1] - 35) + 'px')
+          .html(toDisplay);
+	 }
+
+	 function fillRegions(d, currentWeek){
+	 	if (d.properties.grippe){
+            	if (d.properties.grippe[currentWeek+1]){
+	                var value = parseFloat(d.properties.grippe[currentWeek+1]);
+	                return color(value);
+            	}
+                else{
+            		return 'lightgrey';
+                } 
+            }
+        else {
+        	return 'lightgrey';
+        }
+	 }
+
+ 	function updateViz(value, data){
+		/*color.domain([d3.min(grippedata, function(d) { return parseFloat(d[weeks[value]]);}), d3.max(grippedata, function(d) { return parseFloat(d[weeks[value]]);})]);*/
+		d3.select('#week').html(weeks[value-1]);
+		drawMap(value-1, data);
+	}
+
+	function drawMap(currentWeek, regions) {
+
+	  var carte = svg.selectAll("path")
+	    .data(regions.features);
+
+	  // code en cas de mise a jour de la carte / de changement de semaine
+	  carte.attr("class", "update regions")
+	    .style("fill", function(d) {
+          	var color = fillRegions(d,currentWeek);
+          	return color;
+          }).on('mousemove', function(d) {
+          	  fillTooltip(d, currentWeek);
+          })
+          .on('mouseout', function() {
+              tooltip.classed('hidden', true);
+          });
+
+	  // code pour la creation de la carte quand les donnees sont chargees la 1e fois.
+	  carte.enter()
+          .append("path")
+          .attr("class", function(d,i){
+              return "enter regions";
+          })
+          .attr("d", path)
+          .style("fill", function(d) {
+          	var color = fillRegions(d,currentWeek);
+          	return color;
+          })
+           .style("stroke", "black")
+           .style("stroke-width", "1px")
+           .on('mousemove', function(d) {
+              fillTooltip(d, currentWeek);
+          })
+          .on('mouseout', function() {
+              tooltip.classed('hidden', true);
+          });
+
+      carte.exit().remove();
+	}
+
+
+     function processData(error,regionsdata,grippedata) {
+
+     	var nbweeks=0;
+     	var i =0;
+		for (var week in grippedata[0]) {
+		 	 if (week !== "regions" && week !== "somme2014"){
+		     	weeks.push(week);
+		     	nbweeks++;
+			 }
+		     i++;
+		}
+		d3.select('#slider').attr("max", nbweeks);
+		d3.select('#week').html(weeks[0]);
+
+		//On fusionne les donnees avec le GeoJSON
+		for (var i = 0; i < grippedata.length; i++) {
+			for (var j = 0; j < regionsdata.features.length; j++) {
+				if (regionsdata.features[j].properties.nom === grippedata[i].regions){
+				  regionsdata.features[j].properties.grippe = Object.values(grippedata[i]);
+				}
+			}
+		}
+
+		var min=Number.MAX_VALUE;
+		var max=0;
+
+		for (var i = 0; i < grippedata.length; i++) {
+			for (var week in grippedata[i]) {
+				 if (week !== "regions" && week !== "somme2014"){
+				 	var grippeUnit = parseInt(grippedata[i][week]);
+				 	if (grippeUnit <min){
+				 		min = grippeUnit;
+				 	}
+				 	if (grippeUnit >max){
+				 		max = grippeUnit;
+				 	}
+				 }
+			}
+		}
+
+		color.domain([min, max]);
+
+		drawMap(1, regionsdata);
+		//color.domain([0, d3.max(data, function(d) { return parseFloat(d["somme2014"]);})]);
+		d3.select("#slider").on("input", function() {
+			updateViz(+this.value, regionsdata);
+		});
+
+		var legend = svg.append("g")
+					      .attr("class", "legend")
+					      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+		// draw grey color rectangle for not defined values
+		legend.append("rect").attr("x", 30).attr("y", height-95).attr("width", 18).attr("height", 18).style("fill",'lightgrey');
+		// append rectangle legend text
+		legend.append("text") .attr("x", 80).attr("y", height-86).attr("dy", ".35em").style("text-anchor", "end").text("ND");
+
+		//construct the gradient for the color legend
+	    var defs = svg.append("defs");
+
+		var linearGradient = defs.append("linearGradient")
+								 .attr("id", "linear-gradient")
+								 .attr("x1", "0%")
+							     .attr("y1", "0%")
+							     .attr("x2", "100%")
+							     .attr("y2", "0%");
+
+		linearGradient.append("stop") 
+		    .attr("offset", "0%")   
+		    .attr("stop-color", color(min)); //light green
+
+		linearGradient.append("stop") 
+		    .attr("offset", "100%")   
+		    .attr("stop-color", color(max)); //dark green
+
+		//draw the gradient rectangle
+		var gradientWidth = 140;
+		legend.append("rect")
+			.attr("class", "legendRect")
+			.attr("x", 30)
+			.attr("y", height-130)
+			.attr("rx", 8/2)
+			.attr("width", gradientWidth)
+			.attr("height", 10)
+			.style("fill", "url(#linear-gradient)");
+
+	
+		var xScale = d3.scale.linear()
+			 .range([30, 30+gradientWidth])
+			 .domain([min,max] );
+
+		//Define x-axis
+		var xAxis = d3.svg.axis()
+			  .orient("bottom")
+			  .ticks(3)
+			  .tickFormat(function(d) { console.log(d);return d; })
+			  .scale(xScale);
+
+		//Set up X axis
+		legend.append("g")
+			.attr("class", "axis")
+			.attr("transform", "translate(5," + (height-125) + ")")
+			.call(xAxis);
+		
+		//Append title
+		legend.append("text")
+			.attr("class", "legendTitle")
+			.attr("x", 100)
+			.attr("y", height-140)
+			.style("text-anchor", "middle")
+			.text("Cas de grippe");
+
+	}
+		   
+
+	queue()   // permet de charger les fichiers de manière asynchrone
+	  .defer(d3.json, "geodata/fr/regions.json")
+	  .defer(d3.csv, "data/tps/GrippeFrance2003-15.csv")
+	  .await(processData);  
+  
+  </script>
+
+  <div id="weekdiv">
+  	<input id="slider" type="range" value="1" min="1" max="100" step="1" />
+  	<span id="week"></span>
+  </div>
+
+</body>

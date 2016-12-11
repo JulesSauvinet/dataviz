@@ -27,8 +27,17 @@ router.get('/vizu6', function(req, res) {
 router.get('/vizu7', function(req, res) {
   res.render('vizu7.html');
 });
+router.get('/vizu8', function(req, res) {
+  res.render('tp5_1.html');
+});
+router.get('/vizu9', function(req, res) {
+  res.render('vizu8.html');
+});
 router.get('/tp4', function(req, res) {
   res.render('tp4_1.html');
+});
+router.get('/vizu10', function(req, res) {
+  res.render('tp6.html');
 });
 
 module.exports = router;

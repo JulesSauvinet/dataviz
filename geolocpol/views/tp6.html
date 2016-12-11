@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 11px;}
+
+.links line {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.nodes circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+</style>
+
+<svg width="960" height="600"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/queue.v1.min.js"></script>
+<script>
+
+var svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height");
+
+var color = d3.scaleOrdinal()
+      			.domain(0,12)
+      			.range(["pink","lightblue", "orange" ,"green" ,"red", "blue" ,"black" ,"steelblue", "purple" , "yellow","brown","grey","cyan"]);
+
+var simulation = d3.forceSimulation()
+    .force("link", d3.forceLink().id(function(d) { return d.id;/*d.uid['#text'];*/ }))
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(width / 2, height / 2));
+
+var votesConjoints = {};
+var scrutinsByVotants = [];
+
+function processData(error,scrutins, actors){
+      if (error) throw error;
+
+	  var acteurNameMap = {};
+	  var groupNameMap = {};
+
+      var acteurs = actors.export.acteurs.acteur;
+	  var organes = actors.export.organes.organe;
+      acteurs.forEach(function(a){
+        acteurNameMap[a.uid["#text"]]= a.etatCivil.ident.prenom + " " + a.etatCivil.ident.nom;
+      });
+      organes.forEach(function(o){
+        groupNameMap[o.uid]= o.libelle;
+      });
+
+      var nbGroup = 0;
+      var groupMap = {};
+      groupMap["none"] = nbGroup;
+      nbGroup++; 
+
+      var nodesActeurs = [];
+      var acteursId = [];
+
+      scrutins = scrutins.scrutins.scrutin;
+
+      for (var i = 0; i < scrutins.length; i++) {
+          var scrutin = {};
+          scrutin["pour"]=[];
+          scrutin["contre"]=[];   
+          scrutin["nonVotant"]=[];
+          scrutin["abstention"]=[];
+
+          scrutins[i].ventilationVotes.organe.groupes.groupe.forEach(function(groupe){
+            var vote = groupe.vote.decompteNominatif;
+            var groupId = groupe.organeRef;
+            if (!groupMap[groupId]){
+              groupMap[groupId] = nbGroup;
+              nbGroup++;
+            }
+
+            var abstentions = vote.abstentions;
+            var contres     = vote.contres;
+            var nonVotants  = vote.nonVotants;
+            var pours       = vote.pours;
+
+            if (abstentions){
+              if (abstentions.votant){
+                if( Object.prototype.toString.call( abstentions.votant ) === '[object Array]' ) {
+                  abstentions.votant.forEach(function(votant){
+                      scrutin["abstention"].push(votant.acteurRef);
+
+                      if (!acteursId.includes(votant.acteurRef)){
+                      	acteursId.push(votant.acteurRef);
+                        nodesActeurs.push({id : votant.acteurRef, groupNum : groupMap[groupId], groupId : groupId});
+                      }
+
+                  });
+                }
+                else{
+                    scrutin["abstention"].push(abstentions.votant.acteurRef);
+
+                    if (!acteursId.includes(abstentions.votant.acteurRef)){
+                      	acteursId.push(abstentions.votant.acteurRef);
+                        nodesActeurs.push({id : abstentions.votant.acteurRef, groupNum : groupMap[groupId], groupId : groupId});
+                    }
+
+                }
+              }
+            }
+            if (contres){
+              if (contres.votant){ 
+                if( Object.prototype.toString.call( contres.votant ) === '[object Array]' ) {
+                  contres.votant.forEach(function(votant){
+                      scrutin["contre"].push(votant.acteurRef);
+                      
+	                    if (!acteursId.includes(votant.acteurRef)){
+	                      	acteursId.push(votant.acteurRef);
+                        	nodesActeurs.push({id : votant.acteurRef, groupNum : groupMap[groupId], groupId : groupId});
+                        }
+                  });
+                }
+                else{
+                      scrutin["contre"].push(contres.votant.acteurRef);
+	                  if (!acteursId.includes(contres.votant.acteurRef)){
+	                      	acteursId.push(contres.votant.acteurRef);
+                        	nodesActeurs.push({id : contres.votant.acteurRef, groupNum : groupMap[groupId], groupId : groupId});
+                        }
+                }
+              }
+            }
+            if (nonVotants){
+              if (nonVotants.votant){
+                if( Object.prototype.toString.call( nonVotants.votant ) === '[object Array]' ) {
+                  	nonVotants.votant.forEach(function(votant){
+
+                      	scrutin["nonVotant"].push(votant.acteurRef);
+                      
+	                    if (!acteursId.includes(votant.acteurRef)){
+	                      	acteursId.push(votant.acteurRef);
+                        	nodesActeurs.push({id : votant.acteurRef, groupNum : groupMap[groupId], groupId : groupId});
+                    	}
+                  });
+                }
+                else {
+          			scrutin["nonVotant"].push(nonVotants.votant.acteurRef);
+	                  if (!acteursId.includes(nonVotants.votant.acteurRef)){
+	                      	acteursId.push(nonVotants.votant.acteurRef);
+                   			nodesActeurs.push({id : nonVotants.votant.acteurRef, groupNum : groupMap[groupId], groupId : groupId});
+                    }
+                }
+              }
+            }
+            if (pours){
+              if (pours.votant){ 
+                if( Object.prototype.toString.call( pours.votant ) === '[object Array]' ) {
+                 pours.votant.forEach(function(votant){
+                      scrutin["pour"].push(votant.acteurRef);
+	                    if (!acteursId.includes(votant.acteurRef)){
+	                      	acteursId.push(votant.acteurRef);
+                        	nodesActeurs.push({id : votant.acteurRef, groupNum : groupMap[groupId], groupId : groupId});
+                        }
+                 });
+                }
+                else{
+                   scrutin["pour"].push(pours.votant.acteurRef);
+                    
+	                  if (!acteursId.includes(pours.votant.acteurRef)){
+                      	acteursId.push(pours.votant.acteurRef);
+                  		nodesActeurs.push({id : pours.votant.acteurRef, groupNum : groupMap[groupId], groupId : groupId});
+                  	}
+                }
+              }
+            }
+          });
+          scrutinsByVotants.push(scrutin);
+      }
+
+      scrutinsByVotants.forEach(function(s){
+
+        var pours       = s.pour;
+        var contres     = s.contre;
+        //var nonVotants  = s.nonVotants;
+        //var abstentions = s.abstention;
+
+        //votes pours
+        for (var i = 0; i < pours.length-1; i++) {
+          for (var j = i+1; j < pours.length; j++) {
+            var key = pours[i] + "_" + pours[j];
+            if (!votesConjoints[key]) 
+              votesConjoints[key]=1;
+            else
+              votesConjoints[key]+=1;
+          }
+        }
+
+        //votes contre
+        for (var i = 0; i < contres.length-1; i++) {
+          for (var j = i+1; j < contres.length; j++) {
+            var key = contres[i] + "_" + contres[j];
+            if (!votesConjoints[key]) 
+              votesConjoints[key]=1;
+            else
+              votesConjoints[key]+=1;
+          }
+        }
+      });
+
+      var votesLinks = Object.keys(votesConjoints).map(function (key) { 
+        return {source : key.split("_")[0], target : key.split("_")[1],  value : votesConjoints[key]}; 
+      });
+
+      var min = 10;
+      function isConnectedEnough(link) {
+        return link.value >= min;
+      }
+
+      var votesFiltered = votesLinks.filter(isConnectedEnough);
+      console.log("Nombre d'arcs du graphe : " + votesFiltered.length);
+
+      var strokeDomain = d3.scaleLinear()
+                .range([1, 2])
+                .domain([min, 941]);
+
+
+      //les liens
+      var link = svg.append("g")
+        .attr("class", "links")
+        .selectAll("line")
+        .data(votesFiltered)
+        .enter().append("line")
+        .attr("stroke-width", function(d) { return strokeDomain(d.value);})
+
+      //les noeuds
+      var node = svg.append("g")
+          .attr("class", "nodes")
+        .selectAll("circle")
+        .data(nodesActeurs)
+        .enter().append("circle")
+          .attr("r", 5)
+          .attr("fill", function(d) { return color(d.groupNum);})
+          .call(d3.drag()
+              .on("start", dragstarted)
+              .on("drag", dragged)
+              .on("end", dragended));
+
+      node.append("title")
+          .text(function(d) { return  acteurNameMap[d.id] +'\n'+ groupNameMap[d.groupId]; });
+
+      simulation
+          .nodes(nodesActeurs)
+          .on("tick", ticked);
+
+      simulation.force("link")
+          .links(votesFiltered);
+
+      function ticked() {
+        link
+            .attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+
+        node
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+      }
+
+	  // La légende
+	  var legend = svg.selectAll(".legend")
+	      .data(color.domain())
+	      .enter().append("g")
+	      .attr("class", "legend")
+	      .attr("transform", function(d, i) { return "translate("+(30) +"," + ((height - 200) +i * 15) + ")"; });
+
+	  // draw legend colored circles
+	  legend.append("circle")
+          .attr("r", 5)
+          .attr("fill", function(d,i) { return color(d);})
+	      .attr("x", 40);
+
+	  // draw legend text
+	  legend.append("text")
+	      .attr("x", 15)
+	      .attr("dy", ".35em")
+	      .text(function(d) { 
+	      	var i =0;
+	      	for (var gr in groupMap){
+	      		if (d===i){
+	      			return groupNameMap[gr];
+	      		}
+	      		i++;
+	      	}
+	      })
+}
+
+
+
+function dragstarted(d) {
+  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
+
+function dragged(d) {
+  d.fx = d3.event.x;
+  d.fy = d3.event.y;
+}
+
+function dragended(d) {
+  if (!d3.event.active) simulation.alphaTarget(0);
+  d.fx = null;
+  d.fy = null;
+}
+
+queue()   // permet de charger les fichiers de manière asynchrone
+  .defer(d3.json, "data/tps/scrutins.json")
+  .defer(d3.json,"data/tps/acteurs_simple2.json")
+  .await(processData);  
+
+</script>
