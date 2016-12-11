@@ -73,6 +73,8 @@
 <script>
 
     //TODO GERER LES SCALES DE COLOR
+    //TODO GERER LES VALEURS MANQUANTES
+
 
     var width = 1550,
             height = 800;
@@ -87,32 +89,31 @@
     var path2 = d3.geo.path().projection(projection2);
     var svg2 = d3.select("#mapright").append("svg").attr("width", 600).attr("height", 500);
 
-    var color1 = d3.scale.linear().domain([0,100]).range(['yellow', 'red']);
+    var color1 = d3.scale.linear().domain([0,40000]).range(['yellow', 'red']);
     var color2 = d3.scale.linear().domain([0,100]).range(['lightgreen', 'darkgreen']);
 
     var title1 = /*d3.select("#mapleft")*/svg1.append("text");
     var title2 = /*d3.select("#mapright")*/svg2.append("text");
 
-    function updateViz(year, data1, data2, europe){
+    function updateViz(year, data1, data2, data3, europe){
         /*color.domain([d3.min(grippedata, function(d) { return parseFloat(d[weeks[value]]);}), d3.max(grippedata, function(d) { return parseFloat(d[weeks[value]]);})]);*/
         d3.select('#year').html(year);
-        drawMaps(year, data1, data2, europe);
+        drawMaps(year, data1, data2, data3, europe);
     }
 
-    function drawMaps(year, data1, data2, europe) {
+    function drawMaps(year, data1, data2, data3, europe) {
 
+        //pollution
         dataMap1 = {};
-
         data1.forEach(function (d) {
             //if (d.unit === 'T' && d.airpol === 'NH3' && d.airsect ==='SE1_CIH') {
             dataMap1[d["geo"]] = d[year];
             //}
         });
 
+        //densité
         dataMap2 = {};
-
         data2.forEach(function (d) {
-            console.log(d);
             //if (d.unit === 'T' && d.airpol === 'NH3' && d.airsect ==='SE1_CIH') {
             dataMap2[d["geo"]] = d[year];
             //}
@@ -130,9 +131,9 @@
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
                     if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
-                        return color1(100000 * dataMap1[d.properties.NUTS_ID] / d.properties.POPULATION);
+                        return color1(dataMap1[d.properties.NUTS_ID]);
                     else
-                        return "#999";
+                        return "lightgrey";
                 })
                 .style("opacity", function (d) {
                     if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
@@ -155,7 +156,7 @@
                     if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
                         return color1(100000 * dataMap1[d.properties.NUTS_ID] / d.properties.POPULATION);
                     else
-                        return "#999";
+                        return "lightgrey";
                 })
                 .style("opacity", function (d) {
                     if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
@@ -178,13 +179,13 @@
                 /*.filter(function (d) {
                     return !isNaN(parseFloat(data[d.properties.NUTS_ID]));
                 })*/
-                .style("stroke", "#999")
+                .style("stroke", "lightgrey")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
                     if (!isNaN(parseFloat(dataMap2[d.properties.NUTS_ID])))
                         return color2(100000 * dataMap2[d.properties.NUTS_ID] / d.properties.POPULATION);
                     else
-                        return "#999";
+                        return "lightgrey";
                 })
                 .style("opacity", function (d) {
                     if (!isNaN(parseFloat(dataMap2[d.properties.NUTS_ID])))
@@ -241,13 +242,21 @@
 
     }
 
-    function processData(error,density, pesticides, europe) {
+    //TODO pas statique
+    var NH3 = [];
+    var NMVOC = [];
+    var NOX = [];
+    var PM10 = [];
+    var PM2_5 = [];
+    var SOX = [];
+
+    function processData(error,pollution,density, pesticides, europe) {
 
         if (error) throw error;
 
         var year = d3.select("#slider")[0][0].value;
         d3.select('#year').html(year);
-        drawMaps(year, density, pesticides, europe);
+        drawMaps(year, pollution, density, pesticides, europe);
 
         title1.attr("x", 350)
                 .attr("y", 25)
@@ -261,11 +270,12 @@
 
         //color.domain([0, d3.max(data, function(d) { return parseFloat(d["somme2014"]);})]);
         d3.select("#slider").on("input", function() {
-            updateViz(this.value, density, pesticides, europe);
+            updateViz(this.value, pollution, density, pesticides, europe);
         });
     }
 
     queue()   // permet de charger les fichiers de manière asynchrone
+            .defer(d3.tsv, "data/eurostats/env_air_emission.tsv")
             .defer(d3.tsv, "data/eurostats/demo_r_d3dens.tsv")
             .defer(d3.tsv, "data/eurostats/pesticides_sales2.tsv")
             .defer(d3.json,"geodata/euro/eurotopo.json")
@@ -284,11 +294,12 @@
     <!--TODO passer en pas statique avec jquery?-->
     <h4>Choix polluant</h4>
     <ul>
-        <li><input type="checkbox" id="polcheck1"> Ammoniac</li>
-        <li><input type="checkbox" id="polcheck2"> Dioxyde d'Azote</li>
-        <li><input type="checkbox" id="polcheck3"> Monoxyde de Carbone</li>
-        <li><input type="checkbox" id="polcheck4"> Plomb</li>
-        <li><input type="checkbox" id="polcheck5"> TODO</li>
+        <li><input type="checkbox" id="polcheck1"> NH3</li>
+        <li><input type="checkbox" id="polcheck2"> NMVOC</li>
+        <li><input type="checkbox" id="polcheck3"> NOX</li>
+        <li><input type="checkbox" id="polcheck4"> PM10</li>
+        <li><input type="checkbox" id="polcheck5"> PM2_5</li>
+        <li><input type="checkbox" id="polcheck6"> SOX</li>
     </ul>
 </div>
 
