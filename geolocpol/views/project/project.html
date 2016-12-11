@@ -71,6 +71,9 @@
 <!--script type="text/javascript" src="js/tooltip.js"></script-->
 <!--TODO CHANGER LE STYLE (creer un style adapté), et LES POSITION SONT TOUTES EN ABSOLUES DONC PASSER EN RELATIF -->
 <script>
+
+    //TODO GERER LES SCALES DE COLOR
+
     var width = 1550,
             height = 800;
 
@@ -90,19 +93,28 @@
     var title1 = /*d3.select("#mapleft")*/svg1.append("text");
     var title2 = /*d3.select("#mapright")*/svg2.append("text");
 
-    function updateViz(year, stats, europe){
+    function updateViz(year, data1, data2, europe){
         /*color.domain([d3.min(grippedata, function(d) { return parseFloat(d[weeks[value]]);}), d3.max(grippedata, function(d) { return parseFloat(d[weeks[value]]);})]);*/
         d3.select('#year').html(year);
-        drawMaps(year, stats, europe);
+        drawMaps(year, data1, data2, europe);
     }
 
-    function drawMaps(year, stats, europe) {
+    function drawMaps(year, data1, data2, europe) {
 
-        data = {};
+        dataMap1 = {};
 
-        stats.forEach(function (d) {
+        data1.forEach(function (d) {
             //if (d.unit === 'T' && d.airpol === 'NH3' && d.airsect ==='SE1_CIH') {
-            data[d["geo"]] = d[year];
+            dataMap1[d["geo"]] = d[year];
+            //}
+        });
+
+        dataMap2 = {};
+
+        data2.forEach(function (d) {
+            console.log(d);
+            //if (d.unit === 'T' && d.airpol === 'NH3' && d.airsect ==='SE1_CIH') {
+            dataMap2[d["geo"]] = d[year];
             //}
         });
 
@@ -117,13 +129,13 @@
                 .style("stroke", "#999")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
-                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
-                        return color1(100000 * data[d.properties.NUTS_ID] / d.properties.POPULATION);
+                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
+                        return color1(100000 * dataMap1[d.properties.NUTS_ID] / d.properties.POPULATION);
                     else
                         return "#999";
                 })
                 .style("opacity", function (d) {
-                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
                         return 1;
                     else
                         return 0;
@@ -140,13 +152,13 @@
                 .style("stroke", "#999")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
-                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
-                        return color1(100000 * data[d.properties.NUTS_ID] / d.properties.POPULATION);
+                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
+                        return color1(100000 * dataMap1[d.properties.NUTS_ID] / d.properties.POPULATION);
                     else
                         return "#999";
                 })
                 .style("opacity", function (d) {
-                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
                         return 1;
                     else
                         return 0;
@@ -169,13 +181,13 @@
                 .style("stroke", "#999")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
-                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
-                        return color2(100000 * data[d.properties.NUTS_ID] / d.properties.POPULATION);
+                    if (!isNaN(parseFloat(dataMap2[d.properties.NUTS_ID])))
+                        return color2(100000 * dataMap2[d.properties.NUTS_ID] / d.properties.POPULATION);
                     else
                         return "#999";
                 })
                 .style("opacity", function (d) {
-                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                    if (!isNaN(parseFloat(dataMap2[d.properties.NUTS_ID])))
                         return 1;
                     else
                         return 0;
@@ -192,13 +204,13 @@
                 .style("stroke", "#999")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
-                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
-                        return color2(100000 * data[d.properties.NUTS_ID] / d.properties.POPULATION);
+                    if (!isNaN(parseFloat(dataMap2[d.properties.NUTS_ID])))
+                        return color2(100000 * dataMap2[d.properties.NUTS_ID] / d.properties.POPULATION);
                     else
                         return "#999";
                 })
                 .style("opacity", function (d) {
-                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                    if (!isNaN(parseFloat(dataMap2[d.properties.NUTS_ID])))
                         return 1;
                     else
                         return 0;
@@ -229,13 +241,13 @@
 
     }
 
-    function processData(error,density, europe) {
+    function processData(error,density, pesticides, europe) {
 
         if (error) throw error;
 
         var year = d3.select("#slider")[0][0].value;
         d3.select('#year').html(year);
-        drawMaps(year, density, europe);
+        drawMaps(year, density, pesticides, europe);
 
         title1.attr("x", 350)
                 .attr("y", 25)
@@ -249,12 +261,13 @@
 
         //color.domain([0, d3.max(data, function(d) { return parseFloat(d["somme2014"]);})]);
         d3.select("#slider").on("input", function() {
-            updateViz(this.value, density, europe);
+            updateViz(this.value, density, pesticides, europe);
         });
     }
 
     queue()   // permet de charger les fichiers de manière asynchrone
             .defer(d3.tsv, "data/eurostats/demo_r_d3dens.tsv")
+            .defer(d3.tsv, "data/eurostats/pesticides_sales2.tsv")
             .defer(d3.json,"geodata/euro/eurotopo.json")
             .await(processData);
 
@@ -263,7 +276,7 @@
 
 <div id="yeardiv">
     <h4>Année</h4>
-    <input id="slider" type="range" value="2014" min="1990" max="2014" step="1" />
+    <input id="slider" type="range" value="2000" min="1990" max="2014" step="1" />
     <span id="year"></span>
 </div>
 
