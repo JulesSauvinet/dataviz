@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Crimes recorded by the police - NUTS 3 regions</title>
+<style>
+    .background {
+        fill: #fff;
+        stroke: #ccc;
+    }
+    .tooltip{ background-color:rgba(200,200,200,0.5);;
+        margin: 10px;
+        height: 90px;
+        width: 150px;
+        padding-left: 10px;
+        padding-top: 10px;
+        -webkit-border-radius:10px;
+        -moz-border-radius:10px;
+        border-radius:10px;
+    }
+</style>
+<body>
+<h2>Density of population - NUTS 3 regions</h2>
+<div id="map"></div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="https://d3js.org/queue.v1.min.js"></script>
+<!--script type="text/javascript" src="js/tooltip.js"></script-->
+
+<script>
+    var width = 1200,
+            height = 600;
+
+    var projection = d3.geo.stereographic()
+            .center([3.9,43.0])
+            .scale(1300)
+            .translate([width / 4 , height / 2+100]);
+    var path = d3.geo.path()
+            .projection(projection);
+    var svg = d3.select("#map").append("svg")
+            .attr("width", 1160)
+            .attr("height", 600);
+
+    var color = d3.scale.linear().domain([0,100]).range(['yellow', 'red']);
+
+    function processData(error,stats, europe) {
+
+        if (error) throw error;
+
+        data = {};
+        stats.forEach(function (d) {
+            //if (d.unit === 'T' && d.airpol === 'NH3' && d.airsect ==='SE1_CIH') {
+            data[d["geo"]] = d['2014'];
+            //}
+        });
+        console.log(data);
+
+        svg.selectAll(".region")
+                .data(topojson.feature(europe, europe.objects.regions).features)
+                .enter()
+                .append("path")
+                .filter(function (d) {
+                    return !isNaN(parseFloat(data[d.properties.NUTS_ID]));
+                })
+                .attr("class", "region")
+                .attr("d", path)
+                .style("stroke", "#999")
+                .style("stroke-width", 0.2)
+                .style("fill", function (d) {
+                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                        return color(100000 * data[d.properties.NUTS_ID] / d.properties.POPULATION);
+                    else
+                        return "#999";
+                })
+                .style("opacity", function (d) {
+                    if (!isNaN(parseFloat(data[d.properties.NUTS_ID])))
+                        return 1;
+                    else
+                        return 0;
+                });
+
+        /*.call(d3.helper.tooltip(function (d, i) {
+         return tooltipText(d);
+         }));*/
+        /*function tooltipText(d){
+         if (isNaN(parseFloat(data[d.properties.NUTS_ID]))) {
+         var crimes = "No Data";
+         } else {
+         var crimes = data[d.properties.NUTS_ID];
+         }
+         return "<b>" + d.properties.NAME + "</b>"
+         + "<br/> pop: " + d.properties.POPULATION
+         + "<br/> crimes: " + crimes;
+         }*/
+    }
+
+    queue()   // permet de charger les fichiers de manière asynchrone
+            .defer(d3.tsv, "data/eurostats/demo_r_d3dens.tsv")
+            .defer(d3.json,"geodata/euro/eurotopo.json")
+            .await(processData);
+
+
+</script>
+
+
+<footer>Source: <a href="http://http://ec.europa.eu/eurostat/data/database">eurostat</a></footer>

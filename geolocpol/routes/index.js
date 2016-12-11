@@ -6,38 +6,48 @@ router.get('/', function(req, res, next) {
   res.render('index.html');
 });
 
-router.get('/vizu1', function(req, res) {
-  res.render('vizu1.html');
+
+router.get('/project', function(req, res) {
+  res.render('project/project.html');
 });
-router.get('/vizu2', function(req, res) {
-  res.render('vizu2.html');
+
+
+/**************** TPS *****************/
+router.get('/grippeNovembre2015', function(req, res) {
+  res.render('tps/tp4_1.html');
 });
-router.get('/vizu3', function(req, res) {
-  res.render('vizu3.html');
+router.get('/grippe20132015', function(req, res) {
+  res.render('tps/tp5_1.html');
 });
-router.get('/vizu4', function(req, res) {
-  res.render('vizu4.html');
+router.get('/votesconjoints', function(req, res) {
+  res.render('tps/tp6.html');
 });
-router.get('/vizu5', function(req, res) {
-  res.render('tp4_1.html');
+
+
+/**************** Samples/Tests *****************/
+//Simple bar chart, first viz
+router.get('/simpleBarChart', function(req, res) {
+  res.render('samples/simplebarchart.html');
 });
-router.get('/vizu6', function(req, res) {
-  res.render('vizu6.html');
+//A simple map of the UK, inspired by lets make a map!
+router.get('/mapUK', function(req, res) {
+  res.render('samples/mapUK.html');
 });
-router.get('/vizu7', function(req, res) {
-  res.render('vizu7.html');
+//Juste la carte du monde (gardee au cas ou besoin d'un copié-collé
+router.get('/worldbackground', function(req, res) {
+  res.render('samples/worldbackground.html');
 });
-router.get('/vizu8', function(req, res) {
-  res.render('tp5_1.html');
+//A simple map of France indicating the Ammoniac rate in 2010
+router.get('/franceAmmoniac', function(req, res) {
+  res.render('samples/franceAmmoniac.html');
 });
-router.get('/vizu9', function(req, res) {
-  res.render('vizu8.html');
+//Les cours d'eau en France
+router.get('/waterways', function(req, res) {
+  res.render('samples/waterways.html');
 });
-router.get('/tp4', function(req, res) {
-  res.render('tp4_1.html');
-});
-router.get('/vizu10', function(req, res) {
-  res.render('tp6.html');
+//La densité de population en Europe
+router.get('/densityEurope', function(req, res) {
+  res.render('samples/densityEurope.html');
 });
 
 module.exports = router;
