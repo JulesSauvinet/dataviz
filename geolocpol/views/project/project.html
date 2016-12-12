@@ -136,25 +136,32 @@
         max2 = d3.max(data2, function(d) { return parseFloat(d[year]);});
 
         //color2.domain([min2,max2]);
+        var data = topojson.feature(europe, europe.objects.regions).features;
+        data.forEach(function(d){
+           if (dataMap2[d.properties.NUTS_ID]) {
+               d.value = dataMap2[d.properties.NUTS_ID];
+           }
+        });
 
         var carte2 = svg2.selectAll(".region2")
-                .data(topojson.feature(europe, europe.objects.regions).features);
+                .data(data);
 
         // code en cas de mise a jour de la carte / de changement de semaine
         carte2.attr("class", "update region2")
                 .filter(function (d) {
-                    return !isNaN(parseFloat(dataMap2[d.properties.NUTS_ID]));
+                    return !isNaN(parseFloat(d.value));
                 })
                 .style("stroke", "lightgrey")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
-                    if (!isNaN(parseFloat(dataMap2[d.properties.NUTS_ID])))
-                        return color2(100000 * dataMap2[d.properties.NUTS_ID] / d.properties.POPULATION);
+                    
+                    if (!isNaN(parseFloat(d.value)))
+                        return color2(100000 * d.value / d.properties.POPULATION);
                     else
                         return "lightgrey";
                 })
                 .style("opacity", function (d) {
-                    if (!isNaN(parseFloat(dataMap2[d.properties.NUTS_ID])))
+                    if (!isNaN(parseFloat(d.value)))
                         return 1;
                     else
                         return 0;
@@ -164,20 +171,20 @@
         carte2.enter()
                 .append("path")
                 .filter(function (d) {
-                    return !isNaN(parseFloat(dataMap2[d.properties.NUTS_ID]));
+                    return !isNaN(parseFloat(d.value));
                 })
                 .attr("class", "enter region2")
                 .attr("d", path2)
                 .style("stroke", "#999")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
-                    if (!isNaN(parseFloat(dataMap2[d.properties.NUTS_ID])))
-                        return color2(100000 * dataMap2[d.properties.NUTS_ID] / d.properties.POPULATION);
+                    if (!isNaN(parseFloat(d.value)))
+                        return color2(100000 * d.value / d.properties.POPULATION);
                     else
                         return "#999";
                 })
                 .style("opacity", function (d) {
-                    if (!isNaN(parseFloat(dataMap2[d.properties.NUTS_ID])))
+                    if (!isNaN(parseFloat(d.value)))
                         return 1;
                     else
                         return 0;
@@ -223,25 +230,33 @@
         max1 = d3.max(dataRange, function(d) { return parseFloat(d);});
         color1.domain([min1,max1]);
 
+        var data = topojson.feature(europe, europe.objects.regions).features;
+        data.forEach(function(d){
+            if (dataMap1[d.properties.NUTS_ID]) {
+                d.value = dataMap1[d.properties.NUTS_ID];
+            }
+        });
+
+
         var carte1 = svg1.selectAll(".region1")
-                .data(topojson.feature(europe, europe.objects.regions).features);
+                .data(data);
 
         // code en cas de mise a jour de la carte / de changement d'annee
         carte1.attr("class", "update region1")
                 .filter(function (d) {
-                    return !isNaN(parseFloat(dataMap1[d.properties.NUTS_ID]));
+                    return !isNaN(parseFloat(d.value));
                 })
                 .style("stroke", "#999")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
-                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
-                        return color1(dataMap1[d.properties.NUTS_ID]);
+                    if (!isNaN(parseFloat(d.value)))
+                        return color1(d.value);
 
                     else
                         return "lightgrey";
                 })
                 .style("opacity", function (d) {
-                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
+                    if (!isNaN(parseFloat(d.value)))
                         return 1;
                     else
                         return 0;
@@ -251,20 +266,20 @@
         carte1.enter()
                 .append("path")
                 .filter(function (d) {
-                    return !isNaN(parseFloat(dataMap1[d.properties.NUTS_ID]));
+                    return !isNaN(parseFloat(d.value));
                 })
                 .attr("class", "enter region1")
                 .attr("d", path1)
                 .style("stroke", "#999")
                 .style("stroke-width", 0.2)
                 .style("fill", function (d) {
-                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
-                        return color1(dataMap1[d.properties.NUTS_ID]);
+                    if (!isNaN(parseFloat(d.value)))
+                        return color1(d.value);
                     else
                         return "lightgrey";
                 })
                 .style("opacity", function (d) {
-                    if (!isNaN(parseFloat(dataMap1[d.properties.NUTS_ID])))
+                    if (!isNaN(parseFloat(d.value)))
                         return 1;
                     else
                         return 0;
@@ -301,7 +316,7 @@
 
     var pollutants = [];
 
-    function processData(error,pollutions,density, pesticides, europe) {
+    function processData(error,pollutions,density, pesticides, energie, europe) {
 
         if (error) throw error;
 
@@ -319,6 +334,16 @@
                pollutants.push(p.airpol);
            }
         });
+
+        //TODO les autres
+        var pest = pesticides.filter(function(d,i){return d['pe_type'] === 'PE_0'});
+
+        //TODO exploiter les sous infos
+        var enerind = energie.filter(function(d,i){return d['indic_nv'] === 'FEC_IND'});
+        var enerser = energie.filter(function(d,i){return d['indic_nv'] === 'FEC_SER'});
+        var eneragr = energie.filter(function(d,i){return d['indic_nv'] === 'FEC_AGR'});
+        var enerhh = energie.filter(function(d,i){return d['indic_nv'] === 'FEC_HH'});
+        var enertot = energie.filter(function(d,i){return d['indic_nv'] === 'FEC_TOT'});
 
         /********************* le div des polluants **********************/
         var fieldset = d3.select("#pollutiondiv").append("form");
@@ -384,7 +409,8 @@
                             dataMap2=density;
                             break;
                         case "prod":
-                            dataMap2=density;
+                            console.log("prodtot");
+                            dataMap2=enertot;
                             break;
                         case "charb":
                             dataMap2=density;
@@ -395,9 +421,13 @@
                         case "todo":
                             dataMap2=density;
                             break;
-                        case "pest":
-                            console.log("pesticide");
-                            dataMap2=pesticides;
+                        case "pest1":
+                            console.log("pest1");
+                            dataMap2=pest;
+                            break;
+                        case "pest2":
+                            console.log("pest2");
+                            dataMap2=pest;
                             break;
                     }
                     updateMap2(year, dataMap2, europe);
@@ -412,6 +442,7 @@
             .defer(d3.tsv, "data/eurostats/env_air_emission.tsv")
             .defer(d3.tsv, "data/eurostats/demo_r_d3dens.tsv")
             .defer(d3.tsv, "data/eurostats/pesticides_sales2.tsv")
+            .defer(d3.tsv, "data/eurostats/env_rpep.tsv")
             .defer(d3.json,"geodata/euro/eurotopo.json")
             .await(processData);
 
@@ -437,8 +468,9 @@
     <input type="radio" name="mesure" value = "prod"  id="polmesure2"> Production electricite <br>
     <input type="radio" name="mesure" value = "auto" id="polmesure3"> Parc auto <br>
     <input type="radio" name="mesure" value = "charb" id="polmesure4"> Production charbon <br>
-    <input type="radio" name="mesure" value = "pest" id="polmesure5"> Vente pesticide <br>
-    <input type="radio" name="mesure" value = "todo" id="polmesure6"> TODO
+    <input type="radio" name="mesure" value = "pest1" id="polmesure5"> Vente pesticide (1990-2008) <br>
+    <input type="radio" name="mesure" value = "pest2" id="polmesure6"> Vente pesticide (2011-2014) <br>
+    <input type="radio" name="mesure" value = "todo" id="polmesure7"> TODO
 </div>
 
 
