@@ -72,7 +72,7 @@ var SVGs = divs.append('svg').attr({
 });
 
 
-
+//TODO UN SEUL DATA
 var pollutants = [];
 /* fonction pour créer le div des polluants de manière dynamique */
 function createPolDiv(pollutions){
@@ -108,17 +108,22 @@ var polMap = {};
 /* fonction qui créé les datasets des polluants pour chaque polluant*/
 function createPolDatas(pollutions){
     pollutants.forEach(function(pollutant){
-        var pollution = pollutions.filter(function(d,i){return (d.geo !== "EU28" && d.airpol === pollutant && d.airsect === "TOT_NAT")});
+        var geoNot = ["EU28"/*, "CH"*/];
+        var pollution = pollutions.filter(function(d,i){return (!geoNot.includes(d.geo)
+        && d.airpol === pollutant && d.airsect === "TOT_NAT")});
         polMap[pollutant] = pollution;
     });
 }
 
 var dataMap = {};
+var geoPol = {};
 /* fonction pour un dataset contenant les données de map + du polluant courant sélectionné*/
 function createMergedPolAndMapData(europe){
     pollutants.forEach(function(pollutant){
         var pollution = polMap[pollutant];
-        var data = topojson.feature(europe, europe.objects.regions).features;
+        var dataRaw = topojson.feature(europe, europe.objects.regions).features;
+
+        var data = JSON.parse(JSON.stringify(dataRaw));
 
         //création d'un tableau des codes nuts 1
         var geos = [];
@@ -132,16 +137,21 @@ function createMergedPolAndMapData(europe){
                     years.forEach(function (year) {
                         d.properties[year] = p[year];
                     });
+                    if (!d.properties.dens)
+                        d.properties.dens = p["dens"];
                 }
-                if (!d.properties.dens)
-                    d.properties.dens = p["dens"];
 
             });
         });
 
         dataMap[pollutant] = data;
     });
-
+    for (var pollutant in dataMap){
+        geoPol[pollutant]=[];
+        dataMap[pollutant].forEach(function(d){
+            geoPol[pollutant].push(d.properties["NUTS_ID"]);
+        });
+    }
 }
 
 var colorpol = {};
@@ -151,35 +161,38 @@ function createScalesColorPol(){
 
         var pollution=polMap[pollutant];
 
+        //console.log(pollution);
+
         var min = Number.MAX_VALUE;
-
         pollution.forEach(function(pol){
-            for (var key in pol){
-
-                if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens") {
-                    //on ne base la scale que s'il y a une densité associé au code NUTS
-                    var value = parseFloat(pol[key]) / parseFloat(pol["dens"][key]);
-                    var year = parseInt(key);
-                    if (year >= 2000 && year <= 2014) {
-                        if (parseFloat(pol[key]) !== 0 && value < parseFloat(min)) {
-                            min = value;
+            if (geoPol[pollutant].includes(pol['geo'])){
+                for (var key in pol){
+                    if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens") {
+                        //on ne base la scale que s'il y a une densité associé au code NUTS
+                        var value = parseFloat(pol[key]) / parseFloat(pol["dens"][key]);
+                        var year = parseInt(key);
+                        if (year >= 2000 && year <= 2014) {
+                            if (parseFloat(pol[key]) !== 0 && value < parseFloat(min)) {
+                                min = value;
+                            }
                         }
                     }
                 }
             }
-
         });
 
         var max = Number.MIN_VALUE;
         pollution.forEach(function(pol){
-            for (var key in pol){
-                if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens") {
-                    //on ne base la scale que s'il y a une densité associé au code NUTS
-                    var value = parseFloat(pol[key])/parseFloat(pol["dens"][key]);
-                    var year = parseInt(key);
-                    if (year >= 2000 && year <= 2014) {
-                        if (value > parseFloat(max)) {
-                            max = value;
+            if (geoPol[pollutant].includes(pol['geo'])) {
+                for (var key in pol) {
+                    if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens") {
+                        //on ne base la scale que s'il y a une densité associé au code NUTS
+                        var year = parseInt(key);
+                        var value = parseFloat(pol[key]) / parseFloat(pol["dens"][year]);
+                        if (year >= 2000 && year <= 2014) {
+                            if (value > parseFloat(max)) {
+                                max = value;
+                            }
                         }
                     }
                 }
@@ -212,7 +225,7 @@ function updatePol(){
 
     data = dataMap[curPol];
 
-    console.log(colorpol[curPol].domain()[1]);
+    //console.log(colorpol[curPol].domain()[1]);
     //création des fonds de carte des smallMultiples
     SVGs.each(function(date){
 
@@ -230,7 +243,6 @@ function updatePol(){
 
         map.style("fill", function (d) {
 
-
             if (!isNaN(d.properties[date])){
                 //WATCHOUT Statique on remplace la densité de 2001 par celle de 2000
                 // et celle de 2004 par celle de 2003 car données manquantes #empirisme
@@ -240,7 +252,11 @@ function updatePol(){
                 if (datebis === "2004")
                     datebis = "2003";
 
+                //console.log("pol : ", d.properties[date]);
+
                 var value = (parseFloat(d.properties[date])/parseFloat(d.properties["dens"][datebis]));
+
+                //console.log(value);
 
                 return colorpol[curPol](value);
             }
@@ -280,8 +296,11 @@ function init(error,pollutions,density, pesticides, energie, nuclear, taxes,
     //on intègre les données de pollution aux données de map
     createMergedPolAndMapData(europe);
 
+
     //on créé les scales de couleurs pour chaque polluants
     createScalesColorPol();
+
+    //console.log(dataMap);
 
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=pol]")
