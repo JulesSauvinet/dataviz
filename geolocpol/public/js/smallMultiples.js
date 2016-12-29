@@ -24,7 +24,7 @@ function createPolData(pollutions){
             choice= rb.property("value");
         }
     });
-    var pollution = pollutions.filter(function(d,i){return d.airpol === choice});
+    var pollution = pollutions.filter(function(d,i){return (d.geo !== "EU28" && d.airpol === choice && d.airsect === "TOT_NAT")});
     return pollution;
 }
 
@@ -89,17 +89,32 @@ function init(error,pollutions,density, pesticides, energie, nuclear, taxes,
         'height':mapHeight
     });
 
+    //on intègre les données de pollution aux données de map
     var data = topojson.feature(europe, europe.objects.regions).features;
 
-    SVGs.each(function(date){
+    //création d'un tableau des codes nuts 1
+    var geos = [];
 
+    pollution.forEach(function(p){
+        if (!geos.includes(p["geo"]))
+            geos.push(p["geo"]);
+    });
+
+    data = data.filter(function(d,i){return geos.includes(d.properties["NUTS_ID"])});
+
+
+    years.forEach(function(year){
         data.forEach(function(d){
             pollution.forEach(function(p){
                 if (d.properties["NUTS_ID"] === p["geo"]){
-                    d.properties[date] = p[date];
+                    d.properties[year] = parseFloat(p[year]);
                 }
             });
         });
+    });
+
+
+    SVGs.each(function(date){
 
         d3.select(this).selectAll('path')
             .data(data)
@@ -112,38 +127,38 @@ function init(error,pollutions,density, pesticides, energie, nuclear, taxes,
             });
     });
 
-
+    var test=0;
     function update(){
         SVGs.each(function(date){
 
-            data.forEach(function(d){
-                pollution.forEach(function(p){
-                    if (d.properties["NUTS_ID"] === p["geo"]){
-                        d.properties[date] = p[date];
-                    }
-                });
-            });
-
-            dataRange = [];
+            var dataRange = [];
             pollution.forEach(function (p) {
                 if (p["geo"] !== 'EU28'){
                     dataRange.push(p[date]);
                 }
             });
 
-            min = d3.min(dataRange, function(d) { return parseFloat(d);});
-            max = d3.max(dataRange, function(d) { return parseFloat(d);});
+            var min = d3.min(dataRange, function(d) { if (parseFloat(d) !== 0.0) return parseFloat(d);});
+            var max = d3.max(dataRange, function(d) { if (parseFloat(d) !== 0.0) return parseFloat(d);});
             color.domain([min,max]);
 
             d3.select(this).selectAll('path')
                 .data(data)
                 .style("fill", function (d) {
-                    if (!isNaN(parseFloat(d.properties[date])))
-                        return color(d.properties[date]);
+                    if (test === 0){
+                        console.log(d.properties[date]);
+                        test++;
+                    }
 
-                    else
+                    if (!isNaN(d.properties[date])){
+                        //console.log(color(d.properties[date]));
+                        return color(d.properties[date]);
+                    }
+                    /*else{
+                        console.log(d);
                         return "lightgrey";
-                })
+                    }*/
+                });
         })
     }
 
