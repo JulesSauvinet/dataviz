@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>Crimes recorded by the police - NUTS 3 regions</title>
+<title>Density in Europe - NUTS 3 regions</title>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="https://d3js.org/queue.v1.min.js"></script>
+
 <style>
     .background {
         fill: #fff;
@@ -18,13 +23,7 @@
     }
 </style>
 <body>
-<h2>Density of population - NUTS 3 regions</h2>
-<div id="map"></div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://d3js.org/topojson.v1.min.js"></script>
-<script src="https://d3js.org/queue.v1.min.js"></script>
 <!--script type="text/javascript" src="js/tooltip.js"></script-->
-
 <script>
     var width = 1200,
             height = 600;
@@ -100,5 +99,7 @@
 
 </script>
 
+<h2>Density of population - NUTS 3 regions</h2>
+<div id="map"></div>
 
 <footer>Source: <a href="http://http://ec.europa.eu/eurostat/data/database">eurostat</a></footer>

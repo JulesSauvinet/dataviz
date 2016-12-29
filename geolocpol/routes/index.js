@@ -8,7 +8,11 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/project', function(req, res) {
-  res.render('project/project.html');
+  res.render('project/smallMultiples.html');
+});
+
+router.get('/test1', function(req, res) {
+  res.render('project/test1.html');
 });
 
 

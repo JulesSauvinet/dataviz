@@ -1,77 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <meta charset="utf-8">
-    <title>Loading data from server</title>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://d3js.org/topojson.v1.min.js"></script>
-    <script src="https://d3js.org/queue.v1.min.js"></script>
+        <meta charset="utf-8">
+        <title>Loading data from server</title>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="http://d3js.org/topojson.v1.min.js"></script>
 
-    <style>
-        .subunit.FXC,.subunit.FXX { fill: whitesmoke/*#FFE3EB*/; stroke:"black"; stroke-width:10}
+        <style>
+                .subunit.FXC,.subunit.FXX { fill: whitesmoke/*#FFE3EB*/; stroke:"black"; stroke-width:10}
 
-        .subunit.FR,
-        .subunit-label.FR {
-          display: none;
-        }
+                .subunit.FR,
+                .subunit-label.FR {
+                  display: none;
+                }
 
-        .regions-boundary {
-            fill: none;
-            stroke: black;
-            stroke-dasharray: 3,3;
-            stroke-linejoin: round;
-        }
+                .regions-boundary {
+                    fill: none;
+                    stroke: black;
+                    stroke-dasharray: 3,3;
+                    stroke-linejoin: round;
+                }
 
-        .subunit-boundary {
-            fill: none;
-            /*stroke: black;
-            stroke-dasharray: 2,2;
-            stroke-linejoin: round;*/
-        }
-
-        .regions-subunit { fill: floralwhite;  opacity:0.9; stroke:"black"; stroke-width:10}
-
-        .subunit-label {
-          fill: #777;
-          fill-opacity: .5;
-          font-size: 20px;
-          font-weight: 300;
-          text-anchor: middle;
-        }
+                .subunit-boundary {
+                    fill: none;
+                    /*stroke: black;
+                    stroke-dasharray: 2,2;
+                    stroke-linejoin: round;*/
+                }
 
 
-        .place,
-        .place-label {
-          fill: #444;
-        }
+                .regions-subunit { fill: floralwhite;  opacity:0.9; stroke:"black"; stroke-width:10}
 
-        text {
-          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-          font-size: 10px;
-          pointer-events: none;
-        }
+                .subunit-label {
+                  fill: #777;
+                  fill-opacity: .5;
+                  font-size: 20px;
+                  font-weight: 300;
+                  text-anchor: middle;
+                }
 
-        div.tooltip {
-            position: absolute;
-            text-align: center;
-            width: 100px;
-            height: 40px;
-            padding: 2px;
-            font: 12px sans-serif;
-            background: lightsteelblue;
-            border: 0px;
-            border-radius: 8px;
-            pointer-events: none;
-        }
 
-    </style>
+                .place,
+                .place-label {
+                  fill: #444;
+                }
+
+                text {
+                  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                  font-size: 10px;
+                  pointer-events: none;
+                }
+
+                div.tooltip {
+                    position: absolute;
+                    text-align: center;
+                    width: 100px;
+                    height: 40px;
+                    padding: 2px;
+                    font: 12px sans-serif;
+                    background: lightsteelblue;
+                    border: 0px;
+                    border-radius: 8px;
+                    pointer-events: none;
+                }
+
+        </style>
 
     </head>
     <body>
 
     <script type="text/javascript">
-
-        //TODO UNIFIER LE DATASET
         var width = 1160,
             height = 860;
 
@@ -115,6 +113,7 @@
                 var idReg =  [];
 
                 if (error) return console.error(error);
+
 
                 svg.selectAll(".regions")
                         .data(regions.features)
@@ -194,21 +193,51 @@
                         .attr('style', 'display:none;');*/
 
                 /*color : rgb(255,0,0);*/
-                d3.tsv("data/fr/pol_air_eider.csv", function(error, linesIn) {
+
+                idReg.forEach(function (id){
+                    svg.select('#regions-subunit'+id).on('mouseover', function( d, i) {
+                        //console.log(d.id);
+                        d3.select(this).style("fill", "red").style( "opacity", 0.5);
+                        /*svg.select("#properties-label"+d.id)
+                         .attr('style', 'display:inline;')
+                         .style("font-size", function(d,i){return 16;})
+                         .style("font-weight", function(d,i){return "bold";})
+                         .style("font-family", "monospace");*/
+
+                        div.transition()
+                                .duration(200)
+                                .style("opacity", .9);
+                        console.log(d);
+                        div.html(d.properties.nom + "<br/>"  + d.properties.nom_cl)
+                                .style("left", (d3.event.pageX) + "px")
+                                .style("top", (d3.event.pageY - 28) + "px");
+
+                    });
+                    svg.select('#regions-subunit'+id).on("mouseout", function( data, index) {
+                        d3.select(this).transition().duration(100).style("fill", "floralwhite").style( "opacity", 0.9);
+                        //svg.selectAll("text").transition().duration(100).attr('style', 'display:none;');
+                        //svg.select("#properties-label"+id).transition().duration(100).attr('style', 'display:none;');
+                        div.transition()
+                                .duration(300)
+                                .style("opacity", 0);
+                    });
+                });
+
+                d3.tsv("data/fr/pol_air_eider.csv", function(error, lines) {
 
                     function keepQuant(line) {
-                        return line["Série"].includes("Quantités annuelles émises");
+                        return line["Série"].includes("Nombre d'établissements concernés");
                     }
 
                     //Creation tableaux filtrés en fonction des lignes
-                    var lines = linesIn.filter(keepQuant);
+                    var filterLines = lines.filter(keepQuant);
                     function keepAmmoniac(line) {return line["Série"].includes("Ammoniac");}
                     var ammoniac = lines.filter(keepAmmoniac);
                     function keepCadmium(line) {return line["Série"].includes("Cadmium");}
                     var cadmium = lines.filter(keepCadmium);
                     function keepMonoC(line) {return line["Série"].includes("Monoxyde de carbone");}
                     var monoC = lines.filter(keepMonoC);
-                    function keepCompOrg(line) {return line["Série"].includes("Composés Organiques");}
+                    function keepcompOrg(line) {return line["Série"].includes("Composés Organiques");}
                     var compOrg = lines.filter(keepCompOrg);
                     function keepFluoH(line) {return line["Série"].includes("Fluorure d'hydrogène");}
                     var fluoH = lines.filter(keepFluoH);
@@ -224,7 +253,7 @@
                     var chlorV = lines.filter(keepChlorV);
                     function keepOxydeN(line) {return line["Série"].includes("Oxyde d'azote");}
                     var oxydeN = lines.filter(keepOxydeN);
-                    function keepPlomb(line) {return line["Série"].includes("Plomb");}
+                    function keeplomb(line) {return line["Série"].includes("Plomb");}
                     var plomb = lines.filter(keepPlomb);
                     function keepPoussieres(line) {return line["Série"].includes("Poussières");}
                     var poussieres = lines.filter(keepPoussieres);
@@ -252,78 +281,6 @@
                     //"N° région"
                     //plomb
 
-                    var ammoRange = d3.scale.linear().range([0, 1]);
-                    // Accessor for value
-                    ammoRange.domain([0, d3.max(ammoniac, function(d) { if (d["2002"] !== "ND"){ return parseFloat(d["2002"]);} })]);
-
-                    /*svg.selectAll(".regions")
-                            .data(ammoniac)
-                            .enter().append("div")
-                            .attr("class", function (d, i) {
-                                return "regions-infos" ;
-                            })
-                            .attr("id", function (d, i) {
-                                idReg.push(d.id);
-                                return "regions-infos"+ d["N° région"] ;
-                            });*/
-
-                    /*var selectAmmo = svg.selectAll('.regions-subunit')
-                            .data(ammoniac);
-
-                    selectAmmo.enter().append("path");*/
-
-                    var ammoValues = {};
-                    ammoniac.forEach(function(ammo){
-                        if (!ammoValues[ammo["N° région, département"]])
-                            ammoValues[ammo["N° région, département"]] = {};
-
-                        ammoValues[ammo["N° région, département"]]["1999"] = ammo["1999"];
-                        ammoValues[ammo["N° région, département"]]["2000"] = (ammo["2000"]);
-                        ammoValues[ammo["N° région, département"]]["2001"] = (ammo["2001"]);
-                        ammoValues[ammo["N° région, département"]]["2002"] = (ammo["2002"]);
-                        ammoValues[ammo["N° région, département"]]["2003"] = (ammo["2003"]);
-                        ammoValues[ammo["N° région, département"]]["2004"] = (ammo["2004"]);
-                        ammoValues[ammo["N° région, département"]]["2005"] = (ammo["2005"]);
-                        ammoValues[ammo["N° région, département"]]["2006"] = (ammo["2006"]);
-                        ammoValues[ammo["N° région, département"]]["2007"] = (ammo["2007"]);
-                        ammoValues[ammo["N° région, département"]]["2008"] = (ammo["2008"]);
-                    });
-                    //console.log(ammoValues);
-                    //console.log(idReg);
-
-                    idReg.forEach(function (id) {
-                        svg.select('#regions-subunit' + id)
-                                  .style("fill", "orange")
-                                  .style("opacity", function (d, i) {
-                                      var opacity = 0.0;
-
-                                      if (ammoValues[d.id])
-                                          if (ammoRange(ammoValues[d.id]["2002"]))
-                                              opacity = parseFloat(ammoRange(ammoValues[d.id]["2002"]));
-                                      //console.log(opacity);
-                                      return opacity;
-                                  });
-
-                        svg.select('#regions-subunit'+id).on('mouseover', function( d, i) {
-                            //console.log(d.id);
-                            d3.select(this).style("fill", "red");
-
-                            div.transition()
-                                    .duration(200)
-                                    .style("opacity", .9);
-                            div.html("Ammoniac en 2005 en " + id + " :" + "<br/>"  + ammoValues[d.id]["2005"])
-                                    .style("left", (d3.event.pageX) + "px")
-                                    .style("top", (d3.event.pageY - 28) + "px");
-
-                        });
-                        svg.select('#regions-subunit'+id).on("mouseout", function( data, index) {
-                            d3.select(this).transition().duration(100).style("fill", "orange");//.style( "opacity", 0.9);
-                            //svg.selectAll("text").transition().duration(100).attr('style', 'display:none;');
-                            div.transition()
-                                    .duration(300)
-                                    .style("opacity", 0);
-                        });
-                    });
 
                 });
 
