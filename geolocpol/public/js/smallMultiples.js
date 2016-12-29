@@ -115,86 +115,82 @@ function createPolDatas(pollutions){
 
 var dataMap = {};
 /* fonction pour un dataset contenant les données de map + du polluant courant sélectionné*/
-function createMergedPolAndMapData(curPol,europe){
-    var pollution = polMap[curPol];
-    var data = topojson.feature(europe, europe.objects.regions).features;
+function createMergedPolAndMapData(europe){
+    pollutants.forEach(function(pollutant){
+        var pollution = polMap[pollutant];
+        var data = topojson.feature(europe, europe.objects.regions).features;
 
-    //création d'un tableau des codes nuts 1
-    var geos = [];
+        //création d'un tableau des codes nuts 1
+        var geos = [];
+        pollution.forEach(function(p){if (!geos.includes(p["geo"]))geos.push(p["geo"]);});
 
-    pollution.forEach(function(p){if (!geos.includes(p["geo"]))geos.push(p["geo"]);});
+        data = data.filter(function(d,i){return geos.includes(d.properties["NUTS_ID"])});
 
-    data = data.filter(function(d,i){return geos.includes(d.properties["NUTS_ID"])});
-
-    years.forEach(function(year){
-        data.forEach(function(d){
-            pollution.forEach(function(p){
-                if (d.properties["NUTS_ID"] === p["geo"]){
-                    d.properties[year] = p[year];
+        data.forEach(function(d) {
+            pollution.forEach(function (p) {
+                if (d.properties["NUTS_ID"] === p["geo"]) {
+                    years.forEach(function (year) {
+                        d.properties[year] = p[year];
+                    });
                 }
                 if (!d.properties.dens)
                     d.properties.dens = p["dens"];
+
             });
         });
+
+        dataMap[pollutant] = data;
     });
 
-    dataMap[curPol] = data;
 }
 
 var colorpol = {};
 /* fonction qui créé les scales de couleurs pour chaque polluant en fonction des min et max (appelé une seule fois) */
 function createScalesColorPol(){
     pollutants.forEach(function(pollutant){
-        if (!colorpol[pollutant]){
-            pollution=polMap[pollutant];
-            var min = d3.min(pollution, function(pol) {
-                var mintmp = Number.MAX_VALUE;
 
-                for (var key in pol){
+        var pollution=polMap[pollutant];
+
+        var min = Number.MAX_VALUE;
+
+        pollution.forEach(function(pol){
+            for (var key in pol){
+
+                if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens") {
                     //on ne base la scale que s'il y a une densité associé au code NUTS
-                    if (!isNaN(parseFloat(pol["dens"][key]))) {
-                        var value = parseFloat(pol[key]) / parseFloat(pol["dens"][key]);
-                        if (!isNaN(value)) {
-                            if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens") {
-                                var year = parseInt(key);
-                                if (year >= 2000 && year <= 2014) {
-                                    if (parseFloat(pol[key]) !== 0 && value < parseFloat(mintmp)) {
-                                        mintmp = value;
-                                    }
-                                }
-                            }
+                    var value = parseFloat(pol[key]) / parseFloat(pol["dens"][key]);
+                    var year = parseInt(key);
+                    if (year >= 2000 && year <= 2014) {
+                        if (parseFloat(pol[key]) !== 0 && value < parseFloat(min)) {
+                            min = value;
                         }
                     }
                 }
-                return mintmp;
-            });
-            var max = d3.max(pollution, function(pol) {
-                var maxtmp = Number.MIN_VALUE;
+            }
 
-                for (var key in pol){
+        });
+
+        var max = Number.MIN_VALUE;
+        pollution.forEach(function(pol){
+            for (var key in pol){
+                if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens") {
                     //on ne base la scale que s'il y a une densité associé au code NUTS
-                    if (!isNaN(parseFloat(pol["dens"][key]))){
-                        var value = parseFloat(pol[key])/parseFloat(pol["dens"][key]);
-                        if (!isNaN(value)) {
-                            if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens") {
-                                var year = parseInt(key);
-                                if (year >= 2000 && year <= 2014) {
-                                    if (value > parseFloat(maxtmp)) {
-                                        maxtmp = value;
-                                    }
-                                }
-                            }
+                    var value = parseFloat(pol[key])/parseFloat(pol["dens"][key]);
+                    var year = parseInt(key);
+                    if (year >= 2000 && year <= 2014) {
+                        if (value > parseFloat(max)) {
+                            max = value;
                         }
                     }
                 }
-                return maxtmp;
-            });
+            }
+        });
 
-            var color = d3.scale.linear().range(['yellow', 'red']);
-            color.domain([min,max]);
+        //console.log(min,max);
+        var color = d3.scale.linear().range(['yellow', 'red']);
+        color.domain([min,max]);
 
-            colorpol[pollutant] = color;
-        }
+        colorpol[pollutant] = color;
     });
 }
 
@@ -202,7 +198,7 @@ function update(){
 
 }
 
-function updatePol(curPol){
+function updatePol(){
 
     var choice;
     d3.selectAll(".radiopol").each(function(d){
@@ -212,31 +208,49 @@ function updatePol(curPol){
         }
     });
 
+    curPol = choice;
+
     data = dataMap[curPol];
 
+    console.log(colorpol[curPol].domain()[1]);
+    //création des fonds de carte des smallMultiples
     SVGs.each(function(date){
 
-        d3.select(this).selectAll('path')
-            .data(data)
-            .style("fill", function (d) {
-                if (!isNaN(d.properties[date])){
-                    //WATCHOUT Statique on remplace la densité de 2001 par celle de 2000
-                    // et celle de 2004 par celle de 2003 car données manquantes #empirisme
-                    var datebis = date;
-                    if (datebis === "2001")
-                        datebis = "2000";
-                    if (datebis === "2004")
-                        datebis = "2003";
+        var map = d3.select(this).selectAll('path')
+            .data(data);
 
-                    var value = (parseFloat(d.properties[date])/parseFloat(d.properties["dens"][datebis]));
-                    return colorpol[curPol](value);
-                }
-                else{
-                    console.log(d);
-                    return "lightgrey";
+        map.enter().append("path")
+            .attr({
+                "d":path,
+                "id":function(d){
+                    return d.properties["NUTS_ID"] + date;
                 }
             });
-    })
+
+
+        map.style("fill", function (d) {
+
+
+            if (!isNaN(d.properties[date])){
+                //WATCHOUT Statique on remplace la densité de 2001 par celle de 2000
+                // et celle de 2004 par celle de 2003 car données manquantes #empirisme
+                var datebis = date;
+                if (datebis === "2001")
+                    datebis = "2000";
+                if (datebis === "2004")
+                    datebis = "2003";
+
+                var value = (parseFloat(d.properties[date])/parseFloat(d.properties["dens"][datebis]));
+
+                return colorpol[curPol](value);
+            }
+            else{
+                console.log(d);
+                return "lightgrey";
+            }
+        });
+    });
+
 }
 
 function init(error,pollutions,density, pesticides, energie, nuclear, taxes,
@@ -264,39 +278,21 @@ function init(error,pollutions,density, pesticides, energie, nuclear, taxes,
     createPolDatas(pollutions);
 
     //on intègre les données de pollution aux données de map
-    pollutants.forEach(function(pol){
-        createMergedPolAndMapData(pol,europe);
-    });
+    createMergedPolAndMapData(europe);
 
     //on créé les scales de couleurs pour chaque polluants
     createScalesColorPol();
 
-    //les données courantes
-    var data = dataMap[curPol];
-
-
-    SVGs.each(function(date){
-        d3.select(this).selectAll('path')
-            .data(data)
-            .enter().append("path")
-            .attr({
-                "d":path,
-                "id":function(d){
-                    return d.properties["NUTS_ID"] + date;
-                }
-            });
-    });
-
-
+    //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=pol]")
         .on("change", function() {
-            var elem = d3.select(this);
-            curPol = elem.property("value");
-            updatePol(curPol);
+            updatePol();
         });
 
-    updatePol(curPol);
-    //on update la vizu
+    //on affiche les smallMultiples de pollution
+    updatePol();
+
+    //on update la vizu TODO ce sera pour les autres smallMultiples
     update();
 }
 
