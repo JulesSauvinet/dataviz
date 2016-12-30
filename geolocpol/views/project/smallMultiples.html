@@ -33,13 +33,25 @@
     }
 
 
-     #maps{
+    #content{
         position: absolute;
         left: 0px;
         width: 80%;
         margin : 30px;
         padding-right : 50px;
         padding-left : 30px;
+    }
+     #maps{
+        height : 45%;
+    }
+
+    #maps2{
+        height : 45%;
+    }
+
+    .map{
+        display: inline-block;
+        text-align: center;
     }
 
     .map{
@@ -48,12 +60,21 @@
     }
 
     path{
-        stroke-width:1;
+        stroke-width:2;
     }
 
     #pollutiondiv{
         position: relative;
         margin : 10px;
+        border:1pt solid black;
+        padding: 4px;
+        width : 250px;
+    }
+
+    #mesurediv{
+        position: relative;
+        margin: 10px;
+        margin-top:250px;
         border:1pt solid black;
         padding: 4px;
         width : 250px;
@@ -109,19 +130,25 @@
         left: 0;
     }
 
-    footer{position : absolute; bottom : -100px; margin-top : 30px;}
+    footer{position : absolute; bottom : -30px; margin-top : 40px;}
 
 </style>
 
 <body>
 
-<div id="maps">
+<div id = "content">
+    <div id="maps"></div>
+    <div id="maps2"></div>
     <footer>Source: <a href="http://http://ec.europa.eu/eurostat/data/database">eurostat</a></footer>
+
 </div>
+
+
 
 <div id="settings">
     <!--------------- RADIOLIST POLLUANTS ------------------>
     <div id="pollutiondiv"></div>
+    <!---------------- RADIOLIST MESURES ------------------->
     <div id="mesurediv"></div>
 </div>
 
