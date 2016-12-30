@@ -5,7 +5,7 @@ var width = 1550, height = 800;
 
 //le polluant courant sélectionné
 var curPol = "NH3";
-
+var unitPolMap = {};
 //la taille d'une small map
 var mapWidth = 275;
 var mapHeight = 230;
@@ -54,11 +54,6 @@ var color10 = d3.scale.linear().range(['orange', 'brown']);
 colors.push(color0,color1,color2,color3,color4,color5,color6,color7,color8,color9,color10);
 /****************************************************************/
 
-//var svg = d3.select( "body" )
-//    .append( "svg" );
-//.attr( "width", width )
-//.attr( "height", height );
-
 //on dessine une map pour chaque année
 var dateJoin = d3.select('#maps').selectAll('div.map')
     .data(years);
@@ -73,10 +68,6 @@ var divs = dateJoin.enter()
 divs.append('p').text(function(d){ return dateFormat(new Date(d)); });
 
 
-var tooltip = d3.select('body').append('div')
-    .attr('class', 'hidden tooltip');
-
-
 //le titre -> nom de l'année
 var SVGs = divs.append('svg').attr(function(d,i){return {
     'width':mapWidth,
@@ -84,22 +75,15 @@ var SVGs = divs.append('svg').attr(function(d,i){return {
     'id':'div' + d
 }});
 
-function fillTooltip(d,date,i){
-    var id = d.properties["NUTS_ID"]+date;
-    var svg = d3.select('#'+id);
-    //console.log(svg);
 
-    var mouse = d3.mouse(svg.node()).map(function(d) {
-        return parseInt(d);
+var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(function(d,date) {
+        var toDisplay =  'Code Pays :  ' +  d.properties["NUTS_ID"] +'</br>'
+            +'Pollution en ' + polNameMap[curPol] +' : ' + parseFloat(d.properties[date]) + unitPolMap[curPol];
+        return toDisplay;
     });
-    var toDisplay =  'Code Pays :  ' +  d.properties["NUTS_ID"] +'</br>' +
-        'Pollution : ' + parseFloat(d.properties[date]);
-
-    tooltip.classed('hidden', false)
-        .attr('style', 'left:' + (mouse[0] + 15) +
-            'px; top:' + (mouse[1] - 35) + 'px')
-        .html(toDisplay);
-}
 
 //TODO UN SEUL DATA
 var pollutants = [];
@@ -138,8 +122,11 @@ var polMap = {};
 function createPolDatas(pollutions){
     pollutants.forEach(function(pollutant){
         var geoNot = ["EU28"/*, "CH"*/];
-        var pollution = pollutions.filter(function(d,i){return (!geoNot.includes(d.geo)
-        && d.airpol === pollutant && d.airsect === "TOT_NAT")});
+        var pollution = pollutions.filter(function(d,i){
+            if (!unitPolMap[pollutant])
+                unitPolMap[pollutant] = d.unit;
+            return (!geoNot.includes(d.geo) && d.airpol === pollutant && d.airsect === "TOT_NAT")
+        });
         polMap[pollutant] = pollution;
     });
 }
@@ -254,14 +241,13 @@ function updatePol(){
 
     curPol = choice;
 
+
     data = dataMap[curPol];
 
     //console.log(colorpol[curPol].domain()[1]);
     //création des fonds de carte des smallMultiples
     var i=0;
     SVGs.each(function(date){
-
-        var svg = d3.select(this);
 
         var map = d3.select(this).selectAll('path')
             .data(data);
@@ -273,14 +259,10 @@ function updatePol(){
                     return d.properties["NUTS_ID"] + date;
                 }
             })
-            .on('mousemove', function(d) {
-                (function(j) {
-                    fillTooltip(d,date,j);
-                }) (i);
+            .on('mouseover', function(d){
+                tip.show(d,date);
             })
-            .on('mouseout', function() {
-                tooltip.classed('hidden', true);
-            });
+            .on('mouseout', tip.hide);
 
 
         map.style("fill", function (d) {
@@ -308,6 +290,8 @@ function updatePol(){
             }
         });
 
+        map.call(tip);
+
         i++;
     });
 
@@ -317,8 +301,6 @@ function init(error,pollutions,density, pesticides, energie, nuclear, taxes,
               infantmort,transport, heartdiseases, cancer, motorcars, europe){
 
     if (error) throw error;
-
-    tooltip.classed('hidden', true);
 
     //on intègre la données de densité au données de pollution pour calibrer les scales de couleurs notamment
     density.forEach(function(dens){
