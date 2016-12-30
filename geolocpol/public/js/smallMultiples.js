@@ -7,11 +7,11 @@ var width = 1550, height = 800;
 var curPol = "NH3";
 var unitPolMap = {};
 //la taille d'une small map
-var mapWidth = 275;
-var mapHeight = 230;
+var mapWidth = 230;
+var mapHeight = 180;
 
 //projection + path de l'europe d'une small map
-var projection = d3.geo.stereographic().center([3.9,43.0]).scale(375).translate([mapWidth / 2, mapHeight / 2]);
+var projection = d3.geo.stereographic().center([3.9,43.0]).scale(375).translate([mapWidth / 2-20, mapHeight / 2+40]);
 
 var path = d3.geo.path()
     .projection(projection);
@@ -20,7 +20,7 @@ var dateFormat = d3.time.format("%Y");
 
 //les années choisies (une map par année)
 //TODO more dynamic?
-var years = ["2000","2001","2002","2003","2004","2005","2006","2007",
+var years = [/*"2000","2001","2002",*/"2003","2004","2005","2006","2007",
              "2008","2009","2010","2011","2012","2013","2014"];
 
 var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
@@ -55,8 +55,7 @@ colors.push(color0,color1,color2,color3,color4,color5,color6,color7,color8,color
 /****************************************************************/
 
 //on dessine une map pour chaque année
-var dateJoin = d3.select('#maps').selectAll('div.map')
-    .data(years);
+var dateJoin = d3.select('#maps').selectAll('div.map').data(years);
 
 var divs = dateJoin.enter()
     .append('div').attr({
@@ -65,15 +64,14 @@ var divs = dateJoin.enter()
     });
 
 
-divs.append('p').text(function(d){ return dateFormat(new Date(d)); });
-
+divs.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
 
 //le titre -> nom de l'année
-var SVGs = divs.append('svg').attr(function(d,i){return {
+var SVGs = divs.append('svg').attr({
     'width':mapWidth,
     'height':mapHeight,
-    'id':'div' + d
-}});
+    'class' : 'svgmap'
+});
 
 
 var tip = d3.tip()
@@ -189,7 +187,7 @@ function createScalesColorPol(){
                         //on ne base la scale que s'il y a une densité associé au code NUTS
                         var value = parseFloat(pol[key]) / parseFloat(pol["dens"][key]);
                         var year = parseInt(key);
-                        if (year >= 2000 && year <= 2014) {
+                        if (year >= 2003 && year <= 2014) {
                             if (parseFloat(pol[key]) !== 0 && value < parseFloat(min)) {
                                 min = value;
                             }
@@ -207,7 +205,7 @@ function createScalesColorPol(){
                         //on ne base la scale que s'il y a une densité associé au code NUTS
                         var year = parseInt(key);
                         var value = parseFloat(pol[key]) / parseFloat(pol["dens"][year]);
-                        if (year >= 2000 && year <= 2014) {
+                        if (year >= 2003 && year <= 2014) {
                             if (value > parseFloat(max)) {
                                 max = value;
                             }
@@ -323,7 +321,6 @@ function init(error,pollutions,density, pesticides, energie, nuclear, taxes,
 
     //on intègre les données de pollution aux données de map
     createMergedPolAndMapData(europe);
-
 
     //on créé les scales de couleurs pour chaque polluants
     createScalesColorPol();
