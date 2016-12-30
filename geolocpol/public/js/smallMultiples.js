@@ -11,7 +11,7 @@ var mapWidth = 275;
 var mapHeight = 230;
 
 //projection + path de l'europe d'une small map
-var projection = d3.geo.stereographic().center([3.9,43.0]).scale(350).translate([mapWidth / 2, mapHeight / 2]);
+var projection = d3.geo.stereographic().center([3.9,43.0]).scale(375).translate([mapWidth / 2, mapHeight / 2]);
 
 var path = d3.geo.path()
     .projection(projection);
@@ -23,6 +23,8 @@ var dateFormat = d3.time.format("%Y");
 var years = ["2000","2001","2002","2003","2004","2005","2006","2007",
              "2008","2009","2010","2011","2012","2013","2014"];
 
+var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
+                  'PM10' : 'Particules 10', 'PM2_5': 'Particules 2.5', 'SOX' : 'Oxyde de soufre'};
 
 /*********************** NOT USED ********************************/
 var colorMap = {};
@@ -52,6 +54,11 @@ var color10 = d3.scale.linear().range(['orange', 'brown']);
 colors.push(color0,color1,color2,color3,color4,color5,color6,color7,color8,color9,color10);
 /****************************************************************/
 
+//var svg = d3.select( "body" )
+//    .append( "svg" );
+//.attr( "width", width )
+//.attr( "height", height );
+
 //on dessine une map pour chaque année
 var dateJoin = d3.select('#maps').selectAll('div.map')
     .data(years);
@@ -65,12 +72,34 @@ var divs = dateJoin.enter()
 
 divs.append('p').text(function(d){ return dateFormat(new Date(d)); });
 
-//le titre -> nom de l'année
-var SVGs = divs.append('svg').attr({
-    'width':mapWidth,
-    'height':mapHeight
-});
 
+var tooltip = d3.select('body').append('div')
+    .attr('class', 'hidden tooltip');
+
+
+//le titre -> nom de l'année
+var SVGs = divs.append('svg').attr(function(d,i){return {
+    'width':mapWidth,
+    'height':mapHeight,
+    'id':'div' + d
+}});
+
+function fillTooltip(d,date,i){
+    var id = d.properties["NUTS_ID"]+date;
+    var svg = d3.select('#'+id);
+    //console.log(svg);
+
+    var mouse = d3.mouse(svg.node()).map(function(d) {
+        return parseInt(d);
+    });
+    var toDisplay =  'Code Pays :  ' +  d.properties["NUTS_ID"] +'</br>' +
+        'Pollution : ' + parseFloat(d.properties[date]);
+
+    tooltip.classed('hidden', false)
+        .attr('style', 'left:' + (mouse[0] + 15) +
+            'px; top:' + (mouse[1] - 35) + 'px')
+        .html(toDisplay);
+}
 
 //TODO UN SEUL DATA
 var pollutants = [];
@@ -101,7 +130,7 @@ function createPolDiv(pollutions){
             value: function(d) { return d }
         });
     radioSpan.append("label")
-        .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
+        .html(function(d, i) {  return d.last == true ? polNameMap[d] :  polNameMap[d] + '<br>'});
 }
 
 var polMap = {};
@@ -155,6 +184,8 @@ function createMergedPolAndMapData(europe){
 }
 
 var colorpol = {};
+
+
 /* fonction qui créé les scales de couleurs pour chaque polluant en fonction des min et max (appelé une seule fois) */
 function createScalesColorPol(){
     pollutants.forEach(function(pollutant){
@@ -227,7 +258,10 @@ function updatePol(){
 
     //console.log(colorpol[curPol].domain()[1]);
     //création des fonds de carte des smallMultiples
+    var i=0;
     SVGs.each(function(date){
+
+        var svg = d3.select(this);
 
         var map = d3.select(this).selectAll('path')
             .data(data);
@@ -238,6 +272,14 @@ function updatePol(){
                 "id":function(d){
                     return d.properties["NUTS_ID"] + date;
                 }
+            })
+            .on('mousemove', function(d) {
+                (function(j) {
+                    fillTooltip(d,date,j);
+                }) (i);
+            })
+            .on('mouseout', function() {
+                tooltip.classed('hidden', true);
             });
 
 
@@ -265,6 +307,8 @@ function updatePol(){
                 return "lightgrey";
             }
         });
+
+        i++;
     });
 
 }
@@ -273,6 +317,8 @@ function init(error,pollutions,density, pesticides, energie, nuclear, taxes,
               infantmort,transport, heartdiseases, cancer, motorcars, europe){
 
     if (error) throw error;
+
+    tooltip.classed('hidden', true);
 
     //on intègre la données de densité au données de pollution pour calibrer les scales de couleurs notamment
     density.forEach(function(dens){
