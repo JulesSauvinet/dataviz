@@ -21,7 +21,7 @@ var mapWidth = 230;
 var mapHeight = 180;
 
 //projection + path de l'europe d'une small map
-var projection = d3.geo.stereographic().center([3.9,43.0]).scale(375).translate([mapWidth / 2-20, mapHeight / 2+40]);
+var projection = d3.geo.stereographic().center([3.9,43.0]).scale(375).translate([mapWidth / 2-20, mapHeight / 2+43]);
 
 var path = d3.geo.path()
     .projection(projection);
@@ -35,6 +35,10 @@ var years = [/*"2000","2001","2002",*/"2003","2004","2005","2006","2007",
 
 var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
                   'PM10' : 'Particules 10', 'PM2_5': 'Particules 2.5', 'SOX' : 'Oxyde de soufre'};
+
+
+d3.select("#maps").append("h4").attr("id", "maptitle").attr("class", "maptitle");
+d3.select("#maps2").append("h4").attr("id", "map2title").attr("class", "maptitle");
 
 //on dessine une map pour chaque année pour la pollution
 var dateJoin = d3.select('#maps').selectAll('div.map').data(years);
@@ -130,6 +134,7 @@ function createPolDiv(pollutions){
         });
     radioSpan.append("label")
         .html(function(d, i) {  return d.last == true ? polNameMap[d] :  polNameMap[d] + '<br>'});
+
 }
 
 var mesures = ['Morts de cancers','Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales','Transport', 'Morts de maladies cardiaques',  'Moteurs de voitures'];
@@ -439,6 +444,7 @@ function createScalesColor(){
 /* fonction de mise a jour des smallMultiples de pollution */
 function updatePol(){
 
+
     var choice;
     d3.selectAll(".radiopol").each(function(d){
         rb = d3.select(this);
@@ -448,6 +454,8 @@ function updatePol(){
     });
 
     curPol = choice;
+
+    d3.select('#maptitle').html(polNameMap[curPol]);
 
     data = dataMap[curPol];
 
@@ -542,6 +550,8 @@ function updateMes(){
 
     curMes = mesuresCodes[choice];
 
+    d3.select('#map2title').html(choice);
+
     data = mesureMap[curMes];
     //console.log(data);
 
@@ -625,6 +635,7 @@ function init(error,pollutions,density, pesticides, energie, nuclear, taxes,
        insertDensity(dens,cancer);
        insertDensity(dens,motorcars);
     });
+
 
     //on créé le div des polluants
     createPolDiv(pollutions);
