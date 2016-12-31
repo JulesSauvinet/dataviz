@@ -511,29 +511,35 @@ function updatePol(){
         i++;
     });
 
-    // build the map legend
+
+    d3.select("#pollegend").selectAll(".svglegend").remove();
+
+    // build the map 1 legend
     // La légende
-    var nbItemLegend = [1,2,3,4,5];
+    var dataUpdate = [curPol+"1",curPol+"2",curPol+"3",curPol+"4",curPol+"5"];
 
-    /*var legend = d3.select("#pollegend").append("svg").selectAll(".legend")
-        .data(nbItemLegend)
-        .enter().append("g")
+    var legend = d3.select("#pollegend").append("svg").attr("class", "svglegend").selectAll(".legend")
+        .data(dataUpdate);
+
+    legend.enter().append("g")
         .attr("class", "legend")
-        .attr("transform", function(d, i) { return "translate("+(30) +"," + ((height - 200) +i * 15) + ")"; });
-
-    // draw legend colored circles
-    legend.append("circle")
+        .attr("transform", function(d, i) {return "translate("+(30) +"," + ((20) +i * 20) + ")"; })
+        .append("circle")
         .attr("r", 5)
-        .attr("fill", function(d,i) { return colorpol[curPol]((colorpol[curPol].domain()[1]/5)*d);})
+        .attr("fill", function(d,i) {
+            i=i+1;
+            return colorpol[curPol]((colorpol[curPol].domain()[1]/5)*i);})
         .attr("x", 40);
 
-    // draw legend text
     legend.append("text")
         .attr("x", 15)
         .attr("dy", ".35em")
-        .text(function(d) {
-            (colorpol[curPol].domain()[1]/5)*d;
-        });*/
+        .text(function(d,i) {
+            i=i+1;
+            return (colorpol[curPol].domain()[1]/5)*i;
+        });
+
+    legend.exit().remove();
 
 }
 
@@ -603,6 +609,35 @@ function updateMes(){
     });
 
 
+    // build the map 1 legend
+
+    d3.select("#meslegend").selectAll(".svglegend").remove();
+    // La légende
+    var dataUpdate = [curMes+"1",curMes+"2",curMes+"3",curMes+"4",curMes+"5"];
+
+
+    var legend = d3.select("#meslegend").append("svg").attr("class", "svglegend").selectAll(".legend")
+        .data(dataUpdate);
+
+    legend.enter().append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d, i) { return "translate("+(30) +"," + ((20) +i * 20) + ")"; })
+        .append("circle")
+        .attr("r", 5)
+        .attr("fill", function(d,i) {
+            i=i+1;
+            return colormes[curMes]((colormes[curMes].domain()[1]/5)*i);})
+        .attr("x", 40);
+
+    legend.append("text")
+        .attr("x", 15)
+        .attr("dy", ".35em")
+        .text(function(d,i) {
+            i=i+1;
+            return (colormes[curMes].domain()[1]/5)*i;
+        });
+
+    legend.exit().remove();
 }
 
 function insertDensity(dens, data){

@@ -31,25 +31,28 @@
     #settings {
         position: absolute;
         right: 0px;
-        width: 20%;
-        margin : 20px;
+        width: 21%;
     }
 
 
-    #content{
+    #mapsdiv{
         position: absolute;
         left: 0px;
-        width: 80%;
-        margin: 10px 20px 20px;
-        padding-right : 50px;
-        padding-left : 30px;
+        width: 76%;
+        padding-right : 20px;
+        padding-left : 10px;
+        margin-left:30px;
     }
-     #maps{
+    #maps{
         height : 45%;
+        padding-left: 30px;
+        padding-right: 10px;
     }
 
     #maps2{
         height : 45%;
+        padding-left: 30px;
+        padding-right: 10px;
     }
 
     .map{
@@ -72,7 +75,8 @@
 
     #pollutiondiv{
         position: relative;
-        margin : 30px;
+        margin : 10px;
+        margin-top:35px;
         /*border:1pt solid black;*/
         padding: 4px;
         width : 230px;
@@ -81,14 +85,16 @@
     #mesurediv{
         position: relative;
         margin: 10px;
-        margin-top:220px;
+        margin-top:40px;
         /*border:1pt solid black;*/
         padding: 4px;
         width : 250px;
     }
 
     form {
-        padding-left: 10px;
+        padding-left: 15px;
+        padding-bottom: 10px;
+
         padding-right: 10px;
         border: 1px solid lightgray;
     }
@@ -102,6 +108,11 @@
     }
     label.notSelected {
         color: lightgray;
+    }
+
+    .legend{
+        margin-left: 30px;
+
     }
 
     .background {
@@ -143,7 +154,7 @@
 
 <body>
 
-<div id = "content">
+<div id = "mapsdiv">
     <div id="maps"></div>
     <div id="maps2"></div>
     <footer>Source: <a href="http://http://ec.europa.eu/eurostat/data/database">eurostat</a></footer>
@@ -158,6 +169,7 @@
     <div id="pollegend"></div>
     <!---------------- RADIOLIST MESURES ------------------->
     <div id="mesurediv"></div>
+    <div id="meslegend"></div>
 </div>
 
 </body>
