@@ -5,6 +5,7 @@
 //TODO DESIGN
 //TODO CHARTS QUAND HOOVE
 //TODO UTF8
+//TODO FIX DONNEES MANQUANTES DUNE ANNEE SUR LAUTRE -> REMPLISSAGE NOIRES
 
 
 //NOT USED mais eventuellement la taille de la vizu
@@ -90,13 +91,13 @@ var tip = d3.tip()
     .html(function(d,date, isPol) {
         var toDisplay =  'Région :  ' +  d.properties["NAME"] +'</br>';
         if (isPol)
-            toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseFloat(d.properties[date]) + unitPolMap[curPol];
+            toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseFloat(d.properties[date])/parseFloat(d.properties['dens'][date]) + unitPolMap[curPol];
         else{
             var unit = '??';
             if (unitMesMap[curMes])
                 unit = unitMesMap[curMes];
             if (!isNaN(parseFloat(d.properties[date])))
-                toDisplay+=getNameFromMesCode(curMes) + ' : ' + parseFloat(d.properties[date]) + unit;
+                toDisplay+=getNameFromMesCode(curMes) + ' : ' + parseFloat(d.properties[date])/parseFloat(d.properties['dens'][date])/ + unit;
             else
                 toDisplay+=getNameFromMesCode(curMes) + ' : ND';
         }
