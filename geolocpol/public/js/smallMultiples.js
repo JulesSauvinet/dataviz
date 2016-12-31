@@ -6,6 +6,9 @@
 //TODO CHARTS QUAND HOOVE
 //TODO UTF8
 //TODO FIX DONNEES MANQUANTES DUNE ANNEE SUR LAUTRE -> REMPLISSAGE NOIRES
+//TODO ZOOM SUR CARTES
+//TODO CHANGER YEAR EN FONCTION DES DONNEES?
+//TODO VALEUR A LA PLACE DES YEAR QUAND ON HOOVER
 
 
 //NOT USED mais eventuellement la taille de la vizu
@@ -91,13 +94,13 @@ var tip = d3.tip()
     .html(function(d,date, isPol) {
         var toDisplay =  'Région :  ' +  d.properties["NAME"] +'</br>';
         if (isPol)
-            toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseInt(parseFloat(d.properties[date])/parseFloat(d.properties['dens'][date])) + ' ' + unitPolMap[curPol];
+            toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + (parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*100.0) + unitPolMap[curPol];
         else{
             var unit = '??';
             if (unitMesMap[curMes])
                 unit = unitMesMap[curMes];
             if (!isNaN(parseFloat(d.properties[date])))
-                toDisplay+=getNameFromMesCode(curMes) + ' : ' + parseInt(parseFloat(d.properties[date])/parseFloat(d.properties['dens'][date])) + unit;
+                toDisplay+=getNameFromMesCode(curMes) + ' : ' + parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*1000.0 + unit;
             else
                 toDisplay+=getNameFromMesCode(curMes) + ' : ND';
         }
@@ -204,6 +207,8 @@ function createMergedPolAndMapData(europe){
                     });
                     if (!d.properties.dens)
                         d.properties.dens = p["dens"];
+                    if (!d.properties.pop)
+                        d.properties.pop = p["pop"];
                 }
 
             });
@@ -234,6 +239,9 @@ function mergeData(data1,data2,mes){
                 });
                 if (!d.properties.dens)
                     d.properties.dens = p["dens"];
+
+                if (!d.properties.pop)
+                    d.properties.pop = p["pop"];
             }
             if (!unitMesMap[mes])
                 if (p['unit'])
@@ -319,9 +327,9 @@ function createScalesColor(){
         pollution.forEach(function(pol){
             if (geoPol[pollutant].includes(pol['geo'])){
                 for (var key in pol){
-                    if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens") {
+                    if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
                         //on ne base la scale que s'il y a une densité associé au code NUTS
-                        var value = parseFloat(pol[key]) / parseFloat(pol["dens"][key]);
+                        var value = parseFloat(pol[key]) / parseFloat(pol["pop"][key])*100.0;
                         var year = parseInt(key);
                         if (year >= 2003 && year <= 2014) {
                             if (parseFloat(pol[key]) !== 0 && value < parseFloat(min)) {
@@ -337,10 +345,10 @@ function createScalesColor(){
         pollution.forEach(function(pol){
             if (geoPol[pollutant].includes(pol['geo'])) {
                 for (var key in pol) {
-                    if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens") {
+                    if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
                         //on ne base la scale que s'il y a une densité associé au code NUTS
                         var year = parseInt(key);
-                        var value = parseFloat(pol[key]) / parseFloat(pol["dens"][year]);
+                        var value = parseFloat(pol[key]) / parseFloat(pol["pop"][year])*100.0;
                         if (year >= 2003 && year <= 2014) {
                             if (value > parseFloat(max)) {
                                 max = value;
@@ -358,7 +366,7 @@ function createScalesColor(){
         colorpol[pollutant] = color;
     });
 
-    var notYearKeys = ["dens", "sex", "age", "unit","icd10", "airsect", "geo", "airpol",
+    var notYearKeys = ["dens", "pop", "sex", "age", "unit","icd10", "airsect", "geo", "airpol",
                        "prod_nrg","engine", "indic_nv", "nst07", "pe_type", "product","indic_nrg", "tax",
                         "COUNTRY", "NAME", 'POPULATION', 'NUTS_ID'];
 
@@ -375,7 +383,7 @@ function createScalesColor(){
                 for (var key in md){
                     if (!notYearKeys.includes(key)) {
                         //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
-                        var value = parseFloat(md[key]) / parseFloat(md["dens"][key]);
+                        var value = parseFloat(md[key]) / parseFloat(md["pop"][key])*1000.0;
                         var year = parseInt(key);
                         if (year >= 2003 && year <= 2014) {
                             if (parseFloat(md[key]) !== 0 && value < parseFloat(min)) {
@@ -394,7 +402,7 @@ function createScalesColor(){
                 for (var key in md) {
                     if (!notYearKeys.includes(key)) {
                         //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
-                        var value = parseFloat(md[key]) / parseFloat(md["dens"][key]);
+                        var value = parseFloat(md[key]) / parseFloat(md["pop"][key])*1000.0;
                         var year = parseInt(key);
                         if (year >= 2003 && year <= 2014) {
                             if (value > parseFloat(max)) {
@@ -493,7 +501,7 @@ function updatePol(){
 
                 //console.log("pol : ", d.properties[date]);
 
-                var value = (parseFloat(d.properties[date])/parseFloat(d.properties["dens"][datebis]));
+                var value = (parseFloat(d.properties[date])/parseFloat(d.properties["pop"][date]))*100.0;
 
                 //console.log(value);
 
@@ -537,7 +545,7 @@ function updatePol(){
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            return parseInt((colorpol[curPol].domain()[1]/5)*i)+ ' ' + unitPolMap[curPol];
+            return ((colorpol[curPol].domain()[1]/5)*i)+ ' ' + unitPolMap[curPol];
         });
 
     legend.exit().remove();
@@ -572,7 +580,7 @@ function updateMes(){
         map.style("fill", function (d) {
             if (!isNaN(d.properties[date])){
                 var datebis = date;
-                var value = parseFloat(d.properties[date])/parseFloat(d.properties["dens"][datebis]);
+                var value = parseFloat(d.properties[date])/parseFloat(d.properties["pop"][datebis]);
                 return colormes[curMes](value);
             }
             else{
@@ -593,7 +601,7 @@ function updateMes(){
 
                 var datebis = date;
 
-                var value = parseFloat(d.properties[date])/parseFloat(d.properties["dens"][datebis]);
+                var value = parseFloat(d.properties[date])/parseFloat(d.properties["pop"][datebis])*1000.0;
 
                 return colormes[curMes](value);
             }
@@ -635,41 +643,54 @@ function updateMes(){
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            return parseInt((colormes[curMes].domain()[1]/5)*i)+' '+unitMesMap[curMes];
+            return ((colormes[curMes].domain()[1]/5)*i)+' '+unitMesMap[curMes];
         });
 
     legend.exit().remove();
 }
 
-function insertDensity(dens, data){
-    data.forEach(function(d){
-        if (!d['dens'])
-            d['dens']={};
-        if (d["geo"] === dens["geo"]){
+function insertDataAttribute(data1, data2, attribute){
+    data2.forEach(function(d){
+        if (!d[attribute])
+            d[attribute]={};
+        if (d["geo"] === data1["geo"]){
             years.forEach(function(year){
                 if (d[year])
-                    d['dens'][year]= dens[year];
+                    d[attribute][year]= data1[year];
             });
         }
     });
 }
 
-function init(error,pollutions,density, pesticides, energie, nuclear, taxes,
+function init(error,pollutions,density, population, pesticides, energie, nuclear, taxes,
               transport, heartdiseases, cancer, motorcars, europe){
 
     if (error) throw error;
 
     //on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
     density.forEach(function(dens){
-       insertDensity(dens,pollutions);
-       insertDensity(dens,pesticides);
-       insertDensity(dens,energie);
-       insertDensity(dens,nuclear);
-       insertDensity(dens,taxes);
-       insertDensity(dens,transport);
-       insertDensity(dens,heartdiseases);
-       insertDensity(dens,cancer);
-       insertDensity(dens,motorcars);
+        insertDataAttribute(dens,pollutions,'dens');
+        insertDataAttribute(dens,pesticides,'dens');
+        insertDataAttribute(dens,energie,'dens');
+        insertDataAttribute(dens,nuclear,'dens');
+        insertDataAttribute(dens,taxes,'dens');
+        insertDataAttribute(dens,transport,'dens');
+        insertDataAttribute(dens,heartdiseases,'dens');
+        insertDataAttribute(dens,cancer,'dens');
+        insertDataAttribute(dens,motorcars,'dens');
+    });
+
+    //on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
+    population.forEach(function(pop){
+        insertDataAttribute(pop,pollutions,'pop');
+        insertDataAttribute(pop,pesticides,'pop');
+        insertDataAttribute(pop,energie,'pop');
+        insertDataAttribute(pop,nuclear,'pop');
+        insertDataAttribute(pop,taxes,'pop');
+        insertDataAttribute(pop,transport,'pop');
+        insertDataAttribute(pop,heartdiseases,'pop');
+        insertDataAttribute(pop,cancer,'pop');
+        insertDataAttribute(pop,motorcars,'pop');
     });
 
 
@@ -720,6 +741,8 @@ queue()
     .defer(d3.tsv, "data/eurostats/clean/env_air_emission.tsv")
     //les données sur la densité pour la normalisation des scales
     .defer(d3.tsv, "data/eurostats/clean/demo_r_d3dens.tsv")
+    //les données sur la population pour la normalisation des scales
+    .defer(d3.tsv, "data/eurostats/clean/demo_r_d2jan.tsv")
     //les pesticides de 80 à 2008
     .defer(d3.tsv, "data/eurostats/clean/pesticides_sales2.tsv")
     //production d'energie par secteur
