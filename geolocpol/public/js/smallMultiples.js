@@ -522,13 +522,11 @@ function updateMes(){
     //console.log(data);
 
     SVGs2.each(function(date) {
-        
+
         d3.select(this).selectAll('path').remove();
 
         var map = d3.select(this).selectAll('path')
             .data(data);
-
-        map.exit().remove();
 
         map.style("fill", function (d) {
             if (!isNaN(d.properties[date])){
@@ -544,6 +542,7 @@ function updateMes(){
         map.enter().append("path")
             .attr({
                 "d": path,
+                "class" : "mappath",
                 "id": function (d) {
                     //console.log(d.properties["NUTS_ID"]);
                     return d.properties["NUTS_ID"] + '2' + date;
@@ -561,8 +560,6 @@ function updateMes(){
                 return "lightgrey";
             }
         });
-
-
 
         map.exit().remove();
 
