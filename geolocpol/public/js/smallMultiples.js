@@ -545,7 +545,7 @@ function updatePol(){
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            return (colorpol[curPol].domain()[1]/5)*i;
+            return ((colorpol[curPol].domain()[1]/5)*i)+ ' ' + unitPolMap[curPol];
         });
 
     legend.exit().remove();
@@ -643,7 +643,7 @@ function updateMes(){
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            return (colormes[curMes].domain()[1]/5)*i;
+            return ((colormes[curMes].domain()[1]/5)*i)+' '+unitMesMap[curMes];
         });
 
     legend.exit().remove();
