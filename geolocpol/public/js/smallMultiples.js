@@ -97,7 +97,7 @@ var tip = d3.tip()
             if (unitMesMap[curMes])
                 unit = unitMesMap[curMes];
             if (!isNaN(parseFloat(d.properties[date])))
-                toDisplay+=getNameFromMesCode(curMes) + ' : ' + parseFloat(d.properties[date])/parseFloat(d.properties['dens'][date])/ + unit;
+                toDisplay+=getNameFromMesCode(curMes) + ' : ' + parseFloat(d.properties[date])/parseFloat(d.properties['dens'][date]) + unit;
             else
                 toDisplay+=getNameFromMesCode(curMes) + ' : ND';
         }
