@@ -70,7 +70,6 @@ var SVGs2 = divs2.append('svg').attr({
     'class' : 'svgmap'
 });
 
-
 var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
@@ -214,7 +213,6 @@ function mergeData(data1,data2){
 
     return data1;
 }
-
 
 var geoMes = {};
 //TODO centraliser les données pour optimiser le stockage?
@@ -434,6 +432,7 @@ function updatePol(){
     var i=0;
     SVGs.each(function(date){
 
+
         var map = d3.select(this).selectAll('path')
             .data(data);
 
@@ -450,7 +449,6 @@ function updatePol(){
             .on('mouseout', tip.hide);
 
         map.style("fill", function (d) {
-
             if (!isNaN(d.properties[date])){
                 //WATCHOUT Statique on remplace la densité de 2001 par celle de 2000
                 // et celle de 2004 par celle de 2003 car données manquantes #empirisme
@@ -481,6 +479,30 @@ function updatePol(){
         i++;
     });
 
+    // build the map legend
+    // La légende
+    var nbItemLegend = [1,2,3,4,5];
+
+    /*var legend = d3.select("#pollegend").append("svg").selectAll(".legend")
+        .data(nbItemLegend)
+        .enter().append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d, i) { return "translate("+(30) +"," + ((height - 200) +i * 15) + ")"; });
+
+    // draw legend colored circles
+    legend.append("circle")
+        .attr("r", 5)
+        .attr("fill", function(d,i) { return colorpol[curPol]((colorpol[curPol].domain()[1]/5)*d);})
+        .attr("x", 40);
+
+    // draw legend text
+    legend.append("text")
+        .attr("x", 15)
+        .attr("dy", ".35em")
+        .text(function(d) {
+            (colorpol[curPol].domain()[1]/5)*d;
+        });*/
+
 }
 
 //TODO PRENDRE LES DONNEES DE POPULATION ANNEE PAR ANNEE
@@ -500,11 +522,24 @@ function updateMes(){
     //console.log(data);
 
     SVGs2.each(function(date) {
-
-        //d3.select(this).empty();
+        
+        d3.select(this).selectAll('path').remove();
 
         var map = d3.select(this).selectAll('path')
             .data(data);
+
+        map.exit().remove();
+
+        map.style("fill", function (d) {
+            if (!isNaN(d.properties[date])){
+                var datebis = date;
+                var value = parseFloat(d.properties[date])/parseFloat(d.properties["dens"][datebis]);
+                return colormes[curMes](value);
+            }
+            else{
+                return "lightgrey";
+            }
+        });
 
         map.enter().append("path")
             .attr({
@@ -513,20 +548,12 @@ function updateMes(){
                     //console.log(d.properties["NUTS_ID"]);
                     return d.properties["NUTS_ID"] + '2' + date;
                 }
-            });
-
-        map.style("fill", function (d) {
+            }).style("fill", function (d) {
             if (!isNaN(d.properties[date])){
 
-                //if (curMes === "pe")
-                //    console.log(d);
                 var datebis = date;
-                //console.log("pol : ", d.properties[date]);
 
-                //var value = parseFloat(d.properties[date])/parseFloat(d.properties["POPULATION"]);//parseFloat(d.properties["dens"][datebis]));
                 var value = parseFloat(d.properties[date])/parseFloat(d.properties["dens"][datebis]);
-
-                //console.log(value);
 
                 return colormes[curMes](value);
             }
@@ -534,6 +561,8 @@ function updateMes(){
                 return "lightgrey";
             }
         });
+
+
 
         map.exit().remove();
 
