@@ -91,13 +91,13 @@ var tip = d3.tip()
     .html(function(d,date, isPol) {
         var toDisplay =  'Région :  ' +  d.properties["NAME"] +'</br>';
         if (isPol)
-            toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseFloat(d.properties[date])/parseFloat(d.properties['dens'][date]) + unitPolMap[curPol];
+            toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseInt(parseFloat(d.properties[date])/parseFloat(d.properties['dens'][date])) + ' ' + unitPolMap[curPol];
         else{
             var unit = '??';
             if (unitMesMap[curMes])
                 unit = unitMesMap[curMes];
             if (!isNaN(parseFloat(d.properties[date])))
-                toDisplay+=getNameFromMesCode(curMes) + ' : ' + parseFloat(d.properties[date])/parseFloat(d.properties['dens'][date]) + unit;
+                toDisplay+=getNameFromMesCode(curMes) + ' : ' + parseInt(parseFloat(d.properties[date])/parseFloat(d.properties['dens'][date])) + unit;
             else
                 toDisplay+=getNameFromMesCode(curMes) + ' : ND';
         }
@@ -537,7 +537,7 @@ function updatePol(){
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            return (colorpol[curPol].domain()[1]/5)*i;
+            return parseInt((colorpol[curPol].domain()[1]/5)*i)+ ' ' + unitPolMap[curPol];
         });
 
     legend.exit().remove();
@@ -635,7 +635,7 @@ function updateMes(){
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            return (colormes[curMes].domain()[1]/5)*i;
+            return parseInt((colormes[curMes].domain()[1]/5)*i)+' '+unitMesMap[curMes];
         });
 
     legend.exit().remove();
