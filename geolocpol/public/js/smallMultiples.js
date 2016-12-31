@@ -3,7 +3,8 @@
 //TODO LEGENDE
 //TODO TITRES
 //TODO DESIGN
-//TODO CHARTS QUAND HOOVER
+//TODO CHARTS QUAND HOOVE
+//TODO UTF8
 
 
 //NOT USED mais eventuellement la taille de la vizu
@@ -13,6 +14,8 @@ var width = 1550, height = 800;
 var curPol = "NH3";
 var curMes = "c";
 var unitPolMap = {};
+var unitMesMap = {};
+
 //la taille d'une small map
 var mapWidth = 230;
 var mapHeight = 180;
@@ -70,12 +73,30 @@ var SVGs2 = divs2.append('svg').attr({
     'class' : 'svgmap'
 });
 
+function getNameFromMesCode(mesCode){
+    for (var mesure in mesuresCodes){
+        if (mesuresCodes[mesure] === mesCode)
+            return mesure;
+    }
+}
+
 var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
-    .html(function(d,date) {
-        var toDisplay =  'Code Pays :  ' +  d.properties["NUTS_ID"] +'</br>'
-            +'Pollution en ' + polNameMap[curPol] +' : ' + parseFloat(d.properties[date]) + unitPolMap[curPol];
+    .html(function(d,date, isPol) {
+        var toDisplay =  'Région :  ' +  d.properties["NAME"] +'</br>';
+        if (isPol)
+            toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseFloat(d.properties[date]) + unitPolMap[curPol];
+        else{
+            var unit = '??';
+            if (unitMesMap[curMes])
+                unit = unitMesMap[curMes];
+            if (!isNaN(parseFloat(d.properties[date])))
+                toDisplay+=getNameFromMesCode(curMes) + ' : ' + parseFloat(d.properties[date]) + unit;
+            else
+                toDisplay+=getNameFromMesCode(curMes) + ' : ND';
+        }
+
         return toDisplay;
     });
 
@@ -192,7 +213,7 @@ function createMergedPolAndMapData(europe){
     }
 }
 
-function mergeData(data1,data2){
+function mergeData(data1,data2,mes){
     var geos = [];
     data2.forEach(function(p){if (!geos.includes(p["geo"]))geos.push(p["geo"]);});
 
@@ -208,6 +229,9 @@ function mergeData(data1,data2){
                 if (!d.properties.dens)
                     d.properties.dens = p["dens"];
             }
+            if (!unitMesMap[mes])
+                if (p['unit'])
+                    unitMesMap[mes] = p['unit'];
         });
     });
 
@@ -225,47 +249,47 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     //pesticides
     var data1 = JSON.parse(JSON.stringify(dataRaw));
     pesticides.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_0"});
-    data1= mergeData(data1,pesticides);
+    data1= mergeData(data1,pesticides,'pe');
     mesureMap['pe'] = data1;
 
     //energie
     var data2 = JSON.parse(JSON.stringify(dataRaw));
     energie.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nv"] === "FEC_TOT"});
-    data2= mergeData(data2,energie);
+    data2= mergeData(data2,energie,'en');
     mesureMap['en'] = data2;
 
     //chauffage nucleaire
     var data3 = JSON.parse(JSON.stringify(dataRaw));
     nuclear.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nrg"] === "B_100100"});
-    data3 = mergeData(data3,nuclear);
+    data3 = mergeData(data3,nuclear,'cn');
     mesureMap['cn'] = data3;
 
     //taxes
     var data4 = JSON.parse(JSON.stringify(dataRaw));
     taxes.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["tax"] === "ENV"});
-    data4 = mergeData(data4,taxes);
+    data4 = mergeData(data4,taxes,'te');
     mesureMap['te'] = data4;
 
     //transport
     var data6 = JSON.parse(JSON.stringify(dataRaw));
     transport.filter(function(d,i){return d["geo"] != "EU15"});
-    data6 = mergeData(data6,transport);
+    data6 = mergeData(data6,transport,'tr');
     mesureMap['tr'] = data6;
 
     //heart diseases
     var data7 = JSON.parse(JSON.stringify(dataRaw));
-    data7 = mergeData(data7,heartdiseases);
+    data7 = mergeData(data7,heartdiseases, 'hd');
     mesureMap['hd'] = data7;
 
     //cancer
     var data8 = JSON.parse(JSON.stringify(dataRaw));
-    data8 = mergeData(data8,cancer);
+    data8 = mergeData(data8,cancer, 'c');
     mesureMap['c'] = data8;
 
     //motor cars
     var data9 = JSON.parse(JSON.stringify(dataRaw));
     motorcars.filter(function(d,i){return d["prod_nrg"] === "TOTAL" && d["engine"] === "TOTAL"});
-    data9 = mergeData(data9,motorcars);
+    data9 = mergeData(data9,motorcars, 'mv');
     mesureMap['mv'] = data9;
 
     for (var mesure in mesureMap){
@@ -444,7 +468,7 @@ function updatePol(){
                 }
             })
             .on('mouseover', function(d){
-                tip.show(d,date);
+                tip.show(d,date, true);
             })
             .on('mouseout', tip.hide);
 
@@ -559,7 +583,10 @@ function updateMes(){
             else{
                 return "lightgrey";
             }
-        });
+        }).on('mouseover', function(d){
+                tip.show(d,date, false);
+            })
+          .on('mouseout', tip.hide);
 
         map.exit().remove();
 
