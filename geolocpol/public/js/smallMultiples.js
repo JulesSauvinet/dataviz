@@ -713,7 +713,8 @@ function updateMes(){
     }
     var yearsD2 = [];
     for(var vari = 0; vari < lgt; vari++) {
-        yearsD2.push(yearsD[vari]);
+        if(parseInt(yearsD[vari]) > 2002)
+            yearsD2.push(yearsD[vari]);
     }
     yearsD2.sort();
 
