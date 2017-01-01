@@ -40,6 +40,20 @@ var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques'
                   'PM10' : 'Particules 10', 'PM2_5': 'Particules 2.5', 'SOX' : 'Oxyde de soufre'};
 
 
+var correspondanceMap = {'NH3' : ['Pesticides','Morts de cancers','Taxes environnementales','Energie',
+                                  'Chauffage Nucleaire','Morts de maladies cardiaques'/*,'Transport','Moteurs de voitures'*/],
+                         'NMVOC' : ['Morts de cancers','Morts de maladies cardiaques'/*,
+                                    'Taxes environnementales','Energie','Chauffage Nucleaire','Transport','Pesticides','Moteurs de voitures'*/],
+                         'NOX' : ['Chauffage Nucleaire','Energie'/*,'Moteurs de voitures','Transport',
+                                  'Morts de cancers','Morts de maladies cardiaques','Pesticides','Taxes environnementales'*/],
+                         'PM10' : ['Taxes environnementales','Energie','Transport','Morts de cancers',
+                                   'Morts de maladies cardiaques'/*,'Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
+                         'PM2_5' : ['Moteurs de voitures','Transport','Morts de cancers','Morts de maladies cardiaques'/*,
+                                    'Taxes environnementales','Energie','Chauffage Nucleaire','Pesticides'*/],
+                         'SOX' : ['Chauffage Nucleaire','Energie','Pesticides','Morts de cancers','Morts de maladies cardiaques'/*,
+                                  'Taxes environnementales','Transport','Moteurs de voitures'*/]
+                        };
+
 d3.select("#maps").append("h4").attr("id", "maptitle").attr("class", "maptitle");
 d3.select("#maps2").append("h4").attr("id", "map2title").attr("class", "maptitle");
 
@@ -144,10 +158,11 @@ function createPolDiv(pollutions){
 var mesures = ['Morts de cancers','Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales','Transport', 'Morts de maladies cardiaques',  'Moteurs de voitures'];
 var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
                     'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c', 'Moteurs de voitures' : 'mv'};
-function createMesureDiv() {
-    var fieldset = d3.select("#mesurediv").append("form");
+var fieldset,radioSpan;
+function createMesureDiv(mesuresTmp) {
+    fieldset = d3.select("#mesurediv").append("form");
     fieldset.append("legend").html("<h4>Choix mesure</h4>");
-    var radioSpan = fieldset.selectAll(".radio").data(mesures);
+    radioSpan = fieldset.selectAll(".radio").data(mesures);
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
@@ -166,6 +181,11 @@ function createMesureDiv() {
         });
     radioSpan.append("label")
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
+}
+
+function updateMesureDiv(mesuresTmp) {
+    radioSpan = fieldset.selectAll(".radio").data(mesuresTmp);
+    radioSpan.exit().remove();
 }
 
 /* ----------------------------- fonction qui créé les datasets des polluants pour chaque polluant ----------------------------- */
@@ -507,6 +527,7 @@ function updatePol() {
     });
 
     curPol = choice;
+    updateMesureDiv(correspondanceMap[curPol]);
 
     d3.select('#maptitle').html(polNameMap[curPol]);
 
@@ -624,13 +645,9 @@ function updateMes(){
             }
         });
     });
+    console.log("intersection : " + yearsD);
 
-    //dateJoin = d3.select('#maps').selectAll('div.map').data(years);
-    //dateJoin2 = d3.select('#maps2').selectAll('div.map').data(years);
-
-    //console.log("intersection : " + yearsD);
-
-    /*dateJoin = d3.select('#maps').selectAll('div.map').data(yearsD);
+    dateJoin = d3.select('#maps').selectAll('div.map').data(yearsD);
     dateJoin.exit().remove();
     divs = dateJoin.enter().append('div').attr({'id':function(d){ return 'map_'+d; },'class':'map'});
     divs.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
@@ -644,7 +661,9 @@ function updateMes(){
     divs2.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
     divs2.remove();
     SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-    SVGs2.remove();*/
+    SVGs2.remove();
+    
+    d3.select('#map2title').html(choice);
     
     d3.select('#map2title').html(choice);
 
@@ -806,7 +825,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     createPolDiv(pollutions);
 
     //on créé dynamiquement le div des mesures
-    createMesureDiv();
+    createMesureDiv(mesures);
 
     //On récupère la liste pollution en fonction du polluant (radio bouton) choisi
     createPolDatas(pollutions);
