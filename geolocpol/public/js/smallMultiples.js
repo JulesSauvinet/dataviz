@@ -806,17 +806,17 @@ queue()
     //les pesticides de 80 à 2008
     .defer(d3.tsv, "data/eurostats/clean/pesticides_sales2.tsv")
     //production d'energie par secteur
-    .defer(d3.tsv, "data/eurostats/clean/env_rpep.tsv")
+    .defer(d3.csv, "data/eurostats/clean/env_rpep2.csv")
     //les donnees du chauffage nucleaire
     .defer(d3.csv, "data/eurostats/clean/nuclear_heat.csv")
     //les donnees des taxes sur l'environnement
     .defer(d3.csv, "data/eurostats/clean/env_ac_taxes.csv")
     //les donnees du transport
-    .defer(d3.tsv, "data/eurostats/clean/road_go_na_rl3g_transport.tsv")
+    .defer(d3.csv, "data/eurostats/clean/road_go_na_rl3g_transport2.csv")
     //les donnees du chauffage nucleaire
-    .defer(d3.tsv, "data/eurostats/clean/tgs00059_ischaemic_heart_diseases.tsv")
+    .defer(d3.csv, "data/eurostats/clean/tgs00059_ischaemic_heart_diseases2.csv")
     //les donnees des morts de cancer
-    .defer(d3.tsv, "data/eurostats/clean/tgs00058_cancer.tsv")
+    .defer(d3.csv, "data/eurostats/clean/tgs00058_cancer2.csv")
     //les donnees de moteurs de voiture
     .defer(d3.csv, "data/eurostats/clean/type_of_motor_cars.csv")
     //la map de l'europe
