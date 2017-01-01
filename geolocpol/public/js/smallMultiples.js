@@ -274,7 +274,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     //pesticides
     var years1 = [];
     var data1 = JSON.parse(JSON.stringify(dataRaw));
-    pesticides.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_0"});
+    pesticides.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_1"});
     data1= mergeData(data1,pesticides,'pe');
     var yearsTmp = Object.keys(pesticides[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years1.push(d);}});
@@ -485,7 +485,7 @@ function createScalesColor(){
                 color.range(['pink', 'purple']);
                 break;
             case "mv":
-                color.range(['orange', 'brown']);
+                color.range(['pink', 'darkred']);
                 break;
         }
         color.domain([min,max]);
@@ -530,7 +530,7 @@ function updatePol() {
             .on('mouseover', function(d){
                 tip.show(d,date, true);
                 years.forEach(function(year){
-                    var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year]));
+                    var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*10000.0).toFixed(0);
                     d3.select('.title'+year).html(value);
                 });
             })
@@ -711,7 +711,7 @@ function updateMes(){
             }).on('mouseover', function(d){
                     tip.show(d,date, false);
                     years.forEach(function(year){
-                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year]));
+                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*1000.0).toFixed(4);
                         d3.select('.title2'+year).html(value);
                     });
                 })
