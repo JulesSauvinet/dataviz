@@ -645,9 +645,9 @@ function updateMes(){
             }
         });
     });
-    console.log("intersection : " + yearsD);
+    //console.log("intersection : " + yearsD);
 
-    dateJoin = d3.select('#maps').selectAll('div.map').data(yearsD);
+    /*dateJoin = d3.select('#maps').selectAll('div.map').data(yearsD);
     dateJoin.exit().remove();
     divs = dateJoin.enter().append('div').attr({'id':function(d){ return 'map_'+d; },'class':'map'});
     divs.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
@@ -661,9 +661,7 @@ function updateMes(){
     divs2.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
     divs2.remove();
     SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-    SVGs2.remove();
-    
-    d3.select('#map2title').html(choice);
+    SVGs2.remove();*/
     
     d3.select('#map2title').html(choice);
 
