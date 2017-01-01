@@ -152,6 +152,7 @@ function createPolDiv(pollutions){
             value: function(d) { return d }
         });
     radioSpan.append("label")
+        .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? polNameMap[d] :  polNameMap[d] + '<br>'});
 
 }
@@ -182,11 +183,33 @@ function createMesureDiv(mesuresTmp) {
             value: function(d) { return d }
         });
     radioSpan.append("label")
+
+        .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
 }
 
 function updateMesureDiv(mesuresTmp) {
+    fieldset.selectAll(".radiomesure").remove();
+    fieldset.selectAll(".radiolabel").remove();
+
     radioSpan = fieldset.selectAll(".radio").data(mesuresTmp);
+
+    radioSpan.append("input")
+        .attr({
+            type: "radio",
+            name: "mesure",
+            class : "radiomesure",
+            id : function(d,i) { return 'mesureradio' + i;},
+            value : function(d,i) { return mesuresCodes[d];}
+        })
+        .property({
+            checked: function(d,i) { return (i ===0); },
+            value: function(d) { return d }
+        });
+    radioSpan.append("label")
+        .attr('class', 'radiolabel')
+        .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
+
     radioSpan.exit().remove();
 }
 
@@ -529,7 +552,7 @@ function updatePol() {
     });
 
     curPol = choice;
-    updateMesureDiv(correspondanceMap[curPol]);
+    //updateMesureDiv(correspondanceMap[curPol]);
 
     d3.select('#maptitle').html(polNameMap[curPol]);
 
