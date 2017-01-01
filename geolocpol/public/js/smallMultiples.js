@@ -236,7 +236,7 @@ function mergeData(data1,data2,mes){
 
     data1= data1.filter(function(d,i){return geos.includes(d.properties["NUTS_ID"])});
 
-    console.log(mes);
+    //console.log(mes);
 
     data1.forEach(function(d) {
         data2.forEach(function (p) {
@@ -552,7 +552,7 @@ function updatePol() {
                 return colorpol[curPol](value);
             }
             else{
-                console.log(d);
+                //console.log(d);
                 return "lightgrey";
             }
         });
@@ -617,7 +617,7 @@ function updateMes(){
         });
     });
 
-    console.log(years);
+    //console.log(years);
 
     dateJoin = d3.select('#maps').selectAll('div.map').data(years);
 
@@ -654,21 +654,40 @@ function updateMes(){
                     return d.properties["NUTS_ID"] + '2' + date;
                 }
             }).style("fill", function (d) {
-            if (!isNaN(d.properties[date])){
+                if (!isNaN(d.properties[date])){
 
-                var datebis = date;
+                    var datebis = date;
 
-                var value = parseFloat(d.properties[date])/parseFloat(d.properties["pop"][datebis])*1000.0;
+                    var datebis = parseInt(datebis);
+                    if (!d.properties["pop"][datebis]){
+                        for (var i=1; i<=10; i++){
+                            if(d.properties["pop"][datebis+i]){
+                                d.properties["pop"][datebis] = d.properties["pop"][datebis+i];
+                                break;
+                            }
+                            else if (d.properties["pop"][datebis-i]){
+                                d.properties["pop"][datebis] = d.properties["pop"][datebis-i];
+                                break;
+                            }
+                        }
+                    }
 
-                return colormes[curMes](value);
-            }
-            else{
-                return "lightgrey";
-            }
-        }).on('mouseover', function(d){
-                tip.show(d,date, false);
-            })
-          .on('mouseout', tip.hide);
+
+                    if (d.properties["pop"][datebis]){
+                        var value = parseFloat(d.properties[date])/parseFloat(d.properties["pop"][datebis])*1000.0;
+                        return colormes[curMes](value);
+                    }
+                    else {
+                        return "lightgrey";
+                    }
+                }
+                else{
+                    return "lightgrey";
+                }
+            }).on('mouseover', function(d){
+                    tip.show(d,date, false);
+                })
+              .on('mouseout', tip.hide);
 
         map.exit().remove();
     });
@@ -719,7 +738,7 @@ function insertDataAttribute(data1, data2, attribute){
 }
 
 function init(error,pollutions,density, population, pesticides, energie, nuclear, taxes,
-              transport, heartdiseases, cancer, motorcars, europe){
+              transport, heartdiseases, cancer, motorcars, animals, europe){
 
     if (error) throw error;
 
@@ -819,6 +838,8 @@ queue()
     .defer(d3.csv, "data/eurostats/clean/tgs00058_cancer2.csv")
     //les donnees de moteurs de voiture
     .defer(d3.csv, "data/eurostats/clean/type_of_motor_cars.csv")
+    //la population animale
+    .defer(d3.csv, "data/eurostats/clean/agr_r_animal.tsv")
     //la map de l'europe
     .defer(d3.json,"geodata/euro/eurotopo.json")
     .await(init);
