@@ -170,6 +170,7 @@ function createMesureDiv() {
 }
 
 var polMap = {};
+var yearPol = [];
 /* fonction qui créé les datasets des polluants pour chaque polluant*/
 function createPolDatas(pollutions){
     pollutants.forEach(function(pollutant){
@@ -181,6 +182,8 @@ function createPolDatas(pollutions){
         });
         polMap[pollutant] = pollution;
     });
+    yearsTmp = Object.keys(pollutions[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {yearPol.push(parseInt(d));}});
 }
 
 var dataMap = {};
