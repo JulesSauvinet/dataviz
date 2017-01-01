@@ -681,9 +681,20 @@ function updateMes(){
             }
         });
     });
-    console.log("intersection : " + yearsD);
+    yearsD.reverse();
+    if (12 < yearsD.length) {
+        var lgt = 12;
+    }
+    else {
+        var lgt  = yearsD.length;
+    }
+    var yearsD2 = [];
+    for(var vari = 0; vari < lgt; vari++) {
+        yearsD2.push(yearsD[vari]);
+    }
+    yearsD2.sort();
 
-    updateDate(yearsD);
+    updateDate(yearsD2);
 
     d3.select('#map2title').html(choice);
 
