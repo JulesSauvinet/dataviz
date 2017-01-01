@@ -45,6 +45,7 @@ d3.select("#maps").append("h4").attr("id", "maptitle").attr("class", "maptitle")
 d3.select("#maps2").append("h4").attr("id", "map2title").attr("class", "maptitle");
 
 //on dessine une map pour chaque année pour la pollution
+
 var dateJoin = d3.select('#maps').selectAll('div.map').data(years);
 
 var divs = dateJoin.enter()
@@ -52,7 +53,6 @@ var divs = dateJoin.enter()
         'id':function(d){ return 'map_'+d; },
         'class':'map'
     });
-
 
 divs.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
 
@@ -497,8 +497,7 @@ function createScalesColor(){
 }
 
 /* fonction de mise a jour des smallMultiples de pollution */
-function updatePol(){
-
+function updatePol() {
 
     var choice;
     d3.selectAll(".radiopol").each(function(d){
@@ -518,7 +517,6 @@ function updatePol(){
     //création des fonds de carte des smallMultiples
     var i=0;
     SVGs.each(function(date){
-
 
         var map = d3.select(this).selectAll('path')
             .data(data);
@@ -565,8 +563,6 @@ function updatePol(){
 
         i++;
     });
-
-
     d3.select("#pollegend").selectAll(".svglegend").remove();
 
     // build the map 1 legend
@@ -611,8 +607,7 @@ function updateMes(){
 
     curMes = mesuresCodes[choice];
     yearsMes = yearsMesureMap[curMes];
-    console.log("On a choisi " + choice + ", ce qui donne " + curMes +" et voila le vecteur annee " + yearsMes);
-    years = []
+    years = [];
 
     yearPol.forEach(function(d) {
         yearsMes.forEach(function(e) {
@@ -622,10 +617,15 @@ function updateMes(){
         });
     });
 
+    console.log(years);
+
+    dateJoin = d3.select('#maps').selectAll('div.map').data(years);
+
+    dateJoin2 = d3.select('#maps2').selectAll('div.map').data(years);
+    
     d3.select('#map2title').html(choice);
 
     data = mesureMap[curMes];
-    //console.log(data);
 
     SVGs2.each(function(date) {
 
@@ -671,7 +671,6 @@ function updateMes(){
           .on('mouseout', tip.hide);
 
         map.exit().remove();
-
     });
 
 
@@ -769,7 +768,6 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
 
     //on créé les scales de couleurs pour chaque polluants
     createScalesColor();
-
 
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=pol]")
