@@ -225,10 +225,14 @@ function createMergedPolAndMapData(europe){
 }
 
 function mergeData(data1,data2,mes){
+    /* data1 = donnees polluants */
+    /* data2 = donnees correlation */
     var geos = [];
     data2.forEach(function(p){if (!geos.includes(p["geo"]))geos.push(p["geo"]);});
 
     data1= data1.filter(function(d,i){return geos.includes(d.properties["NUTS_ID"])});
+
+    console.log(mes);
 
     data1.forEach(function(d) {
         data2.forEach(function (p) {
@@ -255,56 +259,89 @@ function mergeData(data1,data2,mes){
 var geoMes = {};
 //TODO centraliser les données pour optimiser le stockage?
 var mesureMap = {};
+var yearsMesureMap = {};
 function createMesureData(europe, pesticides, energie, nuclear, taxes,
                           transport, heartdiseases, cancer, motorcars){
 
     var dataRaw = topojson.feature(europe, europe.objects.regions).features;
 
     //pesticides
+    var years1 = [];
     var data1 = JSON.parse(JSON.stringify(dataRaw));
     pesticides.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_0"});
     data1= mergeData(data1,pesticides,'pe');
+    yearsTmp = Object.keys(pesticides[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years1.push(parseInt(d));}});
     mesureMap['pe'] = data1;
+    yearsMesureMap['pe'] = years1;
 
     //energie
+    var years2 = [];
     var data2 = JSON.parse(JSON.stringify(dataRaw));
     energie.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nv"] === "FEC_TOT"});
     data2= mergeData(data2,energie,'en');
+    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years2.push(parseInt(d));}});
     mesureMap['en'] = data2;
+    yearsMesureMap['en'] = years2;
 
     //chauffage nucleaire
+    var years3 = [];
     var data3 = JSON.parse(JSON.stringify(dataRaw));
     nuclear.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nrg"] === "B_100100"});
     data3 = mergeData(data3,nuclear,'cn');
+    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years3.push(parseInt(d));}});
     mesureMap['cn'] = data3;
+    yearsMesureMap['cn'] = years3;
 
     //taxes
+    var years4 = [];
     var data4 = JSON.parse(JSON.stringify(dataRaw));
     taxes.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["tax"] === "ENV"});
     data4 = mergeData(data4,taxes,'te');
+    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years4.push(parseInt(d));}});
     mesureMap['te'] = data4;
+    yearsMesureMap['te'] = years4;
 
     //transport
+    var years6 = [];
     var data6 = JSON.parse(JSON.stringify(dataRaw));
     transport.filter(function(d,i){return d["geo"] != "EU15"});
     data6 = mergeData(data6,transport,'tr');
+    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years6.push(parseInt(d));}});
     mesureMap['tr'] = data6;
+    yearsMesureMap['tr'] = years6;
 
     //heart diseases
+    var years7 = [];
     var data7 = JSON.parse(JSON.stringify(dataRaw));
     data7 = mergeData(data7,heartdiseases, 'hd');
+    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years7.push(parseInt(d));}});
     mesureMap['hd'] = data7;
+    yearsMesureMap['hd'] = years7;
 
     //cancer
+    var years8 = [];
     var data8 = JSON.parse(JSON.stringify(dataRaw));
     data8 = mergeData(data8,cancer, 'c');
+    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years8.push(parseInt(d));}});
     mesureMap['c'] = data8;
+    yearsMesureMap['c'] = years8;
 
     //motor cars
+    var years9 = [];
     var data9 = JSON.parse(JSON.stringify(dataRaw));
     motorcars.filter(function(d,i){return d["prod_nrg"] === "TOTAL" && d["engine"] === "TOTAL"});
+    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years9.push(parseInt(d));}});
     data9 = mergeData(data9,motorcars, 'mv');
     mesureMap['mv'] = data9;
+    yearsMesureMap['mv'] = years9;
 
     for (var mesure in mesureMap){
         geoMes[mesure]=[];
