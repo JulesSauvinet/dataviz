@@ -60,6 +60,7 @@ d3.select("#maps2").append("h4").attr("id", "map2title").attr("class", "maptitle
 //on dessine une map pour chaque année pour la pollution
 
 var dateJoin = d3.select('#maps').selectAll('div.map').data(years);
+dateJoin.exit().remove();
 
 var divs = dateJoin.enter()
     .append('div').attr({
@@ -78,6 +79,7 @@ var SVGs = divs.append('svg').attr({
 
 //on dessine une map pour chaque année pour les mesures
 var dateJoin2 = d3.select('#maps2').selectAll('div.map').data(years);
+dateJoin2.exit().remove();
 
 var divs2 = dateJoin2.enter()
     .append('div').attr({
@@ -623,6 +625,40 @@ function updatePol() {
 
 }
 
+function updateDate(yearsD){
+
+    d3.selectAll('.maptitle').remove();
+    d3.selectAll('div.map').remove();
+
+    d3.select("#maps").append("h4").attr("id", "maptitle").attr("class", "maptitle");
+    d3.select("#maps2").append("h4").attr("id", "map2title").attr("class", "maptitle");
+
+    dateJoin = d3.select('#maps').selectAll('div.map').data(yearsD);
+    dateJoin2 = d3.select('#maps2').selectAll('div.map').data(yearsD);
+
+    dateJoin.exit().remove();
+    dateJoin2.exit().remove();
+
+
+    //divs.remove();
+    divs = dateJoin.enter().append('div').attr({'id':function(d){ return 'map_'+d; },'class':'map'});
+
+    //divs2.remove();
+    divs2 = dateJoin2.enter().append('div').attr({'id':function(d){ return 'map2_'+d; },'class':'map'});
+
+    divs.append('p').attr({'class' : function(d){ return 'pmap ' + 'title'+d;}}).text(function(d){ return dateFormat(new Date(d)); });
+
+    divs2.append('p').attr({'class' : function(d){ return 'pmap ' + 'title2'+d;}}).text(function(d){ return dateFormat(new Date(d)); });
+
+    //
+    //SVGs.remove();
+    SVGs = divs.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
+
+    //SVGs2.remove();
+    SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
+
+}
+
 //TODO PRENDRE LES DONNEES DE POPULATION ANNEE PAR ANNEE
 /* fonction de mise a jour des smallMultiples de mesure */
 function updateMes(){
@@ -645,30 +681,16 @@ function updateMes(){
             }
         });
     });
-    //console.log("intersection : " + yearsD);
+    console.log("intersection : " + yearsD);
 
-    /*dateJoin = d3.select('#maps').selectAll('div.map').data(yearsD);
-    dateJoin.exit().remove();
-    divs = dateJoin.enter().append('div').attr({'id':function(d){ return 'map_'+d; },'class':'map'});
-    divs.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
-    divs.remove();
-    SVGs = divs.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-    SVGs.remove();
+    updateDate(yearsD);
 
-    dateJoin2 = d3.select('#maps2').selectAll('div.map').data(yearsD);
-    dateJoin2.exit().remove();
-    divs2 = dateJoin2.enter().append('div').attr({'id':function(d){ return 'map2_'+d; },'class':'map'});
-    divs2.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
-    divs2.remove();
-    SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-    SVGs2.remove();*/
-    
     d3.select('#map2title').html(choice);
 
     data = mesureMap[curMes];
 
     SVGs2.each(function(date) {
-        //console.log(date);
+        console.log(date);
 
         d3.select(this).selectAll('path').remove();
 
@@ -848,13 +870,15 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     d3.selectAll("input[type=radio][name=mesure]")
         .on("change", function() {
             updateMes();
+            updatePol();
         });
+
+    //on affiche les smallMultiples de mesure
+    updateMes();
 
     //on affiche les smallMultiples de pollution
     updatePol();
 
-    //on affiche les smallMultiples de mesure
-    updateMes();
 
     // l'idée serait de récupérer la valeur du 1er bouton radio puis la valeur du 2eme bouton radio
     // définir le vecteur des années pour lesquelles on va afficher des smallMaps
