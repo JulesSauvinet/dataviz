@@ -184,7 +184,7 @@ function createPolDatas(pollutions){
         polMap[pollutant] = pollution;
     });
     yearsTmp = Object.keys(pollutions[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {yearPol.push(parseInt(d));}});
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {yearPol.push(d);}});
 }
 
 /* ------------------ fonction pour un dataset contenant les données de map + du polluant courant sélectionné ------------------ */
@@ -278,7 +278,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     pesticides.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_0"});
     data1= mergeData(data1,pesticides,'pe');
     var yearsTmp = Object.keys(pesticides[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years1.push(parseInt(d));}});
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years1.push(d);}});
     mesureMap['pe'] = data1;
     yearsMesureMap['pe'] = years1;
 
@@ -288,7 +288,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     energie.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nv"] === "FEC_TOT"});
     data2= mergeData(data2,energie,'en');
     yearsTmp = Object.keys(energie[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years2.push(parseInt(d));}});
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years2.push(d);}});
     mesureMap['en'] = data2;
     yearsMesureMap['en'] = years2;
 
@@ -298,7 +298,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     nuclear.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nrg"] === "B_100100"});
     data3 = mergeData(data3,nuclear,'cn');
     yearsTmp = Object.keys(nuclear[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years3.push(parseInt(d));}});
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years3.push(d);}});
     mesureMap['cn'] = data3;
     yearsMesureMap['cn'] = years3;
 
@@ -308,7 +308,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     taxes.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["tax"] === "ENV"});
     data4 = mergeData(data4,taxes,'te');
     yearsTmp = Object.keys(taxes[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years4.push(parseInt(d));}});
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years4.push(d);}});
     mesureMap['te'] = data4;
     yearsMesureMap['te'] = years4;
 
@@ -318,7 +318,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     transport.filter(function(d,i){return d["geo"] != "EU15"});
     data6 = mergeData(data6,transport,'tr');
     yearsTmp = Object.keys(transport[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years6.push(parseInt(d));}});
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years6.push(d);}});
     mesureMap['tr'] = data6;
     yearsMesureMap['tr'] = years6;
 
@@ -327,7 +327,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     var data7 = JSON.parse(JSON.stringify(dataRaw));
     data7 = mergeData(data7,heartdiseases, 'hd');
     yearsTmp = Object.keys(heartdiseases[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years7.push(parseInt(d));}});
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years7.push(d);}});
     mesureMap['hd'] = data7;
     yearsMesureMap['hd'] = years7;
 
@@ -336,7 +336,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     var data8 = JSON.parse(JSON.stringify(dataRaw));
     data8 = mergeData(data8,cancer, 'c');
     yearsTmp = Object.keys(motorcars[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years8.push(parseInt(d));}});
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years8.push(d);}});
     mesureMap['c'] = data8;
     yearsMesureMap['c'] = years8;
 
@@ -607,27 +607,39 @@ function updateMes(){
 
     curMes = mesuresCodes[choice];
     yearsMes = yearsMesureMap[curMes];
-    years = [];
+    yearsD = [];
 
     yearPol.forEach(function(d) {
         yearsMes.forEach(function(e) {
             if( d == e ) {
-                years.push(d);
+                yearsD.push(d);
             }
         });
     });
+    console.log("intersection : " + yearsD);
 
-    console.log(years);
+    dateJoin = d3.select('#maps').selectAll('div.map').data(yearsD);
+    dateJoin.exit().remove();
+    divs = dateJoin.enter().append('div').attr({'id':function(d){ return 'map_'+d; },'class':'map'});
+    divs.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
+    divs.remove();
+    SVGs = divs.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
+    SVGs.remove();
 
-    dateJoin = d3.select('#maps').selectAll('div.map').data(years);
-
-    dateJoin2 = d3.select('#maps2').selectAll('div.map').data(years);
+    dateJoin2 = d3.select('#maps2').selectAll('div.map').data(yearsD);
+    dateJoin2.exit().remove();
+    divs2 = dateJoin2.enter().append('div').attr({'id':function(d){ return 'map2_'+d; },'class':'map'});
+    divs2.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
+    divs2.remove();
+    SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
+    SVGs2.remove();
     
     d3.select('#map2title').html(choice);
 
     data = mesureMap[curMes];
 
     SVGs2.each(function(date) {
+        console.log(date);
 
         d3.select(this).selectAll('path').remove();
 
