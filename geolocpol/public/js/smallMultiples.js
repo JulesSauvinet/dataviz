@@ -110,7 +110,7 @@ var tip = d3.tip()
 
 //TODO UN SEUL DATA?
 var pollutants = [];
-/* fonction pour créer le div des polluants de manière dynamique */
+/* ----------------------------- fonction pour créer le div des polluants de manière dynamique ----------------------------- */
 function createPolDiv(pollutions){
     pollutions.forEach(function(p){
         if (!pollutants.includes(p.airpol)) {
@@ -141,10 +141,10 @@ function createPolDiv(pollutions){
 
 }
 
+/* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
 var mesures = ['Morts de cancers','Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales','Transport', 'Morts de maladies cardiaques',  'Moteurs de voitures'];
 var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
-    'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c', 'Moteurs de voitures' : 'mv'};
-/* fonction pour créer le div des mesures de manière dynamique */
+                    'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c', 'Moteurs de voitures' : 'mv'};
 function createMesureDiv() {
     var fieldset = d3.select("#mesurediv").append("form");
     fieldset.append("legend").html("<h4>Choix mesure</h4>");
@@ -169,9 +169,10 @@ function createMesureDiv() {
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
 }
 
+/* ----------------------------- fonction qui créé les datasets des polluants pour chaque polluant ----------------------------- */
+/* ------------------------------ on récupère ici les années disponibles dans le fichier polluant ------------------------------ */
 var polMap = {};
 var yearPol = [];
-/* fonction qui créé les datasets des polluants pour chaque polluant*/
 function createPolDatas(pollutions){
     pollutants.forEach(function(pollutant){
         var geoNot = ["EU28"/*, "CH"*/];
@@ -186,9 +187,9 @@ function createPolDatas(pollutions){
     yearsTmp.forEach(function(d) {if(parseInt(d)) {yearPol.push(parseInt(d));}});
 }
 
+/* ------------------ fonction pour un dataset contenant les données de map + du polluant courant sélectionné ------------------ */
 var dataMap = {};
 var geoPol = {};
-/* fonction pour un dataset contenant les données de map + du polluant courant sélectionné*/
 function createMergedPolAndMapData(europe){
     pollutants.forEach(function(pollutant){
         var pollution = polMap[pollutant];
@@ -260,7 +261,8 @@ function mergeData(data1,data2,mes){
 }
 
 
-// ------------------------------- Mapping des donnees de correlation pour le stockage -------------------------------
+/* ------------------------------------ Mapping des donnees de correlation pour le stockage ------------------------------------ */
+/* ------------------------------ on récupère ici les années disponibles dans le fichier polluant ------------------------------ */
 //TODO centraliser les données pour optimiser le stockage?
 var geoMes = {};
 var mesureMap = {};
@@ -275,7 +277,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     var data1 = JSON.parse(JSON.stringify(dataRaw));
     pesticides.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_0"});
     data1= mergeData(data1,pesticides,'pe');
-    yearsTmp = Object.keys(pesticides[0]);
+    var yearsTmp = Object.keys(pesticides[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years1.push(parseInt(d));}});
     mesureMap['pe'] = data1;
     yearsMesureMap['pe'] = years1;
@@ -285,7 +287,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     var data2 = JSON.parse(JSON.stringify(dataRaw));
     energie.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nv"] === "FEC_TOT"});
     data2= mergeData(data2,energie,'en');
-    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp = Object.keys(energie[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years2.push(parseInt(d));}});
     mesureMap['en'] = data2;
     yearsMesureMap['en'] = years2;
@@ -295,7 +297,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     var data3 = JSON.parse(JSON.stringify(dataRaw));
     nuclear.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nrg"] === "B_100100"});
     data3 = mergeData(data3,nuclear,'cn');
-    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp = Object.keys(nuclear[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years3.push(parseInt(d));}});
     mesureMap['cn'] = data3;
     yearsMesureMap['cn'] = years3;
@@ -305,7 +307,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     var data4 = JSON.parse(JSON.stringify(dataRaw));
     taxes.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["tax"] === "ENV"});
     data4 = mergeData(data4,taxes,'te');
-    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp = Object.keys(taxes[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years4.push(parseInt(d));}});
     mesureMap['te'] = data4;
     yearsMesureMap['te'] = years4;
@@ -315,7 +317,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     var data6 = JSON.parse(JSON.stringify(dataRaw));
     transport.filter(function(d,i){return d["geo"] != "EU15"});
     data6 = mergeData(data6,transport,'tr');
-    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp = Object.keys(transport[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years6.push(parseInt(d));}});
     mesureMap['tr'] = data6;
     yearsMesureMap['tr'] = years6;
@@ -324,7 +326,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     var years7 = [];
     var data7 = JSON.parse(JSON.stringify(dataRaw));
     data7 = mergeData(data7,heartdiseases, 'hd');
-    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp = Object.keys(heartdiseases[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years7.push(parseInt(d));}});
     mesureMap['hd'] = data7;
     yearsMesureMap['hd'] = years7;
@@ -608,6 +610,17 @@ function updateMes(){
     });
 
     curMes = mesuresCodes[choice];
+    yearsMes = yearsMesureMap[curMes];
+    console.log("On a choisi " + choice + ", ce qui donne " + curMes +" et voila le vecteur annee " + yearsMes);
+    years = []
+
+    yearPol.forEach(function(d) {
+        yearsMes.forEach(function(e) {
+            if( d == e ) {
+                years.push(d);
+            }
+        });
+    });
 
     d3.select('#map2title').html(choice);
 
@@ -751,7 +764,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     createMergedPolAndMapData(europe);
 
     //on créé des variables globales pour les données des mesures //TODO fix this
-    createMesureData(europe, pesticides, energie, nuclear, taxes,transport, heartdiseases, cancer, motorcars);
+    createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases, cancer, motorcars);
     //console.log(dataMap);
 
     //on créé les scales de couleurs pour chaque polluants
@@ -775,6 +788,11 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
 
     //on affiche les smallMultiples de mesure
     updateMes();
+
+    // l'idée serait de récupérer la valeur du 1er bouton radio puis la valeur du 2eme bouton radio
+    // définir le vecteur des années pour lesquelles on va afficher des smallMaps
+    // définir les scales de couleurs en fonction du vecteur des années
+    // afficher les smallMaps
 }
 
 
