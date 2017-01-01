@@ -1,11 +1,9 @@
-//TODO PRENDRE EN COMPTE LA POPULATION DANS LES SCALES, ET NON LA DENSITE??!!!!!!!!! enfin de MESURE AU MOINS
-//E.G regarder cancer et heartdisease
+//IDEES
+//demographie ou densité?
+
 //TODO LEGENDE
-//TODO TITRES
 //TODO DESIGN
 //TODO CHARTS QUAND HOOVE
-//TODO UTF8
-//TODO FIX DONNEES MANQUANTES DUNE ANNEE SUR LAUTRE -> REMPLISSAGE NOIRES
 //TODO ZOOM SUR CARTES
 //TODO CHANGER YEAR EN FONCTION DES DONNEES?
 //TODO VALEUR A LA PLACE DES YEAR QUAND ON HOOVER
@@ -94,13 +92,13 @@ var tip = d3.tip()
     .html(function(d,date, isPol) {
         var toDisplay =  'Région :  ' +  d.properties["NAME"] +'</br>';
         if (isPol)
-            toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + (parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*100.0) + unitPolMap[curPol];
+            toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseInt(parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*10000.0) + unitPolMap[curPol] + '/10000 habs';
         else{
             var unit = '??';
             if (unitMesMap[curMes])
                 unit = unitMesMap[curMes];
             if (!isNaN(parseFloat(d.properties[date])))
-                toDisplay+=getNameFromMesCode(curMes) + ' : ' + parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*1000.0 + unit;
+                toDisplay+=getNameFromMesCode(curMes) + ' : ' + (parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*1000.0).toFixed(4) + unit + '/1000 habs';
             else
                 toDisplay+=getNameFromMesCode(curMes) + ' : ND';
         }
@@ -375,7 +373,7 @@ function createScalesColor(){
                 for (var key in pol){
                     if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
                         //on ne base la scale que s'il y a une densité associé au code NUTS
-                        var value = parseFloat(pol[key]) / parseFloat(pol["pop"][key])*100.0;
+                        var value = parseFloat(pol[key]) / parseFloat(pol["pop"][key]);
                         var year = parseInt(key);
                         if (year >= 2003 && year <= 2014) {
                             if (parseFloat(pol[key]) !== 0 && value < parseFloat(min)) {
@@ -394,7 +392,7 @@ function createScalesColor(){
                     if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
                         //on ne base la scale que s'il y a une densité associé au code NUTS
                         var year = parseInt(key);
-                        var value = parseFloat(pol[key]) / parseFloat(pol["pop"][year])*100.0;
+                        var value = parseFloat(pol[key]) / parseFloat(pol["pop"][year]);
                         if (year >= 2003 && year <= 2014) {
                             if (value > parseFloat(max)) {
                                 max = value;
@@ -545,7 +543,7 @@ function updatePol() {
 
                 //console.log("pol : ", d.properties[date]);
 
-                var value = (parseFloat(d.properties[date])/parseFloat(d.properties["pop"][date]))*100.0;
+                var value = (parseFloat(d.properties[date])/parseFloat(d.properties["pop"][date]));
 
                 //console.log(value);
 
@@ -587,7 +585,7 @@ function updatePol() {
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            return ((colorpol[curPol].domain()[1]/5)*i)+ ' ' + unitPolMap[curPol];
+            return parseInt((colorpol[curPol].domain()[1]*10000/5)*i)+ ' ' + unitPolMap[curPol] + '/10000 habs';
         });
 
     legend.exit().remove();
@@ -734,7 +732,7 @@ function updateMes(){
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            return ((colormes[curMes].domain()[1]/5)*i)+' '+unitMesMap[curMes];
+            return ((colormes[curMes].domain()[1]/5)*i).toFixed(4)+' '+unitMesMap[curMes] + '/1000 habs';
         });
 
     legend.exit().remove();
