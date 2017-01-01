@@ -259,8 +259,10 @@ function mergeData(data1,data2,mes){
     return data1;
 }
 
-var geoMes = {};
+
+// ------------------------------- Mapping des donnees de correlation pour le stockage -------------------------------
 //TODO centraliser les données pour optimiser le stockage?
+var geoMes = {};
 var mesureMap = {};
 var yearsMesureMap = {};
 function createMesureData(europe, pesticides, energie, nuclear, taxes,
@@ -354,10 +356,12 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     }
 }
 
+
+// ------------------------------- Création des scales de couleur avec les valeurs min et max -------------------------------
 var colorpol = {};
 var colormes = {};
-/* fonction qui créé les scales de couleurs pour chaque polluant
-   puis pour chaque mesures en fonction des min et max (appelé une seule fois) */
+/* fonction qui créé les scales de couleurs pour chaque polluant 
+puis pour chaque mesures en fonction des min et max (appelé une seule fois) */
 function createScalesColor(){
     pollutants.forEach(function(pollutant){
 
