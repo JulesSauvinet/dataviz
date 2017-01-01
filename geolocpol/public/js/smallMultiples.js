@@ -1,12 +1,13 @@
 //IDEES
 //demographie ou densité?
 
-//TODO LEGENDE
-//TODO DESIGN
-//TODO CHARTS QUAND HOOVE
-//TODO ZOOM SUR CARTES
-//TODO CHANGER YEAR EN FONCTION DES DONNEES?
-//TODO VALEUR A LA PLACE DES YEAR QUAND ON HOOVER
+//TODO optimiser et nettoyer le code
+//TODO améliorer la légende
+//TODO faire du design, sur le panneau de droite notammment
+//TODO faire des graphiques quand on selectionne une region?
+//TODO zoom sur les cartes?
+//TODO changer years en fonction des données
+//TODO valeur a la place de year quand on hoove
 
 
 //NOT USED mais eventuellement la taille de la vizu
@@ -52,7 +53,7 @@ var divs = dateJoin.enter()
         'class':'map'
     });
 
-divs.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
+divs.append('p').attr({'class' : function(d){ return 'pmap ' + 'title'+d;}}).text(function(d){ return dateFormat(new Date(d)); });
 
 //le titre -> nom de l'année
 var SVGs = divs.append('svg').attr({
@@ -70,7 +71,7 @@ var divs2 = dateJoin2.enter()
         'class':'map'
     });
 
-divs2.append('p').attr({'class' : 'pmap'}).text(function(d){ return dateFormat(new Date(d)); });
+divs2.append('p').attr({'class' : function(d){ return 'pmap ' + 'title2'+d;}}).text(function(d){ return dateFormat(new Date(d)); });
 
 //le titre -> nom de l'année
 var SVGs2 = divs2.append('svg').attr({
@@ -528,8 +529,17 @@ function updatePol() {
             })
             .on('mouseover', function(d){
                 tip.show(d,date, true);
+                years.forEach(function(year){
+                    var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year]));
+                    d3.select('.title'+year).html(value);
+                });
             })
-            .on('mouseout', tip.hide);
+            .on('mouseout', function(d,i){
+                tip.hide();
+                years.forEach(function(year){
+                    d3.select('.title'+year).html(year);
+                });
+            });
 
         map.style("fill", function (d) {
             if (!isNaN(d.properties[date])){
@@ -700,8 +710,17 @@ function updateMes(){
                 }
             }).on('mouseover', function(d){
                     tip.show(d,date, false);
+                    years.forEach(function(year){
+                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year]));
+                        d3.select('.title2'+year).html(value);
+                    });
                 })
-              .on('mouseout', tip.hide);
+              .on('mouseout', function(d,i){
+                  tip.hide();
+                  years.forEach(function(year){
+                      d3.select('.title2'+year).html(year);
+                  });
+              });
 
         map.exit().remove();
     });
