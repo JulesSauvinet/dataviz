@@ -223,6 +223,7 @@ function updateMesureDiv(mesures) {
             updateMes();
             updatePol();
         });
+
     radioSpan.exit().remove();
 }
 
@@ -392,7 +393,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     var years8 = [];
     var data8 = JSON.parse(JSON.stringify(dataRaw));
     data8 = mergeData(data8,cancer, 'c');
-    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp = Object.keys(cancer[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years8.push(d);}});
     mesureMap['c'] = data8;
     yearsMesureMap['c'] = years8;
@@ -593,8 +594,9 @@ function updatePol() {
             .on('mouseover', function(d){
                 tip.show(d,date, true);
                 years.forEach(function(year){
-                    var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*10000.0).toFixed(0);
-                    d3.select('.title'+year).html(value);
+                    var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*10000.0).toFixed(4);
+                    var value2 = (parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*10000.0).toFixed(4) + ' ' + unitPolMap[curPol] + '/10000 habs';
+                    d3.select('.title'+year).html(value2);
                 });
             })
             .on('mouseout', function(d,i){
@@ -617,9 +619,6 @@ function updatePol() {
                 //console.log("pol : ", d.properties[date]);
 
                 var value = (parseFloat(d.properties[date])/parseFloat(d.properties["pop"][date]));
-
-                //console.log(value);
-
                 return colorpol[curPol](value);
             }
             else{
@@ -698,7 +697,7 @@ function updateMes(){
         rb = d3.select(this);
         if(rb.property("checked")){
             choice= rb.property("value");
-            //console.log(choice);
+            console.log(choice);
         }
     });
 
@@ -715,15 +714,14 @@ function updateMes(){
     });
     years.reverse();
 
-    years = years.filter(function(year){return parseInt(year) > 2000;});
+    years = years.filter(function(year){return parseInt(year) > 1999;});
     years.sort();
 
-    var lgt  = years.length;
-    if (lgt > 12){
-        var toSup = lgt - 12;
+    if (years.length > 12){
+        var toSup = years.length - 12;
         years = years.slice(toSup,lgt);
     }
-
+    
     updateDate(years);
 
     d3.select('#map2title').html(choice);
@@ -789,8 +787,9 @@ function updateMes(){
             }).on('mouseover', function(d){
                     tip.show(d,date, false);
                     years.forEach(function(year){
-                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*1000.0).toFixed(4);
-                        d3.select('.title2'+year).html(value);
+                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*1000.0).toFixed(4);                        
+                        var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
+                        d3.select('.title2'+year).html(value2);
                     });
                 })
               .on('mouseout', function(d,i){
