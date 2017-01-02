@@ -165,7 +165,7 @@ var fieldset,radioSpan;
 function createMesureDiv(mesuresTmp) {
     fieldset = d3.select("#mesurediv").append("form");
     fieldset.append("legend").html("<h4>Choix mesure</h4>");
-    radioSpan = fieldset.selectAll(".radio").data(mesures);
+    radioSpan = fieldset.selectAll(".radio").data(mesuresTmp);
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
@@ -194,22 +194,29 @@ function updateMesureDiv(mesuresTmp) {
 
     radioSpan = fieldset.selectAll(".radio").data(mesuresTmp);
 
+    radioSpan.enter().append("span")
+        .attr("class", "radio");
+
     radioSpan.append("input")
         .attr({
             type: "radio",
             name: "mesure",
             class : "radiomesure",
             id : function(d,i) { return 'mesureradio' + i;},
-            value : function(d,i) { return mesuresCodes[d];}
+            value : function(d,i) { 
+                console.log(mesuresCodes[d]);
+                return mesuresCodes[d];}
         })
         .property({
             checked: function(d,i) { return (i ===0); },
             value: function(d) { return d }
         });
+
     radioSpan.append("label")
         .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
 
+    console.log("\n\n");
     radioSpan.exit().remove();
 }
 
@@ -552,7 +559,8 @@ function updatePol() {
     });
 
     curPol = choice;
-    //updateMesureDiv(correspondanceMap[curPol]);
+
+    updateMesureDiv(correspondanceMap[curPol]);
 
     d3.select('#maptitle').html(polNameMap[curPol]);
 
