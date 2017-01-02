@@ -3,13 +3,14 @@
 
 //TODO optimiser et nettoyer le code
 //TODO améliorer la légende
-//TODO faire du design, sur le panneau de droite notammment
+//TODO faire du design, sur le panneau de droite notamment
 //TODO faire des graphiques quand on selectionne une region?
 //TODO zoom sur les cartes?
 //TODO changer years en fonction des données
 //TODO suggestions
 //TODO plus de données et exmploiter plus les données
 //TODO changer scales de couleur quand on change les years
+//TODO valeur a la place de year quand on hoove
 
 
 //NOT USED mais eventuellement la taille de la vizu
@@ -34,9 +35,7 @@ var path = d3.geo.path()
 var dateFormat = d3.time.format("%Y");
 
 //les années choisies (une map par année)
-//TODO more dynamic?
-var years = [/*"2000","2001","2002",*/"2003","2004","2005","2006","2007",
-             "2008","2009","2010","2011","2012","2013","2014"];
+var years = ["2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014"];
 
 var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
                   'PM10' : 'Particules 10', 'PM2_5': 'Particules 2.5', 'SOX' : 'Oxyde de soufre'};
@@ -136,7 +135,7 @@ function createPolDiv(pollutions){
     });
 
     var fieldset = d3.select("#pollutiondiv").append("form");
-    fieldset.append("legend").html("<h4>Choix polluant</h4>");
+    fieldset.append("legend").html("<h4>Choix du polluant</h4>");
     var radioSpan = fieldset.selectAll(".radio").data(pollutants);
 
     radioSpan.enter().append("span")
@@ -157,6 +156,7 @@ function createPolDiv(pollutions){
         .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? polNameMap[d] :  polNameMap[d] + '<br>'});
 
+    radioSpan.exit().remove();
 }
 
 /* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
@@ -166,8 +166,8 @@ var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :
 var fieldset,radioSpan;
 function createMesureDiv(mesuresTmp) {
     fieldset = d3.select("#mesurediv").append("form");
-    fieldset.append("legend").html("<h4>Choix mesure</h4>");
-    radioSpan = fieldset.selectAll(".radio").data(mesures);
+    fieldset.append("legend").html("<h4>Choix de la mesure</h4>");
+    radioSpan = fieldset.selectAll(".radio").data(mesuresTmp);
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
@@ -184,17 +184,22 @@ function createMesureDiv(mesuresTmp) {
             checked: function(d,i) { return (i ===0); },
             value: function(d) { return d }
         });
-    radioSpan.append("label")
 
+    radioSpan.append("label")
         .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
+    //radioSpan.exit().remove();
 }
 
 function updateMesureDiv(mesuresTmp) {
-    fieldset.selectAll(".radiomesure").remove();
-    fieldset.selectAll(".radiolabel").remove();
+    //radioSpan.exit().remove();
+    radioSpan.selectAll(".radiomesure").remove();
+    radioSpan.selectAll(".radiolabel").remove();
 
     radioSpan = fieldset.selectAll(".radio").data(mesuresTmp);
+
+    radioSpan.enter().append("span")
+        .attr("class", "radio");
 
     radioSpan.append("input")
         .attr({
@@ -208,11 +213,18 @@ function updateMesureDiv(mesuresTmp) {
             checked: function(d,i) { return (i ===0); },
             value: function(d) { return d }
         });
+
     radioSpan.append("label")
         .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
 
-    radioSpan.exit().remove();
+    //code de mise a jour des smallMultiples de pollution
+    /*d3.selectAll("input[type=radio][name=mesure]")
+        .on("change", function() {
+            updateMes();
+            updatePol();
+        });*/
+    //radioSpan.exit().remove();
 }
 
 /* ----------------------------- fonction qui créé les datasets des polluants pour chaque polluant ----------------------------- */
@@ -554,6 +566,7 @@ function updatePol() {
     });
 
     curPol = choice;
+
     //updateMesureDiv(correspondanceMap[curPol]);
 
     d3.select('#maptitle').html(polNameMap[curPol]);
@@ -664,71 +677,58 @@ function updateDate(yearsD){
     dateJoin.exit().remove();
     dateJoin2.exit().remove();
 
-
-    //divs.remove();
     divs = dateJoin.enter().append('div').attr({'id':function(d){ return 'map_'+d; },'class':'map'});
-
-    //divs2.remove();
     divs2 = dateJoin2.enter().append('div').attr({'id':function(d){ return 'map2_'+d; },'class':'map'});
 
     divs.append('p').attr({'class' : function(d){ return 'pmap ' + 'title'+d;}}).text(function(d){ return dateFormat(new Date(d)); });
-
     divs2.append('p').attr({'class' : function(d){ return 'pmap ' + 'title2'+d;}}).text(function(d){ return dateFormat(new Date(d)); });
 
-    //
-    //SVGs.remove();
     SVGs = divs.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-
-    //SVGs2.remove();
     SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-
 }
 
 //TODO PRENDRE LES DONNEES DE POPULATION ANNEE PAR ANNEE
 /* fonction de mise a jour des smallMultiples de mesure */
+var yearsD = [];
 function updateMes(){
     var choice;
     d3.selectAll(".radiomesure").each(function(d){
         rb = d3.select(this);
         if(rb.property("checked")){
             choice= rb.property("value");
+            //console.log(choice);
         }
     });
 
     curMes = mesuresCodes[choice];
     yearsMes = yearsMesureMap[curMes];
-    yearsD = [];
+    years = [];
 
     yearPol.forEach(function(d) {
         yearsMes.forEach(function(e) {
             if( d == e ) {
-                yearsD.push(d);
+                years.push(d);
             }
         });
     });
-    yearsD.reverse();
-    if (12 < yearsD.length) {
-        var lgt = 12;
-    }
-    else {
-        var lgt  = yearsD.length;
-    }
-    var yearsD2 = [];
-    for(var vari = 0; vari < lgt; vari++) {
-        if(parseInt(yearsD[vari]) > 2002)
-            yearsD2.push(yearsD[vari]);
-    }
-    yearsD2.sort();
+    years.reverse();
 
-    updateDate(yearsD2);
+    years = years.filter(function(year){return parseInt(year) > 2000;});
+    years.sort();
+
+    var lgt  = years.length;
+    if (lgt > 12){
+        var toSup = lgt - 12;
+        years = years.slice(toSup,lgt);
+    }
+
+    updateDate(years);
 
     d3.select('#map2title').html(choice);
 
     data = mesureMap[curMes];
 
     SVGs2.each(function(date) {
-        //console.log(date);
-
         d3.select(this).selectAll('path').remove();
 
         var map = d3.select(this).selectAll('path')
