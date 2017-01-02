@@ -461,7 +461,7 @@ var colorpol = {};
 var colormes = {};
 /* fonction qui créé les scales de couleurs pour chaque polluant 
 puis pour chaque mesures en fonction des min et max (appelé une seule fois) */
-function updateScalesColor(){
+function updateScalesColor(boolDensite){
     colorpol = {};
     colormes = {};
 
@@ -475,7 +475,10 @@ function updateScalesColor(){
                 for (var key in pol){
                     if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
                         //on ne base la scale que s'il y a une densité associé au code NUTS
-                        var value = parseFloat(pol[key]) / parseFloat(pol["pop"][key]);
+                        if(boolDensite == false)
+                            var value = parseFloat(pol[key]) / parseFloat(pol["pop"][key]);
+                        else
+                            var value = parseFloat(pol[key]) / parseFloat(pol["dens"][key]);                            
                         var year = parseInt(key);
                         if (years.includes(key)) {
                             if (parseFloat(pol[key]) !== 0 && value < parseFloat(min)) {
@@ -494,7 +497,10 @@ function updateScalesColor(){
                     if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
                         //on ne base la scale que s'il y a une densité associé au code NUTS
                         var year = parseInt(key);
-                        var value = parseFloat(pol[key]) / parseFloat(pol["pop"][year]);
+                        if(boolDensite == false)
+                            var value = parseFloat(pol[key]) / parseFloat(pol["pop"][year]);
+                        else
+                            var value = parseFloat(pol[key]) / parseFloat(pol["dens"][year]);
                         if (years.includes(key)) {
                             if (value > parseFloat(max)) {
                                 max = value;
@@ -529,7 +535,10 @@ function updateScalesColor(){
                 for (var key in md){
                     if (!notYearKeys.includes(key)) {
                         //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
-                        var value = parseFloat(md[key]) / parseFloat(md["pop"][key])*1000.0;
+                        if(boolDensite == false)
+                            var value = parseFloat(md[key]) / parseFloat(md["pop"][key])*1000.0;
+                        else
+                            var value = parseFloat(md[key]) / parseFloat(md["dens"][key])*1000.0;
                         var year = parseInt(key);
                         if (years.includes(key)) {
                             if (parseFloat(md[key]) !== 0 && value < parseFloat(min)) {
@@ -548,7 +557,10 @@ function updateScalesColor(){
                 for (var key in md) {
                     if (!notYearKeys.includes(key)) {
                         //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
-                        var value = parseFloat(md[key]) / parseFloat(md["pop"][key])*1000.0;
+                        if(boolDensite == false)
+                            var value = parseFloat(md[key]) / parseFloat(md["pop"][key])*1000.0;
+                        else
+                            var value = parseFloat(md[key]) / parseFloat(md["dens"][key])*1000.0;
                         var year = parseInt(key);
                         if (years.includes(key)) {
                             if (value > parseFloat(max)) {
@@ -753,7 +765,7 @@ function updateDate(){
 
     SVGs = divs.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
     SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-    updateScalesColor();
+    updateScalesColor(false);
 }
 
 /* fonction de mise a jour des smallMultiples de mesure */
