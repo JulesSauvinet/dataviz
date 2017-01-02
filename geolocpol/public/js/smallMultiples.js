@@ -120,9 +120,7 @@ function createNormaDiv() {
             updatePol();
         }, false);
     }
-
     //code de mise a jour des smallMultiples de pollution
-
 }
 
 /* ----------------------------- fonction pour créer le div des polluants de manière dynamique ----------------------------- */
@@ -622,10 +620,7 @@ function updatePol() {
                 years.forEach(function(year){
                     var value = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*10000.0).toFixed(4);
                     if(parseFloat(d.properties[year])) {
-                        if (normalisation === 'pop')
-                            value += ' ' + unitPolMap[curPol] + '/10000 habs';
-                        else
-                            value = parseInt(value)/10000;
+                        normalisation === 'pop' ? value += ' ' + unitPolMap[curPol] + '/10000 habs' : value = parseInt(value)/10000;
                         d3.select('.title'+year).html(value);
                     }
                     else {
@@ -645,10 +640,8 @@ function updatePol() {
                 //WATCHOUT Statique on remplace la densité de 2001 par celle de 2000
                 // et celle de 2004 par celle de 2003 car données manquantes #empirisme
                 var datebis = date;
-                if (datebis === "2001")
-                    datebis = "2000";
-                if (datebis === "2004")
-                    datebis = "2003";
+                if (datebis === "2001")datebis = "2000";
+                if (datebis === "2004")datebis = "2003";
 
                 var value = (parseFloat(d.properties[date])/parseFloat(d.properties[normalisation][date]));
                 return colorpol[curPol](value);
@@ -849,7 +842,6 @@ function updateMes(){
     // La légende
     var dataUpdate = [curMes+"1",curMes+"2",curMes+"3",curMes+"4",curMes+"5"];
 
-
     var legend = d3.select("#meslegend").append("svg").attr("class", "svglegend").selectAll(".legend")
         .data(dataUpdate);
 
@@ -896,29 +888,14 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     if (error) throw error;
 
     //on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
+    var dataMesures = [pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,motorcars];
     density.forEach(function(dens){
-        insertDataAttribute(dens,pollutions,'dens');
-        insertDataAttribute(dens,pesticides,'dens');
-        insertDataAttribute(dens,energie,'dens');
-        insertDataAttribute(dens,nuclear,'dens');
-        insertDataAttribute(dens,taxes,'dens');
-        insertDataAttribute(dens,transport,'dens');
-        insertDataAttribute(dens,heartdiseases,'dens');
-        insertDataAttribute(dens,cancer,'dens');
-        insertDataAttribute(dens,motorcars,'dens');
+        dataMesures.forEach(function(dataM){insertDataAttribute(dens,dataM,'dens');});
     });
 
     //on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
     population.forEach(function(pop){
-        insertDataAttribute(pop,pollutions,'pop');
-        insertDataAttribute(pop,pesticides,'pop');
-        insertDataAttribute(pop,energie,'pop');
-        insertDataAttribute(pop,nuclear,'pop');
-        insertDataAttribute(pop,taxes,'pop');
-        insertDataAttribute(pop,transport,'pop');
-        insertDataAttribute(pop,heartdiseases,'pop');
-        insertDataAttribute(pop,cancer,'pop');
-        insertDataAttribute(pop,motorcars,'pop');
+        dataMesures.forEach(function(dataM){insertDataAttribute(pop,dataM,'pop');});
     });
 
     //on créé le div du choix de normalisation
@@ -936,7 +913,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     //on intègre les données de pollution aux données de map
     createMergedPolAndMapData(europe);
 
-    //on créé des variables globales pour les données des mesures //TODO fix this
+    //on créé des variables globales pour les données des mesures
     createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases, cancer, motorcars);
 
     //on affiche les smallMultiples de mesure
