@@ -4,7 +4,7 @@
 //demographie ou densité?
 //TODO laisser l'utilisateur choisir entre pop et densité?
 //TODO plus de données et exploiter plus les données
-//TODO changer position div mesure --> fonction du nombre de map cad fonction de la taille de years modulo 4
+//TODO changer position div mesure --> fonction du nombre de map cad 2 lignes de maps = bien placé sinon autant il faut le descendre d'autant de lignes de map en plus des 2 premieres
 //TODO optimiser et nettoyer le code
 
 
