@@ -763,7 +763,7 @@ function updateDate(){
 
     SVGs = divs.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
     SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-    updateScalesColor();
+    updateScalesColor(false);
 }
 
 /* fonction de mise a jour des smallMultiples de mesure */
