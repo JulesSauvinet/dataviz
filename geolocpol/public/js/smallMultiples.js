@@ -12,6 +12,7 @@
 //le polluant/mesure courant(e) sélectionné(e)
 var curPol = "NH3";
 var curMes = "c";
+var curChoice = 'normaliser par densité';
 
 //Les unités des différent(e)s polluants/mesures
 var unitPolMap = {};
@@ -107,6 +108,33 @@ var tip = d3.tip()
         return toDisplay;
     });
 
+var choiceNorma = ['normaliser par densité', 'normaliser par population'];
+function createChoiceNormalisation() {
+    var fieldset = d3.select("#normalisationdiv").append("form");
+    fieldset.append("choice").html("<h4>Choix de la normalisation</h4>");
+    var radioSpan = fieldset.selectAll(".radio").data(choiceNorma);
+
+    radioSpan.enter().append("span")
+        .attr("class", "radio");
+
+    radioSpan.append("input")
+        .attr({
+            type: "radio",
+            name: "choice",
+            class : "choiceNorma",
+            id : function(d,i) { return 'choiceradio' + i;}
+        })
+        .property({
+            checked: function(d,i) { return (i ===0); },
+            value: function(d) { return d }
+        });
+    radioSpan.append("label")
+        .attr('class', 'radiolabel')
+        .html(function(d, i) { return d.last == true ? choiceNorma[d] :  choiceNorma[d] + '<br>'});
+
+    radioSpan.exit().remove();
+}
+
 //TODO UN SEUL DATA?
 var pollutants = [];
 /* ----------------------------- fonction pour créer le div des polluants de manière dynamique ----------------------------- */
@@ -144,8 +172,7 @@ function createPolDiv(pollutions){
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=pol]")
         .on("change", function() {
-            updatePol();
-            //updateMes();
+            updatePol(false);
         });
 }
 
@@ -183,8 +210,8 @@ function createMesureDiv() {
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=mesure]")
         .on("change", function() {
-            updateMes();
-            updatePol();
+            updateMes(false);
+            updatePol(false);
         });
 }
 
@@ -224,7 +251,7 @@ function updateMesureDiv(mesures) {
     if (!checked){
         d3.selectAll(".radiomesure")[0][0].checked = true;
         curMes = mesuresCodes[d3.selectAll(".radiomesure")[0][0].value];
-        updateMes();
+        updateMes(false);
     }
 
     radioSpan.append("label")
@@ -235,8 +262,8 @@ function updateMesureDiv(mesures) {
     //d3.selectAll("input[type=radio][name=mesure]").remove();
     d3.selectAll("input[type=radio][name=mesure]")
         .on("change", function() {
-            updateMes();
-            updatePol();
+            updateMes(false);
+            updatePol(false);
         });
 }
 
@@ -570,7 +597,7 @@ function updateScalesColor(){
 }
 
 /* fonction de mise a jour des smallMultiples de pollution */
-function updatePol() {
+function updatePol(boolDensite) {
     var choice;
     d3.selectAll(".radiopol").each(function(d){
         rb = d3.select(this);
@@ -582,7 +609,6 @@ function updatePol() {
     curPol = choice;
 
     updateMesureDiv(correspondanceMap[curPol]);
-    //updateMesureDiv(mesures);
 
     var choice2;
     d3.selectAll(".radiomesure").each(function(d){
@@ -617,13 +643,15 @@ function updatePol() {
             .on('mouseover', function(d){
                 tip.show(d,date, true);
                 years.forEach(function(year){
-                    var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*10000.0).toFixed(4);
-                    if(parseFloat(d.properties[year])) {
-                        var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*10000.0).toFixed(4) + ' ' + unitPolMap[curPol] + '/10000 habs';
-                        d3.select('.title'+year).html(value2);
-                    }
-                    else {
-                        d3.select('.title'+year).html("");
+                    if(boolDensite==false) {
+                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*10000.0).toFixed(4);
+                        if(parseFloat(d.properties[year])) {
+                            var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*10000.0).toFixed(4) + ' ' + unitPolMap[curPol] + '/10000 habs';
+                            d3.select('.title'+year).html(value2);
+                        }
+                        else {
+                            d3.select('.title'+year).html("");
+                        }
                     }
                 });
             })
@@ -719,7 +747,7 @@ function updateDate(){
 }
 
 /* fonction de mise a jour des smallMultiples de mesure */
-function updateMes(){
+function updateMes(boolDensite){
     var choice;
     d3.selectAll(".radiomesure").each(function(d){
         rb = d3.select(this);
@@ -815,13 +843,15 @@ function updateMes(){
             }).on('mouseover', function(d){
                     tip.show(d,date, false);
                     years.forEach(function(year){
-                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*1000.0).toFixed(4);
-                        if(parseFloat(d.properties[year])) {                    
-                            var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
-                            d3.select('.title2'+year).html(value2);
-                        }
-                        else {
-                            d3.select('.title2'+year).html("");
+                        if(boolDensite==false) {
+                            var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*1000.0).toFixed(4);
+                            if(parseFloat(d.properties[year])) {                    
+                                var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
+                                d3.select('.title2'+year).html(value2);
+                            }
+                            else {
+                                d3.select('.title2'+year).html("");
+                            }
                         }
                     });
                 })
@@ -911,6 +941,8 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     });
 
 
+    createChoiceNormalisation();
+
     //on créé le div des polluants
     createPolDiv(pollutions);
 
@@ -932,10 +964,10 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
 
 
     //on affiche les smallMultiples de mesure
-    updateMes();
+    updateMes(false);
 
     //on affiche les smallMultiples de pollution
-    updatePol();
+    updatePol(false);
 
 
     // l'idée serait de récupérer la valeur du 1er bouton radio puis la valeur du 2eme bouton radio
