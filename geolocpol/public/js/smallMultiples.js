@@ -1,13 +1,23 @@
-//IDEES
+//-------------------------------------------- IDEES --------------------------------------------
+
+// ----------- SUPER UTILE -----------
 //demographie ou densité?
+//TODO laisser l'utilisateur choisir entre pop et densité?
+//TODO plus de données et exploiter plus les données
+//TODO changer position div mesure --> fonction du nombre de map cad fonction de la taille de years modulo 4
 //TODO optimiser et nettoyer le code
+
+
+// ----------- AMELIORATION -----------
 //TODO améliorer la légende
 //TODO faire du design, sur le panneau de droite notamment
+
+
+// ----------- OPTIMISATION -----------
 //TODO faire des graphiques quand on selectionne une region?
 //TODO zoom sur les cartes?
-//TODO plus de données et exmploiter plus les données
-//TODO laisser l'utilisateur choisir entre pop et densité?
-//TODO changer position div mesure
+
+
 
 //le polluant/mesure courant(e) sélectionné(e)
 var curPol = "NH3";
@@ -87,10 +97,6 @@ var tip = d3.tip()
 
         var name = d.properties["NAME"];
         var name = regionNameMap[name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()];
-
-        //if (!name)
-        //    console.log(name,d.properties["NAME"]);
-
 
         var toDisplay =/*  'Pays :  ' + */name +'</br>';
         /*if (isPol)
@@ -259,7 +265,6 @@ function updateMesureDiv(mesures) {
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
 
     //code de mise a jour des smallMultiples de pollution
-    //d3.selectAll("input[type=radio][name=mesure]").remove();
     d3.selectAll("input[type=radio][name=mesure]")
         .on("change", function() {
             updateMes(false);
@@ -333,8 +338,6 @@ function mergeData(data1,data2,mes){
     data2.forEach(function(p){if (!geos.includes(p["geo"]))geos.push(p["geo"]);});
 
     data1= data1.filter(function(d,i){return geos.includes(d.properties["NUTS_ID"])});
-
-    //console.log(mes);
 
     data1.forEach(function(d) {
         data2.forEach(function (p) {
@@ -511,7 +514,6 @@ function updateScalesColor(boolDensite){
             }
         });
 
-        //console.log(min,max);
         var color = d3.scale.linear().range(['yellow', 'red']);
         color.domain([min,max]);
 
@@ -572,7 +574,6 @@ function updateScalesColor(boolDensite){
             }
         });
 
-        //console.log(min,max);
         var color = d3.scale.linear();
 
         switch (mes){
@@ -602,8 +603,6 @@ function updateScalesColor(boolDensite){
                 break;
         }
         color.domain([min,max]);
-        //console.log(color.domain(),color.range());
-
         colormes[mes] = color;
     });
 }
@@ -637,7 +636,6 @@ function updatePol(boolDensite) {
 
     data = dataMap[curPol];
 
-    //console.log(colorpol[curPol].domain()[1]);
     //création des fonds de carte des smallMultiples
     var i=0;
     SVGs.each(function(date){
@@ -765,7 +763,7 @@ function updateDate(){
 
     SVGs = divs.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
     SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-    updateScalesColor(false);
+    updateScalesColor();
 }
 
 /* fonction de mise a jour des smallMultiples de mesure */
@@ -775,7 +773,6 @@ function updateMes(boolDensite){
         rb = d3.select(this);
         if(rb.property("checked")){
             choice= rb.property("value");
-            //console.log(choice);
         }
     });
 
@@ -972,7 +969,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
         insertDataAttribute(pop,motorcars,'pop');
     });
 
-
+    //on créé le div du choix de normalisation
     createChoiceNormalisation();
 
     //on créé le div des polluants
@@ -989,11 +986,6 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
 
     //on créé des variables globales pour les données des mesures //TODO fix this
     createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases, cancer, motorcars);
-    //console.log(dataMap);
-
-    //on créé les scales de couleurs pour chaque polluants
-    //updateScalesColor();
-
 
     //on affiche les smallMultiples de mesure
     updateMes(false);
@@ -1001,11 +993,10 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     //on affiche les smallMultiples de pollution
     updatePol(false);
 
-
-    // l'idée serait de récupérer la valeur du 1er bouton radio puis la valeur du 2eme bouton radio
-    // définir le vecteur des années pour lesquelles on va afficher des smallMaps
-    // définir les scales de couleurs en fonction du vecteur des années
-    // afficher les smallMaps
+    d3.selectAll("input[type=radio][name=choice]")
+        .on("change", function() {
+            console.log("changement");
+        });
 }
 
 
