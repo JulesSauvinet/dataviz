@@ -184,10 +184,11 @@ function createMesureDiv(mesuresTmp) {
     radioSpan.append("label")
         .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
+    //radioSpan.exit().remove();
 }
 
 function updateMesureDiv(mesuresTmp) {
-    radioSpan.exit().remove();
+    //radioSpan.exit().remove();
     radioSpan.selectAll(".radiomesure").remove();
     radioSpan.selectAll(".radiolabel").remove();
 
@@ -212,6 +213,8 @@ function updateMesureDiv(mesuresTmp) {
     radioSpan.append("label")
         .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
+
+    //radioSpan.exit().remove();
 }
 
 /* ----------------------------- fonction qui créé les datasets des polluants pour chaque polluant ----------------------------- */
