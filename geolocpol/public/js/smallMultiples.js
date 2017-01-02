@@ -109,7 +109,7 @@ var tip = d3.tip()
     .offset([-10, 0])
     .html(function(d,date, isPol) {
         var toDisplay =  'Région :  ' +  d.properties["NAME"] +'</br>';
-        if (isPol)
+        /*if (isPol)
             toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseInt(parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*10000.0) + unitPolMap[curPol] + '/10000 habs';
         else{
             var unit = '??';
@@ -119,7 +119,7 @@ var tip = d3.tip()
                 toDisplay+=getNameFromMesCode(curMes) + ' : ' + (parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*1000.0).toFixed(4) + unit + '/1000 habs';
             else
                 toDisplay+=getNameFromMesCode(curMes) + ' : ND';
-        }
+        }*/
 
         return toDisplay;
     });
