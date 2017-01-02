@@ -996,6 +996,8 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     d3.selectAll("input[type=radio][name=choice]")
         .on("change", function() {
             console.log("changement");
+            updatePol(true);
+            updateMes(true);
         });
 }
 
