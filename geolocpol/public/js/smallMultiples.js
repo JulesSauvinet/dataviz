@@ -622,7 +622,10 @@ function updatePol() {
                 years.forEach(function(year){
                     var value = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*10000.0).toFixed(4);
                     if(parseFloat(d.properties[year])) {
-                        value += ' ' + unitPolMap[curPol] + '/10000 habs';
+                        if (normalisation === 'pop')
+                            value += ' ' + unitPolMap[curPol] + '/10000 habs';
+                        else
+                            value = parseInt(value)/10000;
                         d3.select('.title'+year).html(value);
                     }
                     else {
@@ -685,7 +688,10 @@ function updatePol() {
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            return parseInt((colorpol[curPol].domain()[1]*10000/5)*i)+ ' ' + unitPolMap[curPol] + '/10000 habs';
+            if (normalisation === 'pop')
+                return parseInt((colorpol[curPol].domain()[1]*10000/5)*i)+ ' ' + unitPolMap[curPol] + '/10000 habs';
+            else
+                return parseInt((colorpol[curPol].domain()[1]*10000/5)*i)/10000;
         });
 
     legend.exit().remove();
@@ -815,7 +821,11 @@ function updateMes(){
                     years.forEach(function(year){
                         var value = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*1000.0).toFixed(4);
                         if(parseFloat(d.properties[year])) {
-                            var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
+                            var value2;
+                            if (normalisation === 'pop')
+                                value2 = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
+                            else
+                                value2 = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year]));
                             d3.select('.title2'+year).html(value2);
                         }
                         else {
@@ -858,7 +868,10 @@ function updateMes(){
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            return ((colormes[curMes].domain()[1]/5)*i).toFixed(4)+' '+unitMesMap[curMes] + '/1000 habs';
+            if (normalisation === 'pop')
+                return ((colormes[curMes].domain()[1]/5)*i).toFixed(4)+' '+unitMesMap[curMes] + '/1000 habs';
+            else
+                return ((colormes[curMes].domain()[1]/5)*i).toFixed(4)/1000;
         });
 
     legend.exit().remove();
