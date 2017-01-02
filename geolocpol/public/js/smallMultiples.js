@@ -59,7 +59,7 @@ var correspondanceMap = {'NH3' : ['Pesticides','Morts de cancers','Taxes environ
                         };
 
 var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'Portugal',
-                    'Suomi / finland' : 'Finlande', 'Sverige' : 'Suède', 'Polska' : 'Polande',
+                    'Suomi / finland' : 'Finlande', 'Sverige' : 'Suède', 'Polska' : 'Pologne',
                     'Italia' : 'Italia', 'Latvija' : 'Lettonie', 'Ireland' : 'Irlande',
                     'United kingdom' : 'Grande-Bretagne', 'Deutschland' : 'Allemagne',
                     'Nederland' : 'Pays-Bas', 'Belgique-belgië' : 'Belgique', 'Danmark' : 'Danemark',
