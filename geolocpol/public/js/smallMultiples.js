@@ -741,7 +741,7 @@ function updatePol(boolDensite) {
 }
 
 /* fonction de mise a jour des dates */
-function updateDate(){
+function updateDate(boolDensite){
 
     d3.selectAll('.maptitle').remove();
     d3.selectAll('div.map').remove();
@@ -763,7 +763,7 @@ function updateDate(){
 
     SVGs = divs.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
     SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-    updateScalesColor(false);
+    updateScalesColor(boolDensite);
 }
 
 /* fonction de mise a jour des smallMultiples de mesure */
@@ -797,7 +797,7 @@ function updateMes(boolDensite){
         years = years.slice(toSup, years.length);
     }
     
-    updateDate(years);
+    updateDate(boolDensite);
 
     d3.select('#map2title').html(choice);
 
