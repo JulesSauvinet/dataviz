@@ -653,6 +653,16 @@ function updatePol(boolDensite) {
                             d3.select('.title'+year).html("");
                         }
                     }
+                    else {
+                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["dens"][year])*10000.0).toFixed(4);
+                        if(parseFloat(d.properties[year])) {
+                            var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['dens'][year])*10000.0).toFixed(4) + ' ' + unitPolMap[curPol] + '/10000 habs';
+                            d3.select('.title'+year).html(value2);
+                        }
+                        else {
+                            d3.select('.title'+year).html("");
+                        }                        
+                    }
                 });
             })
             .on('mouseout', function(d,i){
@@ -852,6 +862,16 @@ function updateMes(boolDensite){
                             else {
                                 d3.select('.title2'+year).html("");
                             }
+                        }
+                        else {
+                            var value = (parseFloat(d.properties[year])/parseFloat(d.properties["dens"][year])*1000.0).toFixed(4);
+                            if(parseFloat(d.properties[year])) {                    
+                                var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['dens'][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
+                                d3.select('.title2'+year).html(value2);
+                            }
+                            else {
+                                d3.select('.title2'+year).html("");
+                            }                            
                         }
                     });
                 })
