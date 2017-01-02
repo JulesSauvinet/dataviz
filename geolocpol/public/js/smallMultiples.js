@@ -139,7 +139,7 @@ function createPolDiv(pollutions){
     d3.selectAll("input[type=radio][name=pol]")
         .on("change", function() {
             updatePol();
-            updateMes();
+            //updateMes();
         });
 }
 
@@ -236,7 +236,7 @@ function updateMesureDiv(mesuresTmp) {
             value : function(d,i) { return mesuresCodes[d];}
         })
         .property({
-            checked: function(d,i) { return (i ===0); },
+            checked: function(d,i) { console.log(d); return (mesuresCodes[d] === curMes); },
             value: function(d) { return d }
         });
 
@@ -605,7 +605,6 @@ function updatePol() {
     });
 
     curMes = choice2;
-
 
 
     d3.select('#maptitle').html(polNameMap[curPol]);
