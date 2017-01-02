@@ -60,7 +60,16 @@ var correspondanceMap = {'NH3' : ['Pesticides','Morts de cancers','Taxes environ
                                   'Taxes environnementales','Transport','Moteurs de voitures'*/]
                         };
 
-
+var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'Portugal',
+                    'Suomi / finland' : 'Finlande', 'Sverige' : 'Suède', 'Polska' : 'Polande',
+                    'Italia' : 'Italia', 'Latvija' : 'Lettonie', 'Ireland' : 'Irlande',
+                    'United kingdom' : 'Grande-Bretagne', 'Deutschland' : 'Allemagne',
+                    'Nederland' : 'Pays-Bas', 'Belgique-belgië' : 'Belgique', 'Danmark' : 'Danemark',
+                    'România': 'Roumanie', 'Luxembourg' : 'Luxembourg', '???????? (bulgaria' : 'Bulgarie',
+                    '?????? (ellada)' : 'Grèce', 'Magyarorszàg' : 'Hongrie', 'Österreich' : 'Autriche',
+                    'Lietuva' : 'Lituanie', 'Hrvatska' : 'Croatie', 'Slovensko' :'Slovaquie',
+                    'Slovenija' : 'Slovénie', '?eská republika' : 'République tchèque', 'Eesti' : 'Estonie',
+                    '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte'};
 function getNameFromMesCode(mesCode){
     for (var mesure in mesuresCodes){
         if (mesuresCodes[mesure] === mesCode)
@@ -72,7 +81,11 @@ var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d,date, isPol) {
-        var toDisplay =  'Région :  ' +  d.properties["NAME"] +'</br>';
+
+        var name = d.properties["NAME"];
+        var name = regionNameMap[name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()];
+
+        var toDisplay =  'Région :  ' + name +'</br>';
         /*if (isPol)
             toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseInt(parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*10000.0) + unitPolMap[curPol] + '/10000 habs';
         else{
@@ -121,6 +134,13 @@ function createPolDiv(pollutions){
         .html(function(d, i) {  return d.last == true ? polNameMap[d] :  polNameMap[d] + '<br>'});
 
     radioSpan.exit().remove();
+
+    //code de mise a jour des smallMultiples de pollution
+    d3.selectAll("input[type=radio][name=pol]")
+        .on("change", function() {
+            updatePol();
+            updateMes();
+        });
 }
 
 /* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
@@ -153,11 +173,18 @@ function createMesureDiv() {
         .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
     //radioSpan.exit().remove();
+
+    //code de mise a jour des smallMultiples de pollution
+    d3.selectAll("input[type=radio][name=mesure]")
+        .on("change", function() {
+            updateMes();
+            updatePol();
+        });
 }
 
 function updateMesureDiv(mesures) {
     //radioSpan.exit().remove();
-    radioSpan.selectAll(".radio").remove();
+    //radioSpan.selectAll(".radio").remove();
 
     radioSpan = fieldset.selectAll(".radio").data(mesures);
 
@@ -285,7 +312,6 @@ function mergeData(data1,data2,mes){
 
 /* ------------------------------------ Mapping des donnees de correlation pour le stockage ------------------------------------ */
 /* ------------------------------ on récupère ici les années disponibles dans le fichier polluant ------------------------------ */
-//TODO centraliser les données pour optimiser le stockage?
 var geoMes = {};
 var mesureMap = {};
 var yearsMesureMap = {};
@@ -523,7 +549,6 @@ function updateScalesColor(){
 
 /* fonction de mise a jour des smallMultiples de pollution */
 function updatePol() {
-
     var choice;
     d3.selectAll(".radiopol").each(function(d){
         rb = d3.select(this);
@@ -535,6 +560,18 @@ function updatePol() {
     curPol = choice;
 
     updateMesureDiv(correspondanceMap[curPol]);
+
+    var choice2;
+    d3.selectAll(".radiomesure").each(function(d){
+        rb = d3.select(this);
+        if(rb.property("checked")){
+            choice2= rb.property("value");
+        }
+    });
+
+    curMes = choice2;
+
+
 
     d3.select('#maptitle').html(polNameMap[curPol]);
 
@@ -628,6 +665,7 @@ function updatePol() {
 
 }
 
+/* fonction de mise a jour des dates */
 function updateDate(){
 
     d3.selectAll('.maptitle').remove();
@@ -653,7 +691,6 @@ function updateDate(){
     updateScalesColor();
 }
 
-//TODO PRENDRE LES DONNEES DE POPULATION ANNEE PAR ANNEE
 /* fonction de mise a jour des smallMultiples de mesure */
 function updateMes(){
     var choice;
@@ -661,7 +698,7 @@ function updateMes(){
         rb = d3.select(this);
         if(rb.property("checked")){
             choice= rb.property("value");
-            console.log(choice);
+            //console.log(choice);
         }
     });
 
@@ -683,7 +720,7 @@ function updateMes(){
 
     if (years.length > 12){
         var toSup = years.length - 12;
-        years = years.slice(toSup,lgt);
+        years = years.slice(toSup,years.length);
     }
     
     updateDate(years);
@@ -768,7 +805,6 @@ function updateMes(){
 
 
     // build the map 1 legend
-
     d3.select("#meslegend").selectAll(".svglegend").remove();
     // La légende
     var dataUpdate = [curMes+"1",curMes+"2",curMes+"3",curMes+"4",curMes+"5"];
@@ -862,18 +898,6 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     //on créé les scales de couleurs pour chaque polluants
     //updateScalesColor();
 
-    //code de mise a jour des smallMultiples de pollution
-    d3.selectAll("input[type=radio][name=pol]")
-        .on("change", function() {
-            updatePol();
-        });
-
-    //code de mise a jour des smallMultiples de pollution
-    d3.selectAll("input[type=radio][name=mesure]")
-        .on("change", function() {
-            updateMes();
-            updatePol();
-        });
 
     //on affiche les smallMultiples de mesure
     updateMes();
@@ -887,7 +911,6 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     // définir les scales de couleurs en fonction du vecteur des années
     // afficher les smallMaps
 }
-
 
 
 // permet de charger les fichiers de manière asynchrone
