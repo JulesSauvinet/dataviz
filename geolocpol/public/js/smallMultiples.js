@@ -50,7 +50,7 @@ var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques'
 
 var correspondanceMap = {'NH3' : ['Pesticides','Morts de cancers','Taxes environnementales','Energie',
                                   'Chauffage Nucleaire','Morts de maladies cardiaques'/*,'Transport','Moteurs de voitures'*/],
-                         'NMVOC' : ['Morts de cancers','Morts de maladies cardiaques'/*,
+                         'NMVOC' : ['Morts de cancers','Morts de maladies cardiaques', 'Energie renouvelable'/*,
                                     'Taxes environnementales','Energie','Chauffage Nucleaire','Transport','Pesticides','Moteurs de voitures'*/],
                          'NOX' : ['Chauffage Nucleaire','Energie'/*,'Moteurs de voitures','Transport',
                                   'Morts de cancers','Morts de maladies cardiaques','Pesticides','Taxes environnementales'*/],
@@ -73,8 +73,6 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     'Slovenija' : 'Slovénie', '?eská republika' : 'République tchèque', 'Eesti' : 'Estonie',
                     '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte'};
 
-var mesures =  ['Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales',
-                'Transport', 'Morts de maladies cardiaques', 'Morts de cancers', 'Moteurs de voitures'];
 
 function getNameFromMesCode(mesCode){
     for (var mesure in mesuresCodes){
@@ -163,9 +161,11 @@ function createPolDiv(pollutions){
 }
 
 /* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
-var mesures = ['Morts de cancers','Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales','Transport', 'Morts de maladies cardiaques',  'Moteurs de voitures'];
+var mesures = ['Morts de cancers','Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales'
+                ,'Transport', 'Morts de maladies cardiaques',  'Moteurs de voitures', 'Energie renouvelable'];
 var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
-                    'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c', 'Moteurs de voitures' : 'mv'};
+                    'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c'
+                    , 'Moteurs de voitures' : 'mv', 'Energie renouvelable' : 'enr'};
 var fieldset,radioSpan;
 function createMesureDiv() {
     fieldset = d3.select("#mesurediv").append("form");
@@ -346,7 +346,8 @@ function mergeData(data1,data2,mes){
 var geoMes = {};
 var mesureMap = {};
 var yearsMesureMap = {};
-function createMesureData(europe, pesticides, energie, nuclear, taxes,transport, heartdiseases, cancer, motorcars){
+function createMesureData(europe, pesticides, energie, nuclear, taxes,transport, heartdiseases, cancer, motorcars,
+                          enerrenouv){
 
     var dataRaw = topojson.feature(europe, europe.objects.regions).features;
 
@@ -428,6 +429,15 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     mesureMap['mv'] = data9;
     yearsMesureMap['mv'] = years9;
 
+    //motor cars
+    var years10 = [];
+    var data10 = JSON.parse(JSON.stringify(dataRaw));
+    yearsTmp = Object.keys(enerrenouv[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years10.push(parseInt(d));}});
+    data10 = mergeData(data10,enerrenouv, 'enr');
+    mesureMap['enr'] = data10;
+    yearsMesureMap['enr'] = years10;
+
     for (var mesure in mesureMap){
         geoMes[mesure]=[];
         mesureMap[mesure].forEach(function(d){
@@ -493,7 +503,7 @@ function updateScalesColor(){
 
     var notYearKeys = ["dens", "pop", "sex", "age", "unit","icd10", "airsect", "geo", "airpol",
                        "prod_nrg","engine", "indic_nv", "nst07", "pe_type", "product","indic_nrg", "tax",
-                        "COUNTRY", "NAME", 'POPULATION', 'NUTS_ID'];
+                        "COUNTRY", "NAME", 'POPULATION', 'NUTS_ID', 'indic_en'];
 
     mesures.forEach(function(mesure){
         var mes = mesuresCodes[mesure];
@@ -564,6 +574,9 @@ function updateScalesColor(){
                 color.range(['pink', 'purple']);
                 break;
             case "mv":
+                color.range(['pink', 'darkred']);
+                break;
+            case "enr":
                 color.range(['pink', 'darkred']);
                 break;
         }
@@ -864,12 +877,12 @@ function insertDataAttribute(data1, data2, attribute){
 }
 
 function init(error,pollutions,density, population, pesticides, energie, nuclear, taxes,
-              transport, heartdiseases, cancer, motorcars, animals, europe){
+              transport, heartdiseases, cancer, motorcars, animals, enerrenouv, europe){
 
     if (error) throw error;
 
     //on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
-    var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,motorcars];
+    var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,motorcars,enerrenouv];
     density.forEach(function(dens){
         dataMesures.forEach(function(dataM){insertDataAttribute(dens,dataM,'dens');});
     });
@@ -895,7 +908,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     createMergedPolAndMapData(europe);
 
     //on créé des variables globales pour les données des mesures
-    createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases, cancer, motorcars);
+    createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases, cancer, motorcars, enerrenouv);
 
     //on affiche les smallMultiples de mesure
     updateMes();
@@ -931,6 +944,9 @@ queue()
     .defer(d3.csv, "data/eurostats/clean/type_of_motor_cars.csv")
     //la population animale
     .defer(d3.csv, "data/eurostats/clean/agr_r_animal.tsv")
+    //les energies renouvelables
+    .defer(d3.tsv, "data/eurostats/clean/tsdcc330.tsv")
     //la map de l'europe
     .defer(d3.json,"geodata/euro/eurotopo.json")
     .await(init);
+
