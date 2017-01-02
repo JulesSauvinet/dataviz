@@ -22,7 +22,7 @@ var mapWidth = 230;
 var mapHeight = 180;
 
 //Les conteneurs des maps
-var dateJoin;
+var dateJoin;   
 var divs;
 var SVGs;
 var dateJoin2;
@@ -91,7 +91,7 @@ var tip = d3.tip()
         //    console.log(name,d.properties["NAME"]);
 
 
-        var toDisplay =  'Région :  ' + name +'</br>';
+        var toDisplay =/*  'Pays :  ' + */name +'</br>';
         /*if (isPol)
             toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseInt(parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*10000.0) + unitPolMap[curPol] + '/10000 habs';
         else{
