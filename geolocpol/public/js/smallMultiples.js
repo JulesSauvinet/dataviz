@@ -6,6 +6,8 @@
 //TODO faire des graphiques quand on selectionne une region?
 //TODO zoom sur les cartes?
 //TODO plus de données et exmploiter plus les données
+//TODO laisser l'utilisateur choisir entre pop et densité?
+//TODO changer position div mesure
 
 //le polluant/mesure courant(e) sélectionné(e)
 var curPol = "NH3";
@@ -66,6 +68,10 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     'Lietuva' : 'Lituanie', 'Hrvatska' : 'Croatie', 'Slovensko' :'Slovaquie',
                     'Slovenija' : 'Slovénie', '?eská republika' : 'République tchèque', 'Eesti' : 'Estonie',
                     '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte'};
+
+var mesures =  ['Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales',
+    'Transport', 'Morts de maladies cardiaques', 'Morts de cancers', 'Moteurs de voitures'];
+
 function getNameFromMesCode(mesCode){
     for (var mesure in mesuresCodes){
         if (mesuresCodes[mesure] === mesCode)
@@ -166,7 +172,7 @@ function createMesureDiv() {
         })
         .property({
             checked: function(d,i) { return (i ===0); },
-            value: function(d) { return d }
+            value: function(d) { return d; }
         });
 
     radioSpan.append("label")
@@ -203,7 +209,7 @@ function updateMesureDiv(mesures) {
             value : function(d,i) { return mesuresCodes[d];}
         })
         .property({
-            checked: function(d,i) { return (mesuresCodes[d] === curMes); },
+            checked: function(d,i) {return (mesuresCodes[d] === curMes); },
             value: function(d) { return d }
         });
 
@@ -217,7 +223,7 @@ function updateMesureDiv(mesures) {
 
     if (!checked){
         d3.selectAll(".radiomesure")[0][0].checked = true;
-        curMes = d3.selectAll(".radiomesure")[0][0].value;
+        curMes = mesuresCodes[d3.selectAll(".radiomesure")[0][0].value];
         updateMes();
     }
 
@@ -576,6 +582,7 @@ function updatePol() {
     curPol = choice;
 
     updateMesureDiv(correspondanceMap[curPol]);
+    //updateMesureDiv(mesures);
 
     var choice2;
     d3.selectAll(".radiomesure").each(function(d){
@@ -585,7 +592,7 @@ function updatePol() {
         }
     });
 
-    curMes = choice2;
+    curMes = mesuresCodes[choice2];
 
 
     d3.select('#maptitle').html(polNameMap[curPol]);
