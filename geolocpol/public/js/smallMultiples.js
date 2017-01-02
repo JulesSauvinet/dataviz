@@ -7,7 +7,9 @@
 //TODO faire des graphiques quand on selectionne une region?
 //TODO zoom sur les cartes?
 //TODO changer years en fonction des données
-//TODO valeur a la place de year quand on hoove
+//TODO suggestions
+//TODO plus de données et exmploiter plus les données
+//TODO changer scales de couleur quand on change les years
 
 
 //NOT USED mais eventuellement la taille de la vizu
@@ -725,7 +727,7 @@ function updateMes(){
     data = mesureMap[curMes];
 
     SVGs2.each(function(date) {
-        console.log(date);
+        //console.log(date);
 
         d3.select(this).selectAll('path').remove();
 
