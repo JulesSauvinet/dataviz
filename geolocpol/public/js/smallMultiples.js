@@ -618,7 +618,7 @@ function updatePol() {
                 tip.show(d,date, true);
                 years.forEach(function(year){
                     var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*10000.0).toFixed(4);
-                    var value2 = (parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*10000.0).toFixed(4) + ' ' + unitPolMap[curPol] + '/10000 habs';
+                    var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*10000.0).toFixed(4) + ' ' + unitPolMap[curPol] + '/10000 habs';
                     d3.select('.title'+year).html(value2);
                 });
             })
