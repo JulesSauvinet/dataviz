@@ -393,7 +393,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
     var years8 = [];
     var data8 = JSON.parse(JSON.stringify(dataRaw));
     data8 = mergeData(data8,cancer, 'c');
-    yearsTmp = Object.keys(motorcars[0]);
+    yearsTmp = Object.keys(cancer[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years8.push(d);}});
     mesureMap['c'] = data8;
     yearsMesureMap['c'] = years8;
@@ -717,12 +717,11 @@ function updateMes(){
     years = years.filter(function(year){return parseInt(year) > 1999;});
     years.sort();
 
-    var lgt  = years.length;
-    if (lgt > 12){
-        var toSup = lgt - 12;
+    if (years.length > 12){
+        var toSup = years.length - 12;
         years = years.slice(toSup,lgt);
     }
-
+    
     updateDate(years);
 
     d3.select('#map2title').html(choice);
