@@ -61,7 +61,7 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     'Italia' : 'Italia', 'Latvija' : 'Lettonie', 'Ireland' : 'Irlande',
                     'United kingdom' : 'Grande-Bretagne', 'Deutschland' : 'Allemagne',
                     'Nederland' : 'Pays-Bas', 'Belgique-belgië' : 'Belgique', 'Danmark' : 'Danemark',
-                    'România': 'Roumanie', 'Luxembourg' : 'Luxembourg', '???????? (bulgaria' : 'Bulgarie',
+                    'România': 'Roumanie', 'Luxembourg' : 'Luxembourg', '???????? (bulgaria)' : 'Bulgarie',
                     '?????? (ellada)' : 'Grèce', 'Magyarorszàg' : 'Hongrie', 'Österreich' : 'Autriche',
                     'Lietuva' : 'Lituanie', 'Hrvatska' : 'Croatie', 'Slovensko' :'Slovaquie',
                     'Slovenija' : 'Slovénie', '?eská republika' : 'République tchèque', 'Eesti' : 'Estonie',
@@ -80,6 +80,10 @@ var tip = d3.tip()
 
         var name = d.properties["NAME"];
         var name = regionNameMap[name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()];
+
+        //if (!name)
+        //    console.log(name,d.properties["NAME"]);
+
 
         var toDisplay =  'Région :  ' + name +'</br>';
         /*if (isPol)
@@ -179,7 +183,7 @@ function createMesureDiv() {
 }
 
 function updateMesureDiv(mesures) {
-    
+
     radioSpan.exit().remove();
     radioSpan.selectAll(".radio").remove();
     radioSpan.selectAll(".radiomesure").remove();
