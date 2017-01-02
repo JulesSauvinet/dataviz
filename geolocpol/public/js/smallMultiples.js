@@ -1,6 +1,5 @@
 //IDEES
 //demographie ou densité?
-
 //TODO optimiser et nettoyer le code
 //TODO améliorer la légende
 //TODO faire du design, sur le panneau de droite notamment
@@ -12,19 +11,25 @@
 //TODO changer scales de couleur quand on change les years
 //TODO valeur a la place de year quand on hoove
 
-
-//NOT USED mais eventuellement la taille de la vizu
-var width = 1550, height = 800;
-
-//le polluant courant sélectionné
+//le polluant/mesure courant(e) sélectionné(e)
 var curPol = "NH3";
 var curMes = "c";
+
+//Les unités des différent(e)s polluants/mesures
 var unitPolMap = {};
 var unitMesMap = {};
 
-//la taille d'une small map
+//Les dimensions d'une small map
 var mapWidth = 230;
 var mapHeight = 180;
+
+//Les conteneurs des maps
+var dateJoin;
+var divs;
+var SVGs;
+var dateJoin2;
+var divs2;
+var SVGs2;
 
 //projection + path de l'europe d'une small map
 var projection = d3.geo.stereographic().center([3.9,43.0]).scale(375).translate([mapWidth / 2-20, mapHeight / 2+43]);
@@ -55,47 +60,6 @@ var correspondanceMap = {'NH3' : ['Pesticides','Morts de cancers','Taxes environ
                                   'Taxes environnementales','Transport','Moteurs de voitures'*/]
                         };
 
-d3.select("#maps").append("h4").attr("id", "maptitle").attr("class", "maptitle");
-d3.select("#maps2").append("h4").attr("id", "map2title").attr("class", "maptitle");
-
-//on dessine une map pour chaque année pour la pollution
-
-var dateJoin = d3.select('#maps').selectAll('div.map').data(years);
-dateJoin.exit().remove();
-
-var divs = dateJoin.enter()
-    .append('div').attr({
-        'id':function(d){ return 'map_'+d; },
-        'class':'map'
-    });
-
-divs.append('p').attr({'class' : function(d){ return 'pmap ' + 'title'+d;}}).text(function(d){ return dateFormat(new Date(d)); });
-
-//le titre -> nom de l'année
-var SVGs = divs.append('svg').attr({
-    'width':mapWidth,
-    'height':mapHeight,
-    'class' : 'svgmap'
-});
-
-//on dessine une map pour chaque année pour les mesures
-var dateJoin2 = d3.select('#maps2').selectAll('div.map').data(years);
-dateJoin2.exit().remove();
-
-var divs2 = dateJoin2.enter()
-    .append('div').attr({
-        'id':function(d){ return 'map2_'+d; },
-        'class':'map'
-    });
-
-divs2.append('p').attr({'class' : function(d){ return 'pmap ' + 'title2'+d;}}).text(function(d){ return dateFormat(new Date(d)); });
-
-//le titre -> nom de l'année
-var SVGs2 = divs2.append('svg').attr({
-    'width':mapWidth,
-    'height':mapHeight,
-    'class' : 'svgmap'
-});
 
 function getNameFromMesCode(mesCode){
     for (var mesure in mesuresCodes){
