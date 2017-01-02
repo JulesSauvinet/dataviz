@@ -21,7 +21,7 @@
 //le polluant/mesure courant(e) sélectionné(e)
 var curPol = "NH3";
 var curMes = "c";
-var curChoice = 'normaliser par densité';
+var normalisation = "pop";
 
 //Les unités des différent(e)s polluants/mesures
 var unitPolMap = {};
@@ -96,30 +96,33 @@ var tip = d3.tip()
 
 /* -------------------------- fonction pour créer le div du choix de la normalisation des données -------------------------- */
 var choiceNorma = ['normaliser par densité', 'normaliser par population'];
-function createChoiceNormalisation() {
+function createNormaDiv() {
     var fieldset = d3.select("#normalisationdiv").append("form");
-    fieldset.append("choice").html("<h4>Choix de la normalisation</h4>");
-    var radioSpan = fieldset.selectAll(".radio").data(choiceNorma);
+    fieldset.append("legend").html("<h4>Choix de la normalisation</h4>");
 
-    radioSpan.enter().append("span")
-        .attr("class", "radio");
+    fieldset.html('<span class="radio">' +
+        '<input type="radio" name = "choice" class ="choice" id="radPop" value="pop" checked>' +
+        '<label class ="radiolabel">Population</label>' +
+        '</span>'+
+        '<span class="radio">' +
+        '<input type="radio" name = "choice" class ="choice" id="radDens" value="dens">' +
+        '<label class ="radiolabel">Densité</label>' +
+        '</span>');
 
-    radioSpan.append("input")
-        .attr({
-            type: "radio",
-            name: "choice",
-            class : "choiceNorma",
-            id : function(d,i) { return 'choiceradio' + i;}
-        })
-        .property({
-            checked: function(d,i) { return (i ===0); },
-            value: function(d) { return d }
-        });
-    radioSpan.append("label")
-        .attr('class', 'radiolabel')
-        .html(function(d, i) { return d.last == true ? choiceNorma[d] :  choiceNorma[d] + '<br>'});
 
-    radioSpan.exit().remove();
+    var buttonsRad = d3.selectAll("input[type=radio][name=choice]");
+
+    for (var i =0; i<2; i++){
+        buttonsRad[0][i].addEventListener("click", function() {
+            normalisation=this.value;
+            updateScalesColor();
+            updateMes();
+            updatePol();
+        }, false);
+    }
+
+    //code de mise a jour des smallMultiples de pollution
+
 }
 
 /* ----------------------------- fonction pour créer le div des polluants de manière dynamique ----------------------------- */
@@ -158,7 +161,7 @@ function createPolDiv(pollutions){
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=pol]")
         .on("change", function() {
-            updatePol(false);
+            updatePol();
         });
 }
 
@@ -195,8 +198,8 @@ function createMesureDiv() {
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=mesure]")
         .on("change", function() {
-            updateMes(false);
-            updatePol(false);
+            updateMes();
+            updatePol();
         });
 }
 
@@ -236,7 +239,7 @@ function updateMesureDiv(mesures) {
     if (!checked){
         d3.selectAll(".radiomesure")[0][0].checked = true;
         curMes = mesuresCodes[d3.selectAll(".radiomesure")[0][0].value];
-        updateMes(false);
+        updateMes();
     }
 
     radioSpan.append("label")
@@ -246,8 +249,8 @@ function updateMesureDiv(mesures) {
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=mesure]")
         .on("change", function() {
-            updateMes(false);
-            updatePol(false);
+            updateMes();
+            updatePol();
         });
 }
 
@@ -441,7 +444,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
 var colorpol = {};
 var colormes = {};
 /* fonction qui créé les scales de couleurs pour chaque polluant puis pour chaque mesures en fonction des min et max*/
-function updateScalesColor(boolDensite){
+function updateScalesColor(){
     colorpol = {};
     colormes = {};
 
@@ -455,10 +458,7 @@ function updateScalesColor(boolDensite){
                 for (var key in pol){
                     if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
                         //on ne base la scale que s'il y a une densité associé au code NUTS
-                        if(boolDensite == false)
-                            var value = parseFloat(pol[key]) / parseFloat(pol["pop"][key]);
-                        else
-                            var value = parseFloat(pol[key]) / parseFloat(pol["dens"][key]);                            
+                        var value = parseFloat(pol[key]) / parseFloat(pol[normalisation][key]);
                         var year = parseInt(key);
                         if (years.includes(key)) {
                             if (parseFloat(pol[key]) !== 0 && value < parseFloat(min)) {
@@ -477,10 +477,7 @@ function updateScalesColor(boolDensite){
                     if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
                         //on ne base la scale que s'il y a une densité associé au code NUTS
                         var year = parseInt(key);
-                        if(boolDensite == false)
-                            var value = parseFloat(pol[key]) / parseFloat(pol["pop"][year]);
-                        else
-                            var value = parseFloat(pol[key]) / parseFloat(pol["dens"][year]);
+                        var value = parseFloat(pol[key]) / parseFloat(pol[normalisation][year]);
                         if (years.includes(key)) {
                             if (value > parseFloat(max)) {
                                 max = value;
@@ -514,10 +511,7 @@ function updateScalesColor(boolDensite){
                 for (var key in md){
                     if (!notYearKeys.includes(key)) {
                         //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
-                        if(boolDensite == false)
-                            var value = parseFloat(md[key]) / parseFloat(md["pop"][key])*1000.0;
-                        else
-                            var value = parseFloat(md[key]) / parseFloat(md["dens"][key])*1000.0;
+                        var value = parseFloat(md[key]) / parseFloat(md[normalisation][key])*1000.0;
                         var year = parseInt(key);
                         if (years.includes(key)) {
                             if (parseFloat(md[key]) !== 0 && value < parseFloat(min)) {
@@ -536,10 +530,7 @@ function updateScalesColor(boolDensite){
                 for (var key in md) {
                     if (!notYearKeys.includes(key)) {
                         //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
-                        if(boolDensite == false)
-                            var value = parseFloat(md[key]) / parseFloat(md["pop"][key])*1000.0;
-                        else
-                            var value = parseFloat(md[key]) / parseFloat(md["dens"][key])*1000.0;
+                        var value = parseFloat(md[key]) / parseFloat(md[normalisation][key])*1000.0;
                         var year = parseInt(key);
                         if (years.includes(key)) {
                             if (value > parseFloat(max)) {
@@ -585,7 +576,7 @@ function updateScalesColor(boolDensite){
 }
 
 /* fonction de mise a jour des smallMultiples de pollution */
-function updatePol(boolDensite) {
+function updatePol() {
     var choice;
     d3.selectAll(".radiopol").each(function(d){
         rb = d3.select(this);
@@ -608,7 +599,6 @@ function updatePol(boolDensite) {
 
     curMes = mesuresCodes[choice2];
 
-
     d3.select('#maptitle').html(polNameMap[curPol]);
 
     data = dataMap[curPol];
@@ -630,25 +620,13 @@ function updatePol(boolDensite) {
             .on('mouseover', function(d){
                 tip.show(d,date, true);
                 years.forEach(function(year){
-                    if(boolDensite==false) {
-                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*10000.0).toFixed(4);
-                        if(parseFloat(d.properties[year])) {
-                            var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*10000.0).toFixed(4) + ' ' + unitPolMap[curPol] + '/10000 habs';
-                            d3.select('.title'+year).html(value2);
-                        }
-                        else {
-                            d3.select('.title'+year).html("");
-                        }
+                    var value = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*10000.0).toFixed(4);
+                    if(parseFloat(d.properties[year])) {
+                        value += ' ' + unitPolMap[curPol] + '/10000 habs';
+                        d3.select('.title'+year).html(value);
                     }
                     else {
-                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["dens"][year])*10000.0).toFixed(4);
-                        if(parseFloat(d.properties[year])) {
-                            var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['dens'][year])*10000.0).toFixed(4) + ' ' + unitPolMap[curPol] + '/10000 habs';
-                            d3.select('.title'+year).html(value2);
-                        }
-                        else {
-                            d3.select('.title'+year).html("");
-                        }                        
+                        d3.select('.title'+year).html("");
                     }
                 });
             })
@@ -669,7 +647,7 @@ function updatePol(boolDensite) {
                 if (datebis === "2004")
                     datebis = "2003";
 
-                var value = (parseFloat(d.properties[date])/parseFloat(d.properties["pop"][date]));
+                var value = (parseFloat(d.properties[date])/parseFloat(d.properties[normalisation][date]));
                 return colorpol[curPol](value);
             }
             else{
@@ -715,7 +693,7 @@ function updatePol(boolDensite) {
 }
 
 /* fonction de mise a jour des dates */
-function updateDate(boolDensite){
+function updateDate(){
 
     d3.selectAll('.maptitle').remove();
     d3.selectAll('div.map').remove();
@@ -737,11 +715,11 @@ function updateDate(boolDensite){
 
     SVGs = divs.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
     SVGs2 = divs2.append('svg').attr({'width':mapWidth,'height':mapHeight,'class' : 'svgmap'});
-    updateScalesColor(boolDensite);
+    updateScalesColor();
 }
 
 /* fonction de mise a jour des smallMultiples de mesure */
-function updateMes(boolDensite){
+function updateMes(){
     var choice;
     d3.selectAll(".radiomesure").each(function(d){
         rb = d3.select(this);
@@ -771,7 +749,7 @@ function updateMes(boolDensite){
         years = years.slice(toSup, years.length);
     }
     
-    updateDate(boolDensite);
+    updateDate();
 
     d3.select('#map2title').html(choice);
 
@@ -786,7 +764,7 @@ function updateMes(boolDensite){
         map.style("fill", function (d) {
             if (!isNaN(d.properties[date])){
                 var datebis = date;
-                var value = parseFloat(d.properties[date])/parseFloat(d.properties["pop"][datebis]);
+                var value = parseFloat(d.properties[date])/parseFloat(d.properties[normalisation][datebis]);
                 return colormes[curMes](value);
             }
             else{
@@ -808,22 +786,21 @@ function updateMes(boolDensite){
                     var datebis = date;
 
                     var datebis = parseInt(datebis);
-                    if (!d.properties["pop"][datebis]){
+                    if (!d.properties[normalisation][datebis]){
                         for (var i=1; i<=10; i++){
-                            if(d.properties["pop"][datebis+i]){
-                                d.properties["pop"][datebis] = d.properties["pop"][datebis+i];
+                            if(d.properties[normalisation][datebis+i]){
+                                d.properties[normalisation][datebis] = d.properties[normalisation][datebis+i];
                                 break;
                             }
-                            else if (d.properties["pop"][datebis-i]){
-                                d.properties["pop"][datebis] = d.properties["pop"][datebis-i];
+                            else if (d.properties[normalisation][datebis-i]){
+                                d.properties[normalisation][datebis] = d.properties[normalisation][datebis-i];
                                 break;
                             }
                         }
                     }
 
-
-                    if (d.properties["pop"][datebis]){
-                        var value = parseFloat(d.properties[date])/parseFloat(d.properties["pop"][datebis])*1000.0;
+                    if (d.properties[normalisation][datebis]){
+                        var value = parseFloat(d.properties[date])/parseFloat(d.properties[normalisation][datebis])*1000.0;
                         return colormes[curMes](value);
                     }
                     else {
@@ -836,25 +813,13 @@ function updateMes(boolDensite){
             }).on('mouseover', function(d){
                     tip.show(d,date, false);
                     years.forEach(function(year){
-                        if(boolDensite==false) {
-                            var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*1000.0).toFixed(4);
-                            if(parseFloat(d.properties[year])) {                    
-                                var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
-                                d3.select('.title2'+year).html(value2);
-                            }
-                            else {
-                                d3.select('.title2'+year).html("");
-                            }
+                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*1000.0).toFixed(4);
+                        if(parseFloat(d.properties[year])) {
+                            var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
+                            d3.select('.title2'+year).html(value2);
                         }
                         else {
-                            var value = (parseFloat(d.properties[year])/parseFloat(d.properties["dens"][year])*1000.0).toFixed(4);
-                            if(parseFloat(d.properties[year])) {                    
-                                var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['dens'][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
-                                d3.select('.title2'+year).html(value2);
-                            }
-                            else {
-                                d3.select('.title2'+year).html("");
-                            }                            
+                            d3.select('.title2'+year).html("");
                         }
                     });
                 })
@@ -944,7 +909,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     });
 
     //on créé le div du choix de normalisation
-    createChoiceNormalisation();
+    createNormaDiv();
 
     //on créé le div des polluants
     createPolDiv(pollutions);
@@ -962,17 +927,10 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases, cancer, motorcars);
 
     //on affiche les smallMultiples de mesure
-    updateMes(false);
+    updateMes();
 
     //on affiche les smallMultiples de pollution
-    updatePol(false);
-
-    d3.selectAll("input[type=radio][name=choice]")
-        .on("change", function() {
-            console.log("changement");
-            updatePol(true);
-            updateMes(true);
-        });
+    updatePol();
 }
 
 
