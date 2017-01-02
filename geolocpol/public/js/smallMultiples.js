@@ -182,9 +182,9 @@ function createMesureDiv() {
         });
 }
 
-function updateMesureDiv(mesures) {
+function updateMesureDiv(mesuresTmp) {
     //radioSpan.exit().remove();
-    //radioSpan.selectAll(".radio").remove();
+    /*radioSpan.selectAll(".radio").remove();
 
     radioSpan = fieldset.selectAll(".radio").data(mesures);
 
@@ -215,7 +215,42 @@ function updateMesureDiv(mesures) {
             updatePol();
         });
 
+    radioSpan.exit().remove();*/
+
     radioSpan.exit().remove();
+    radioSpan.selectAll(".radio").remove();
+    radioSpan.selectAll(".radiomesure").remove();
+    radioSpan.selectAll(".radiolabel").remove();
+
+    radioSpan = fieldset.selectAll(".radio").data(mesuresTmp);
+
+    radioSpan.enter().append("span")
+        .attr("class", "radio");
+
+    radioSpan.append("input")
+        .attr({
+            type: "radio",
+            name: "mesure",
+            class : "radiomesure",
+            id : function(d,i) { return 'mesureradio' + i;},
+            value : function(d,i) { return mesuresCodes[d];}
+        })
+        .property({
+            checked: function(d,i) { return (i ===0); },
+            value: function(d) { return d }
+        });
+
+    radioSpan.append("label")
+        .attr('class', 'radiolabel')
+        .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
+
+    //code de mise a jour des smallMultiples de pollution
+    //d3.selectAll("input[type=radio][name=mesure]").remove();
+    d3.selectAll("input[type=radio][name=mesure]")
+        .on("change", function() {
+            updateMes();
+            updatePol();
+        });
 }
 
 /* ----------------------------- fonction qui créé les datasets des polluants pour chaque polluant ----------------------------- */
@@ -718,9 +753,9 @@ function updateMes(){
     years = years.filter(function(year){return parseInt(year) > 1999;});
     years.sort();
 
-    if (years.length > 12){
+    if (years.length > 12) {
         var toSup = years.length - 12;
-        years = years.slice(toSup,years.length);
+        years = years.slice(toSup, years.length);
     }
     
     updateDate(years);
