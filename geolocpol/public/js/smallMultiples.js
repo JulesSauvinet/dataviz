@@ -40,7 +40,7 @@ var path = d3.geo.path()
 var dateFormat = d3.time.format("%Y");
 
 //les années choisies (une map par année)
-var years = ["2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014"];
+var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014"];
 
 var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
                   'PM10' : 'Particules 10', 'PM2_5': 'Particules 2.5', 'SOX' : 'Oxyde de soufre'};
@@ -182,47 +182,14 @@ function createMesureDiv() {
         });
 }
 
-function updateMesureDiv(mesuresTmp) {
-    //radioSpan.exit().remove();
-    /*radioSpan.selectAll(".radio").remove();
-
-    radioSpan = fieldset.selectAll(".radio").data(mesures);
-
-    var rad = radioSpan.enter().append("span")
-        .attr("class", "radio");
-
-    rad.append("input")
-        .attr({
-            type: "radio",
-            name: "mesure",
-            class : "radiomesure",
-            id : function(d,i) { return 'mesureradio' + i;},
-            value : function(d,i) { return mesuresCodes[d];}
-        })
-        .property({
-            checked: function(d,i) { return (i ===0); },
-            value: function(d) { return d }
-        });
-
-    rad.append("label")
-        .attr('class', 'radiolabel')
-        .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
-
-    //code de mise a jour des smallMultiples de pollution
-    d3.selectAll("input[type=radio][name=mesure]")
-        .on("change", function() {
-            updateMes();
-            updatePol();
-        });
-
-    radioSpan.exit().remove();*/
+function updateMesureDiv(mesures) {
 
     radioSpan.exit().remove();
     radioSpan.selectAll(".radio").remove();
     radioSpan.selectAll(".radiomesure").remove();
     radioSpan.selectAll(".radiolabel").remove();
 
-    radioSpan = fieldset.selectAll(".radio").data(mesuresTmp);
+    radioSpan = fieldset.selectAll(".radio").data(mesures);
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
@@ -236,9 +203,23 @@ function updateMesureDiv(mesuresTmp) {
             value : function(d,i) { return mesuresCodes[d];}
         })
         .property({
-            checked: function(d,i) { console.log(d); return (mesuresCodes[d] === curMes); },
+            checked: function(d,i) { return (mesuresCodes[d] === curMes); },
             value: function(d) { return d }
         });
+
+    var checked = false;
+    d3.selectAll(".radiomesure").each(function(d){
+        rb = d3.select(this);
+        if(rb.property("checked")){
+            checked = true;
+        }
+    });
+
+    if (!checked){
+        d3.selectAll(".radiomesure")[0][0].checked = true;
+        curMes = d3.selectAll(".radiomesure")[0][0].value;
+        updateMes();
+    }
 
     radioSpan.append("label")
         .attr('class', 'radiolabel')
@@ -749,7 +730,7 @@ function updateMes(){
     });
     years.reverse();
 
-    years = years.filter(function(year){return parseInt(year) > 1999;});
+    years = years.filter(function(year){return parseInt(year) > 1994;});
     years.sort();
 
     if (years.length > 12) {
