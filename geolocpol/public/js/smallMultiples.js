@@ -164,10 +164,10 @@ var mesures = ['Morts de cancers','Pesticides', 'Energie', 'Chauffage Nucleaire'
 var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
                     'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c', 'Moteurs de voitures' : 'mv'};
 var fieldset,radioSpan;
-function createMesureDiv(mesuresTmp) {
+function createMesureDiv() {
     fieldset = d3.select("#mesurediv").append("form");
     fieldset.append("legend").html("<h4>Choix de la mesure</h4>");
-    radioSpan = fieldset.selectAll(".radio").data(mesuresTmp);
+    radioSpan = fieldset.selectAll(".radio").data(mesures);
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
@@ -884,7 +884,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     createPolDiv(pollutions);
 
     //on créé dynamiquement le div des mesures
-    createMesureDiv(mesures);
+    createMesureDiv();
 
     //On récupère la liste pollution en fonction du polluant (radio bouton) choisi
     createPolDatas(pollutions);
