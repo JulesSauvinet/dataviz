@@ -18,7 +18,6 @@
 //TODO zoom sur les cartes?
 
 
-
 //le polluant/mesure courant(e) sélectionné(e)
 var curPol = "NH3";
 var curMes = "c";
@@ -33,18 +32,13 @@ var mapWidth = 230;
 var mapHeight = 180;
 
 //Les conteneurs des maps
-var dateJoin;   
-var divs;
-var SVGs;
-var dateJoin2;
-var divs2;
-var SVGs2;
+var dateJoin,divs,SVGs;
+var dateJoin2,divs2,SVGs2;
 
 //projection + path de l'europe d'une small map
 var projection = d3.geo.stereographic().center([3.9,43.0]).scale(375).translate([mapWidth / 2-20, mapHeight / 2+43]);
 
-var path = d3.geo.path()
-    .projection(projection);
+var path = d3.geo.path().projection(projection);
 
 var dateFormat = d3.time.format("%Y");
 
@@ -53,7 +47,6 @@ var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","200
 
 var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
                   'PM10' : 'Particules 10', 'PM2_5': 'Particules 2.5', 'SOX' : 'Oxyde de soufre'};
-
 
 var correspondanceMap = {'NH3' : ['Pesticides','Morts de cancers','Taxes environnementales','Energie',
                                   'Chauffage Nucleaire','Morts de maladies cardiaques'/*,'Transport','Moteurs de voitures'*/],
@@ -81,7 +74,7 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte'};
 
 var mesures =  ['Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales',
-    'Transport', 'Morts de maladies cardiaques', 'Morts de cancers', 'Moteurs de voitures'];
+                'Transport', 'Morts de maladies cardiaques', 'Morts de cancers', 'Moteurs de voitures'];
 
 function getNameFromMesCode(mesCode){
     for (var mesure in mesuresCodes){
@@ -94,26 +87,14 @@ var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d,date, isPol) {
-
         var name = d.properties["NAME"];
         var name = regionNameMap[name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()];
 
-        var toDisplay =/*  'Pays :  ' + */name +'</br>';
-        /*if (isPol)
-            toDisplay+='Pollution en ' + polNameMap[curPol] +' : ' + parseInt(parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*10000.0) + unitPolMap[curPol] + '/10000 habs';
-        else{
-            var unit = '??';
-            if (unitMesMap[curMes])
-                unit = unitMesMap[curMes];
-            if (!isNaN(parseFloat(d.properties[date])))
-                toDisplay+=getNameFromMesCode(curMes) + ' : ' + (parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*1000.0).toFixed(4) + unit + '/1000 habs';
-            else
-                toDisplay+=getNameFromMesCode(curMes) + ' : ND';
-        }*/
-
+        var toDisplay = name +'</br>';
         return toDisplay;
     });
 
+/* -------------------------- fonction pour créer le div du choix de la normalisation des données -------------------------- */
 var choiceNorma = ['normaliser par densité', 'normaliser par population'];
 function createChoiceNormalisation() {
     var fieldset = d3.select("#normalisationdiv").append("form");
@@ -141,9 +122,8 @@ function createChoiceNormalisation() {
     radioSpan.exit().remove();
 }
 
-//TODO UN SEUL DATA?
-var pollutants = [];
 /* ----------------------------- fonction pour créer le div des polluants de manière dynamique ----------------------------- */
+var pollutants = [];
 function createPolDiv(pollutions){
     pollutions.forEach(function(p){
         if (!pollutants.includes(p.airpol)) {
@@ -211,7 +191,6 @@ function createMesureDiv() {
     radioSpan.append("label")
         .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
-    //radioSpan.exit().remove();
 
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=mesure]")
@@ -367,8 +346,7 @@ function mergeData(data1,data2,mes){
 var geoMes = {};
 var mesureMap = {};
 var yearsMesureMap = {};
-function createMesureData(europe, pesticides, energie, nuclear, taxes,
-                          transport, heartdiseases, cancer, motorcars){
+function createMesureData(europe, pesticides, energie, nuclear, taxes,transport, heartdiseases, cancer, motorcars){
 
     var dataRaw = topojson.feature(europe, europe.objects.regions).features;
 
@@ -462,8 +440,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,
 // ------------------------------- Création des scales de couleur avec les valeurs min et max -------------------------------
 var colorpol = {};
 var colormes = {};
-/* fonction qui créé les scales de couleurs pour chaque polluant 
-puis pour chaque mesures en fonction des min et max (appelé une seule fois) */
+/* fonction qui créé les scales de couleurs pour chaque polluant puis pour chaque mesures en fonction des min et max*/
 function updateScalesColor(boolDensite){
     colorpol = {};
     colormes = {};
@@ -692,13 +669,10 @@ function updatePol(boolDensite) {
                 if (datebis === "2004")
                     datebis = "2003";
 
-                //console.log("pol : ", d.properties[date]);
-
                 var value = (parseFloat(d.properties[date])/parseFloat(d.properties["pop"][date]));
                 return colorpol[curPol](value);
             }
             else{
-                //console.log(d);
                 return "lightgrey";
             }
         });
