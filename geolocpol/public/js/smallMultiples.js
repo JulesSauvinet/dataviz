@@ -5,11 +5,7 @@
 //TODO faire du design, sur le panneau de droite notamment
 //TODO faire des graphiques quand on selectionne une region?
 //TODO zoom sur les cartes?
-//TODO changer years en fonction des données
-//TODO suggestions
 //TODO plus de données et exmploiter plus les données
-//TODO changer scales de couleur quand on change les years
-//TODO valeur a la place de year quand on hoove
 
 //le polluant/mesure courant(e) sélectionné(e)
 var curPol = "NH3";
@@ -183,7 +179,7 @@ function createMesureDiv() {
 }
 
 function updateMesureDiv(mesures) {
-
+    
     radioSpan.exit().remove();
     radioSpan.selectAll(".radio").remove();
     radioSpan.selectAll(".radiomesure").remove();
