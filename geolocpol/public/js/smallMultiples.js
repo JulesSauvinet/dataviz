@@ -618,8 +618,13 @@ function updatePol() {
                 tip.show(d,date, true);
                 years.forEach(function(year){
                     var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*10000.0).toFixed(4);
-                    var value2 = (parseFloat(d.properties[date])/parseFloat(d.properties['pop'][date])*10000.0).toFixed(4) + ' ' + unitPolMap[curPol] + '/10000 habs';
-                    d3.select('.title'+year).html(value2);
+                    if(parseFloat(d.properties[year])) {
+                        var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*10000.0).toFixed(4) + ' ' + unitPolMap[curPol] + '/10000 habs';
+                        d3.select('.title'+year).html(value2);
+                    }
+                    else {
+                        d3.select('.title'+year).html("");
+                    }
                 });
             })
             .on('mouseout', function(d,i){
@@ -810,9 +815,14 @@ function updateMes(){
             }).on('mouseover', function(d){
                     tip.show(d,date, false);
                     years.forEach(function(year){
-                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*1000.0).toFixed(4);                        
-                        var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
-                        d3.select('.title2'+year).html(value2);
+                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*1000.0).toFixed(4);
+                        if(parseFloat(d.properties[year])) {                    
+                            var value2 = (parseFloat(d.properties[year])/parseFloat(d.properties['pop'][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
+                            d3.select('.title2'+year).html(value2);
+                        }
+                        else {
+                            d3.select('.title2'+year).html("");
+                        }
                     });
                 })
               .on('mouseout', function(d,i){
