@@ -5,11 +5,7 @@
 //TODO faire du design, sur le panneau de droite notamment
 //TODO faire des graphiques quand on selectionne une region?
 //TODO zoom sur les cartes?
-//TODO changer years en fonction des données
-//TODO suggestions
 //TODO plus de données et exmploiter plus les données
-//TODO changer scales de couleur quand on change les years
-//TODO valeur a la place de year quand on hoove
 
 //le polluant/mesure courant(e) sélectionné(e)
 var curPol = "NH3";
@@ -183,40 +179,6 @@ function createMesureDiv() {
 }
 
 function updateMesureDiv(mesuresTmp) {
-    //radioSpan.exit().remove();
-    /*radioSpan.selectAll(".radio").remove();
-
-    radioSpan = fieldset.selectAll(".radio").data(mesures);
-
-    var rad = radioSpan.enter().append("span")
-        .attr("class", "radio");
-
-    rad.append("input")
-        .attr({
-            type: "radio",
-            name: "mesure",
-            class : "radiomesure",
-            id : function(d,i) { return 'mesureradio' + i;},
-            value : function(d,i) { return mesuresCodes[d];}
-        })
-        .property({
-            checked: function(d,i) { return (i ===0); },
-            value: function(d) { return d }
-        });
-
-    rad.append("label")
-        .attr('class', 'radiolabel')
-        .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
-
-    //code de mise a jour des smallMultiples de pollution
-    d3.selectAll("input[type=radio][name=mesure]")
-        .on("change", function() {
-            updateMes();
-            updatePol();
-        });
-
-    radioSpan.exit().remove();*/
-
     radioSpan.exit().remove();
     radioSpan.selectAll(".radio").remove();
     radioSpan.selectAll(".radiomesure").remove();
@@ -236,7 +198,7 @@ function updateMesureDiv(mesuresTmp) {
             value : function(d,i) { return mesuresCodes[d];}
         })
         .property({
-            checked: function(d,i) { console.log(d); return (mesuresCodes[d] === curMes); },
+            checked: function(d,i) {return (mesuresCodes[d] === curMes); },
             value: function(d) { return d }
         });
 
