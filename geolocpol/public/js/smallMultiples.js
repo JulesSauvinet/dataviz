@@ -191,17 +191,16 @@ function createMesureDiv(mesuresTmp) {
     //radioSpan.exit().remove();
 }
 
-function updateMesureDiv(mesuresTmp) {
+function updateMesureDiv(mesures) {
     //radioSpan.exit().remove();
-    radioSpan.selectAll(".radiomesure").remove();
-    radioSpan.selectAll(".radiolabel").remove();
+    radioSpan.selectAll(".radio").remove();
 
-    radioSpan = fieldset.selectAll(".radio").data(mesuresTmp);
+    radioSpan = fieldset.selectAll(".radio").data(mesures);
 
-    radioSpan.enter().append("span")
+    var rad = radioSpan.enter().append("span")
         .attr("class", "radio");
 
-    radioSpan.append("input")
+    rad.append("input")
         .attr({
             type: "radio",
             name: "mesure",
@@ -214,17 +213,17 @@ function updateMesureDiv(mesuresTmp) {
             value: function(d) { return d }
         });
 
-    radioSpan.append("label")
+    rad.append("label")
         .attr('class', 'radiolabel')
         .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
 
     //code de mise a jour des smallMultiples de pollution
-    /*d3.selectAll("input[type=radio][name=mesure]")
+    d3.selectAll("input[type=radio][name=mesure]")
         .on("change", function() {
             updateMes();
             updatePol();
-        });*/
-    //radioSpan.exit().remove();
+        });
+    radioSpan.exit().remove();
 }
 
 /* ----------------------------- fonction qui créé les datasets des polluants pour chaque polluant ----------------------------- */
@@ -567,7 +566,7 @@ function updatePol() {
 
     curPol = choice;
 
-    //updateMesureDiv(correspondanceMap[curPol]);
+    updateMesureDiv(correspondanceMap[curPol]);
 
     d3.select('#maptitle').html(polNameMap[curPol]);
 
