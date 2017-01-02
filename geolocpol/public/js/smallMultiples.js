@@ -55,7 +55,7 @@ var correspondanceMap = {'NH3' : ['Pesticides','Morts de cancers','Taxes environ
                          'NOX' : ['Chauffage Nucleaire','Energie'/*,'Moteurs de voitures','Transport',
                                   'Morts de cancers','Morts de maladies cardiaques','Pesticides','Taxes environnementales'*/],
                          'PM10' : ['Taxes environnementales','Energie','Transport','Morts de cancers',
-                                   'Morts de maladies cardiaques'/*,'Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
+                                   'Morts de maladies cardiaques','Moteurs de voitures'/*,'Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
                          'PM2_5' : ['Moteurs de voitures','Transport','Morts de cancers','Morts de maladies cardiaques'/*,
                                     'Taxes environnementales','Energie','Chauffage Nucleaire','Pesticides'*/],
                          'SOX' : ['Chauffage Nucleaire','Energie','Pesticides','Morts de cancers','Morts de maladies cardiaques'/*,
@@ -89,7 +89,6 @@ var tip = d3.tip()
     .html(function(d,date, isPol) {
         var name = d.properties["NAME"];
         var name = regionNameMap[name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()];
-
         var toDisplay = name +'</br>';
         return toDisplay;
     });
@@ -652,19 +651,24 @@ function updatePol() {
         });
 
         map.call(tip);
-
         map.exit().remove();
-
         i++;
     });
-    d3.select("#pollegend").selectAll(".svglegend").remove();
 
-    // build the map 1 legend
     // La légende
-    var dataUpdate = [curPol+"1",curPol+"2",curPol+"3",curPol+"4",curPol+"5"];
+    buildLegend(true);
+}
 
-    var legend = d3.select("#pollegend").append("svg").attr("class", "svglegend").selectAll(".legend")
-        .data(dataUpdate);
+function buildLegend(isPol){
+
+    var dataUpdate = isPol? [curPol+"1",curPol+"2",curPol+"3",curPol+"4",curPol+"5"] : [curMes+"1",curMes+"2",curMes+"3",curMes+"4",curMes+"5"];
+    var idDiv =  isPol ? '#pollegend' : '#meslegend';
+
+    d3.select(idDiv).selectAll(".svglegend").remove();
+    var legend = d3.select(idDiv).append("svg").attr("class", "svglegend").selectAll(".legend").data(dataUpdate);
+    var unitTab = isPol ? unitPolMap : unitMesMap;
+    var curVar = isPol ? curPol : curMes;
+    var colorScale = isPol ? colorpol : colormes;
 
     legend.enter().append("g")
         .attr("class", "legend")
@@ -673,7 +677,7 @@ function updatePol() {
         .attr("r", 5)
         .attr("fill", function(d,i) {
             i=i+1;
-            return colorpol[curPol]((colorpol[curPol].domain()[1]/5)*i);})
+            return colorScale[curVar]((colorScale[curVar].domain()[1]/5)*i);})
         .attr("x", 40);
 
     legend.append("text")
@@ -681,14 +685,21 @@ function updatePol() {
         .attr("dy", ".35em")
         .text(function(d,i) {
             i=i+1;
-            if (normalisation === 'pop')
-                return parseInt((colorpol[curPol].domain()[1]*10000/5)*i)+ ' ' + unitPolMap[curPol] + '/10000 habs';
-            else
-                return parseInt((colorpol[curPol].domain()[1]*10000/5)*i)/10000;
+            if (normalisation === 'pop'){
+                if (isPol)
+                    return parseInt((colorScale[curVar].domain()[1]*10000/5)*i)+ ' ' + unitTab[curVar] + '/10000 habs';
+                else
+                    return ((colorScale[curVar].domain()[1]/5)*i).toFixed(4)+' '+unitTab[curVar] + '/1000 habs';
+            }
+            else{
+                if (isPol)
+                    return parseInt((colorScale[curVar].domain()[1]*10000/5)*i)/10000;
+                else
+                    return ((colorScale[curVar].domain()[1]/5)*i).toFixed(4)/1000;
+            }
         });
 
     legend.exit().remove();
-
 }
 
 /* fonction de mise a jour des dates */
@@ -836,37 +847,7 @@ function updateMes(){
         map.exit().remove();
     });
 
-
-    // build the map 1 legend
-    d3.select("#meslegend").selectAll(".svglegend").remove();
-    // La légende
-    var dataUpdate = [curMes+"1",curMes+"2",curMes+"3",curMes+"4",curMes+"5"];
-
-    var legend = d3.select("#meslegend").append("svg").attr("class", "svglegend").selectAll(".legend")
-        .data(dataUpdate);
-
-    legend.enter().append("g")
-        .attr("class", "legend")
-        .attr("transform", function(d, i) { return "translate("+(30) +"," + ((20) +i * 20) + ")"; })
-        .append("circle")
-        .attr("r", 5)
-        .attr("fill", function(d,i) {
-            i=i+1;
-            return colormes[curMes]((colormes[curMes].domain()[1]/5)*i);})
-        .attr("x", 40);
-
-    legend.append("text")
-        .attr("x", 15)
-        .attr("dy", ".35em")
-        .text(function(d,i) {
-            i=i+1;
-            if (normalisation === 'pop')
-                return ((colormes[curMes].domain()[1]/5)*i).toFixed(4)+' '+unitMesMap[curMes] + '/1000 habs';
-            else
-                return ((colormes[curMes].domain()[1]/5)*i).toFixed(4)/1000;
-        });
-
-    legend.exit().remove();
+    buildLegend(false);
 }
 
 function insertDataAttribute(data1, data2, attribute){
@@ -888,7 +869,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     if (error) throw error;
 
     //on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
-    var dataMesures = [pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,motorcars];
+    var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,motorcars];
     density.forEach(function(dens){
         dataMesures.forEach(function(dataM){insertDataAttribute(dens,dataM,'dens');});
     });
