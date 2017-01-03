@@ -667,7 +667,7 @@ function updatePol() {
                 years.forEach(function(year){
                     var value = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*10000.0).toFixed(4);
                     if(parseFloat(d.properties[year])) {
-                        normalisation === 'pop' ? value += ' ' + unitPolMap[curPol] + '/10000 habs' : value = parseInt(value)/10000;
+                        normalisation === 'pop' ? value += ' ' + unitPolMap[curPol] + '/10000 habs' : value = parseInt(value)/10000+' ' + unitPolMap[curPol] + '/10000 habs';
                         d3.select('.title'+year).html(value);
                     }
                     else {
@@ -741,9 +741,9 @@ function buildLegend(isPol){
             }
             else{
                 if (isPol)
-                    return parseInt((colorScale[curVar].domain()[1]*10000/5)*i)/10000;
+                    return parseInt((colorScale[curVar].domain()[1]*10000/5)*i)/10000 + ' ' + unitTab[curVar] + '/10000 habs';
                 else
-                    return ((colorScale[curVar].domain()[1]/5)*i).toFixed(4)/10000;
+                    return ((colorScale[curVar].domain()[1]/5)*i).toFixed(4)/10000 + ' ' + unitTab[curVar] + '/10000 habs';
             }
         });
 
@@ -877,7 +877,7 @@ function updateMes(){
                             if (normalisation === 'pop')
                                 value2 = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*10000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/10000 habs';
                             else
-                                value2 = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year]));
+                                value2 = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])).toFixed(4) + ' ' + unitMesMap[curMes] + '/10000 habs';
                             d3.select('.title2'+year).html(value2);
                         }
                         else {
