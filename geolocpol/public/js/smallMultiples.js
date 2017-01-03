@@ -96,7 +96,7 @@ var choiceNorma = ['normaliser par densité', 'normaliser par population'];
 function createNormaDiv() {
     var fieldset = d3.select("#normalisationdiv").append("form").attr('class',"normalegend");
     fieldset.append("legend").html(
-        '<h4>Choix de la normalisation</h4>'+
+        '<h5>Choix de la normalisation</h5>'+
         '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radPop" value="pop" checked>' +
         '<label class ="radiolabel">Population</label>' +
@@ -130,16 +130,13 @@ function createPolDiv(pollutions){
     });
 
     var fieldset = d3.select("#pollutiondiv").append("form");
-    fieldset.html('<span class="divchoicetitle">Choix du polluant : </span>');
+    fieldset.html('<h5> Choix du polluant : </h5>');
     var radioSpan = fieldset.selectAll(".radio").data(pollutants);
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
 
 
-    radioSpan.append("label")
-        .attr('class', 'radiolabel')
-        .html(function(d, i) {  return d.last == true ? polNameMap[d] :  polNameMap[d] /*+ '<br>'*/});
     radioSpan.append("input")
         .attr({
             type: "radio",
@@ -152,6 +149,9 @@ function createPolDiv(pollutions){
             value: function(d) { return d }
         });
 
+    radioSpan.append("label")
+        .attr('class', 'radiolabel')
+        .html(function(d, i) {  return d.last == true ? polNameMap[d] :  polNameMap[d] + '<br>'});
     radioSpan.exit().remove();
 
     //code de mise a jour des smallMultiples de pollution
@@ -171,7 +171,7 @@ var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :
 var fieldset,radioSpan;
 function createMesureDiv() {
     fieldset = d3.select("#mesurediv").append("form");
-    fieldset.html('<span class="divchoicetitle">Choix de la mesure : </span>');
+    fieldset.html('<h5>Choix de la mesure : </h5>');
 
     radioSpan = fieldset.selectAll(".radio").data(mesures);
 
@@ -179,10 +179,6 @@ function createMesureDiv() {
         .attr("class", "radio");
 
 
-
-    radioSpan.append("label")
-        .attr('class', 'radiolabel')
-        .html(function(d, i) {  return d.last == true ? d :  d /*+ '<br>'*/});
 
     radioSpan.append("input")
         .attr({
@@ -196,6 +192,10 @@ function createMesureDiv() {
             checked: function(d,i) { return (i ===0); },
             value: function(d) { return d; }
         });
+
+    radioSpan.append("label")
+        .attr('class', 'radiolabel')
+        .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=mesure]")
         .on("change", function() {
@@ -217,11 +217,6 @@ function updateMesureDiv(mesures) {
         .attr("class", "radio");
 
 
-
-    radioSpan.append("label")
-        .attr('class', 'radiolabel')
-        .html(function(d, i) {  return d.last == true ? d :  d /*+ '<br>'*/});
-
     radioSpan.append("input")
         .attr({
             type: "radio",
@@ -234,6 +229,10 @@ function updateMesureDiv(mesures) {
             checked: function(d,i) {return (mesuresCodes[d] === curMes); },
             value: function(d) { return d }
         });
+
+    radioSpan.append("label")
+        .attr('class', 'radiolabel')
+        .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
 
     var checked = false;
     d3.selectAll(".radiomesure").each(function(d){

@@ -18,6 +18,7 @@ h4{
     padding: 0px!important;
     margin-left : 13px!important;
     margin-top: 5px!important;
+    margin-bottom: 5px!important;
 }
 .pmap {
     height : 15px;
@@ -33,7 +34,6 @@ h4{
 
 #content{
     /*min-height: 100%;*/
-    clear:both;
     /*display: flex;*/
     /*flex-direction: column;*/
     /*min-height: 100vh;*/
@@ -87,10 +87,14 @@ h4{
     /*width : 230px;*/
 }
 #pollutiondiv{
+    width : 280px;
 }
 
 #mesurediv{
+    width : 280px;
+    margin-top : 75px;
 }
+
 #position-element{
     position: absolute;
     top: 0;
@@ -98,9 +102,7 @@ h4{
 }
 
 #settings {
-    display:block;
     position:absolute;
-    height : 100vh;
     right: 0px;
     width: 21%;
 
@@ -108,10 +110,10 @@ h4{
 
 #normalisationdiv{
     position: relative;
-    margin: 10px;
+    margin: 3px;
     /*border:1pt solid black;*/
     padding: 4px;
-    width : 250px;
+    width : 280px;
     height : 10%;
 }
 
@@ -125,12 +127,11 @@ h4{
 
 
 #pollegend{
-    margin-top: 300px;
-    bottom : 10px;
+    margin-top: 10px;
 }
 
 #meslegend{
-    margin-top: 330px;
+    margin-top: 10px;
 }
 
 .divchoicetitle{
@@ -138,7 +139,10 @@ h4{
 }
 
 form {
+    border: 1px solid lightgray;
+    margin-left: 28px;
     padding: 7px;
+    padding-left:15px;
 }
 
 .normalegend{
@@ -194,12 +198,11 @@ label.notSelected {
     left: 0;
 }
 
-footer{position : absolute; bottom : -15px; margin-top : 20px;}
+footer{position : absolute; bottom : -15px; margin-top : 10px;}
 
 /* generic */
 h1, h2, h3, h4, h5, h6 {
     color:#232323;
-    margin:10px 0 10px;
 }
 
 p, ul, ol, table, dl {
@@ -227,14 +230,18 @@ h2 {
 }
 
 h3 {
-    font-size: 18px;
+    font-size: 22px;
 }
 
 h4, h5, h6 {
     font-family: Arvo, Monaco, serif;
-    font-weight: 700;
+    font-weight: 800;
 }
 
+h5{
+    font-size: 16px;
+    margin : 5px!important;
+}
 a {
     /*color:#C30000;*/
     color: #00B7FF;
@@ -254,7 +261,7 @@ hr {
     border:0;
     background:#ccc;
     height:1px;
-    margin:0 0 24px;
+    margin:0 0 16px;
 }
 
 a.header {
