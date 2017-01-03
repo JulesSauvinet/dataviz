@@ -527,7 +527,7 @@ function updateScalesColor(){
                 for (var key in md){
                     if (!notYearKeys.includes(key)) {
                         //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
-                        var value = parseFloat(md[key]) / parseFloat(md[normalisation][key])*1000.0;
+                        var value = parseFloat(md[key]) / parseFloat(md[normalisation][key])*10000.0;
                         var year = parseInt(key);
                         if (years.includes(key)) {
                             if (parseFloat(md[key]) !== 0 && value < parseFloat(min)) {
@@ -546,7 +546,7 @@ function updateScalesColor(){
                 for (var key in md) {
                     if (!notYearKeys.includes(key)) {
                         //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
-                        var value = parseFloat(md[key]) / parseFloat(md[normalisation][key])*1000.0;
+                        var value = parseFloat(md[key]) / parseFloat(md[normalisation][key])*10000.0;
                         var year = parseInt(key);
                         if (years.includes(key)) {
                             if (value > parseFloat(max)) {
@@ -713,13 +713,13 @@ function buildLegend(isPol){
                 if (isPol)
                     return parseInt((colorScale[curVar].domain()[1]*10000/5)*i)+ ' ' + unitTab[curVar] + '/10000 habs';
                 else
-                    return ((colorScale[curVar].domain()[1]/5)*i).toFixed(4)+' '+unitTab[curVar] + '/1000 habs';
+                    return ((colorScale[curVar].domain()[1]/5)*i).toFixed(4)+' '+unitTab[curVar] + '/10000 habs';
             }
             else{
                 if (isPol)
                     return parseInt((colorScale[curVar].domain()[1]*10000/5)*i)/10000;
                 else
-                    return ((colorScale[curVar].domain()[1]/5)*i).toFixed(4)/1000;
+                    return ((colorScale[curVar].domain()[1]/5)*i).toFixed(4)/10000;
             }
         });
 
@@ -834,7 +834,7 @@ function updateMes(){
                     }
 
                     if (d.properties[normalisation][datebis]){
-                        var value = parseFloat(d.properties[date])/parseFloat(d.properties[normalisation][datebis])*1000.0;
+                        var value = parseFloat(d.properties[date])/parseFloat(d.properties[normalisation][datebis])*10000.0;
                         return colormes[curMes](value);
                     }
                     else {
@@ -847,11 +847,11 @@ function updateMes(){
             }).on('mouseover', function(d){
                     tip.show(d,date, false);
                     years.forEach(function(year){
-                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*1000.0).toFixed(4);
+                        var value = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*10000.0).toFixed(4);
                         if(parseFloat(d.properties[year])) {
                             var value2;
                             if (normalisation === 'pop')
-                                value2 = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*1000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/1000 habs';
+                                value2 = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*10000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/10000 habs';
                             else
                                 value2 = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year]));
                             d3.select('.title2'+year).html(value2);
