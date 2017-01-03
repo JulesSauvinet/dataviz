@@ -351,125 +351,33 @@ var yearsMesureMap = {};
 function createMesureData(europe, pesticides, energie, nuclear, taxes,transport, heartdiseases, cancer, motorcars,
                           enerrenouv, fertiNitro, fertiPhos, fertiPota){
 
-    var dataRaw = topojson.feature(europe, europe.objects.regions).features;
-
     //pesticides
-    var years1 = [];
-    var data1 = JSON.parse(JSON.stringify(dataRaw));
-    var pesticides2 = pesticides.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_0"});
-    data1= mergeData(data1,pesticides2,'pe');
-    var yearsTmp = Object.keys(pesticides2[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years1.push(d);}});
-    mesureMap['pe'] = data1;
-    yearsMesureMap['pe'] = years1;
-
+    buildMesureData('pe', pesticides, europe);
     //energie
-    var years2 = [];
-    var data2 = JSON.parse(JSON.stringify(dataRaw));
-    var energie2 = energie.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nv"] === "FEC_TOT"});
-    data2= mergeData(data2,energie2,'en');
-    yearsTmp = Object.keys(energie2[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years2.push(d);}});
-    mesureMap['en'] = data2;
-    yearsMesureMap['en'] = years2;
-
+    buildMesureData('en', energie, europe);
     //chauffage nucleaire
-    var years3 = [];
-    var data3 = JSON.parse(JSON.stringify(dataRaw));
-    var nuclear2 = nuclear.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nrg"] === "B_100100"});
-    data3 = mergeData(data3,nuclear2,'cn');
-    yearsTmp = Object.keys(nuclear2[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years3.push(d);}});
-    mesureMap['cn'] = data3;
-    yearsMesureMap['cn'] = years3;
-
+    buildMesureData('cn', nuclear, europe);
     //taxes
-    var years4 = [];
-    var data4 = JSON.parse(JSON.stringify(dataRaw));
-    var taxes2 = taxes.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["tax"] === "ENV" && d["unit"] === "MIO_EUR"});
-    data4 = mergeData(data4,taxes2,'te');
-    yearsTmp = Object.keys(taxes2[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years4.push(d);}});
-    mesureMap['te'] = data4;
-    yearsMesureMap['te'] = years4;
-
+    buildMesureData('te', taxes, europe);
     //transport
-    var years6 = [];
-    var data6 = JSON.parse(JSON.stringify(dataRaw));
-    var transport2 = transport.filter(function(d,i){return d["geo"] != "EU15"});
-    data6 = mergeData(data6,transport2,'tr');
-    yearsTmp = Object.keys(transport2[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years6.push(d);}});
-    mesureMap['tr'] = data6;
-    yearsMesureMap['tr'] = years6;
-
+    buildMesureData('tr', transport, europe);
     //heart diseases
-    var years7 = [];
-    var data7 = JSON.parse(JSON.stringify(dataRaw));
-    data7 = mergeData(data7,heartdiseases, 'hd');
-    yearsTmp = Object.keys(heartdiseases[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years7.push(d);}});
-    mesureMap['hd'] = data7;
-    yearsMesureMap['hd'] = years7;
-
+    buildMesureData('hd', heartdiseases, europe);
     //cancer
-    var years8 = [];
-    var data8 = JSON.parse(JSON.stringify(dataRaw));
-    data8 = mergeData(data8,cancer, 'c');
-    yearsTmp = Object.keys(cancer[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years8.push(d);}});
-    mesureMap['c'] = data8;
-    yearsMesureMap['c'] = years8;
-
-    //motor cars
-    var years9 = [];
-    var data9 = JSON.parse(JSON.stringify(dataRaw));
-    var motorcars2 = motorcars.filter(function(d,i){return d["prod_nrg"] === "DIESEL" && d["engine"] === "TOTAL"});
-    yearsTmp = Object.keys(motorcars[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years9.push(parseInt(d));}});
-    data9 = mergeData(data9,motorcars2, 'mvd');
-    mesureMap['mvd'] = data9;
-    yearsMesureMap['mvd'] = years9;
-    var motorcars3 = motorcars.filter(function(d,i){return d["prod_nrg"] === "PETROL" && d["engine"] === "TOTAL"});
-    var data92 = mergeData(data9,motorcars3, 'mvp');
-    mesureMap['mvp'] = data92;
-    yearsMesureMap['mvp'] = years9;
-
+    buildMesureData('c', cancer, europe);
     //energie renouvelable
-    var years10 = [];
-    var data10 = JSON.parse(JSON.stringify(dataRaw));
-    yearsTmp = Object.keys(enerrenouv[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years10.push(parseInt(d));}});
-    data10 = mergeData(data10,enerrenouv, 'enr');
-    mesureMap['enr'] = data10;
-    yearsMesureMap['enr'] = years10;
-
+    buildMesureData('enr', enerrenouv, europe);
     //fertilisants au nitrogene
-    var years11 = [];
-    var data11 = JSON.parse(JSON.stringify(dataRaw));
-    yearsTmp = Object.keys(fertiNitro[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years11.push(parseInt(d));}});
-    data11 = mergeData(data11,fertiNitro, 'fN');
-    mesureMap['fN'] = data11;
-    yearsMesureMap['fN'] = years11;
-
+    buildMesureData('fN', fertiNitro, europe);
     //fertilisants au phosphore
-    var years12 = [];
-    var data12 = JSON.parse(JSON.stringify(dataRaw));
-    yearsTmp = Object.keys(fertiPhos[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years12.push(parseInt(d));}});
-    data12 = mergeData(data12,fertiPhos, 'fPh');
-    mesureMap['fPh'] = data12;
-    yearsMesureMap['fPh'] = years12;
-
+    buildMesureData('fPh', fertiPhos, europe);
     //fertilisants au potassium
-    var years13 = [];
-    var data13 = JSON.parse(JSON.stringify(dataRaw));
-    yearsTmp = Object.keys(fertiPota[0]);
-    yearsTmp.forEach(function(d) {if(parseInt(d)) {years13.push(parseInt(d));}});
-    data13 = mergeData(data13,fertiPota, 'fPo');
-    mesureMap['fPo'] = data13;
-    yearsMesureMap['fPo'] = years13;
+    buildMesureData('fPo', fertiPota, europe);
+    //moteurs petrole
+    buildMesureData('mvp', motorcars, europe);
+    //moteurs diesel
+    buildMesureData('mvd', motorcars, europe);
+
 
     for (var mesure in mesureMap){
         geoMes[mesure]=[];
@@ -479,14 +387,67 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     }
 }
 
+function buildMesureData(mes, data, europe){
+
+    var dataRaw = topojson.feature(europe, europe.objects.regions).features;
+    var years = [];
+    var data1 = JSON.parse(JSON.stringify(dataRaw));
+
+    var dataFiltered;
+    switch (mes){
+        case "pe":
+            dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_0"});;
+            break;
+        case "en":
+            dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nv"] === "FEC_TOT"});
+            break;
+        case "cn":
+            dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nrg"] === "B_100100"});
+            break;
+        case "te":
+            dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["tax"] === "ENV" && d["unit"] === "MIO_EUR"});
+            break;
+        case "hd":
+            dataFiltered = data.filter(function(d,i){return d["geo"] != "EU15"});
+            break;
+        case "c":
+            dataFiltered = data.filter(function(d,i){return d["geo"] != "EU15"});
+            break;
+        case "tr":
+            dataFiltered = data.filter(function(d,i){return d["geo"] != "EU15"});
+            break;
+        case "mvd":
+            dataFiltered =  data.filter(function(d,i){return d["prod_nrg"] === "DIESEL" && d["engine"] === "TOTAL"});
+            break;
+        case "mvp":
+            dataFiltered =  data.filter(function(d,i){return d["prod_nrg"] === "PETROL" && d["engine"] === "TOTAL"});
+            break;
+        case "enr":
+            dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] != "EU15"});
+            break;
+        case "fN":
+            dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] != "EU15"});
+            break;
+        case "fPh":
+            dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] != "EU15"});
+            break;
+        case "fPo":
+            dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] != "EU15"});
+            break;
+    }
+
+    data1= mergeData(data1,dataFiltered,mes);
+    var yearsTmp = Object.keys(dataFiltered[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years.push(d);}});
+    mesureMap[mes] = data1;
+    yearsMesureMap[mes] = years;
+}
 
 // ------------------------------- Création des scales de couleur avec les valeurs min et max -------------------------------
 var colorpol = {};
 var colormes = {};
 /* fonction qui créé les scales de couleurs pour chaque polluant puis pour chaque mesures en fonction des min et max*/
 function updateScalesColor(){
-    colorpol = {};
-    colormes = {};
 
     pollutants.forEach(function(pollutant){
 
