@@ -168,6 +168,7 @@ var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Energie renouvelable' : 'enr',
                     'Fertilisants au Nitrogene' : 'fN','Fertilisants au Phosphore' : 'fPh','Fertilisants au Potassium' : 'fPo'};
 var fieldset,radioSpan;
+
 function createMesureDiv() {
     fieldset = d3.select("#mesurediv").append("form");
     fieldset.html('<h5>Choix de la mesure : </h5>');
@@ -446,7 +447,6 @@ function buildMesureData(mes, data, europe){
 // ------------------------------- Création des scales de couleur avec les valeurs min et max -------------------------------
 var colorpol = {};
 var colormes = {};
-/* fonction qui créé les scales de couleurs pour chaque polluant puis pour chaque mesures en fonction des min et max*/
 function updateScalesColor(){
 
     pollutants.forEach(function(pollutant){
@@ -679,6 +679,7 @@ function updatePol() {
     buildLegend(true);
 }
 
+/* fonction de création de légende */
 function buildLegend(isPol){
 
     var dataUpdate = isPol? [curPol+"1",curPol+"2",curPol+"3",curPol+"4",curPol+"5"] : [curMes+"1",curMes+"2",curMes+"3",curMes+"4",curMes+"5"];
