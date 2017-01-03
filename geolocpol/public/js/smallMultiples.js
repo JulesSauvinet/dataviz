@@ -399,7 +399,7 @@ function buildMesureData(mes, data, europe){
             dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_0"});;
             break;
         case "en":
-            dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nv"] === "FEC_TOT"});
+            dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19"});
             break;
         case "cn":
             dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nrg"] === "B_100100"});
@@ -932,8 +932,8 @@ queue()
     .defer(d3.tsv, "data/eurostats/clean/demo_r_d2jan.tsv")
     //les pesticides de 80 à 2008
     .defer(d3.tsv, "data/eurostats/clean/pesticides_sales2.tsv")
-    //production d'energie par secteur
-    .defer(d3.csv, "data/eurostats/clean/env_rpep2.csv")
+    //production d'energie 
+    .defer(d3.csv, "data/eurostats/clean/production_energy.csv")
     //les donnees du chauffage nucleaire
     .defer(d3.csv, "data/eurostats/clean/nuclear_heat.csv")
     //les donnees des taxes sur l'environnement
