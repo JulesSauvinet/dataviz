@@ -47,20 +47,19 @@ var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","200
 var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
                   'PM10' : 'Particules 10μm', 'PM2_5': 'Particules 2.5μm', 'SOX' : 'Oxyde de soufre'};
 
-
 var correspondanceMap = {'NH3' : ['Pesticides','Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium',
                                   'Taxes environnementales'/*,'Energie',
                                   'Chauffage Nucleaire','Transport','Moteurs de voitures'*/],
                          'NMVOC' : ['Moteurs de voitures pétrole','Energie renouvelable','Morts de cancers','Morts de maladies cardiaques'/*, 
-                                    /*,'Taxes environnementales','Energie','Chauffage Nucleaire','Transport','Pesticides','Moteurs de voitures'*/],
-                         'NOX' : ['Chauffage Nucleaire','Energie','Moteurs de voitures pétrole'/*,'Moteurs de voitures','Transport',
+                                    /*,'Taxes environnementales','Production d\'énergie'','Chauffage Nucleaire','Taxe transport','Pesticides','Moteurs de voitures'*/],
+                         'NOX' : ['Chauffage Nucleaire','Moteurs de voitures pétrole','Production d\'énergie'/*,'Moteurs de voitures','Taxe transport',
                                   'Morts de cancers','Morts de maladies cardiaques','Pesticides','Taxes environnementales'*/],
-                         'PM10' : ['Taxes environnementales','Energie','Transport','Morts de cancers',
-                                   'Morts de maladies cardiaques','Moteurs de voitures diesel'/*,'Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
-                         'PM2_5' : ['Moteurs de voitures diesel','Transport','Morts de cancers','Morts de maladies cardiaques'/*,
-                                    'Taxes environnementales','Energie','Chauffage Nucleaire','Pesticides'*/],
-                         'SOX' : ['Chauffage Nucleaire','Energie','Pesticides','Morts de cancers','Morts de maladies cardiaques'/*,
-                                  'Taxes environnementales','Transport','Moteurs de voitures'*/]
+                         'PM10' : ['Taxes environnementales','Taxe transport','Morts de cancers','Morts de maladies cardiaques',
+                                    /*'Moteurs de voitures diesel','Production d\'énergie','Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
+                         'PM2_5' : ['Moteurs de voitures diesel','Taxe transport','Morts de cancers','Morts de maladies cardiaques'/*,
+                                    'Taxes environnementales','Production d\'énergie','Chauffage Nucleaire','Pesticides'*/],
+                         'SOX' : ['Chauffage Nucleaire','Production d\'énergie'/*,'Pesticides','Morts de cancers','Morts de maladies cardiaques',
+                                  'Taxes environnementales','Taxe transport','Moteurs de voitures'*/]
                         };
 
 var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'Portugal',
@@ -160,11 +159,11 @@ function createPolDiv(pollutions){
 }
 
 /* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
-var mesures = ['Morts de cancers','Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales','Transport', 
+var mesures = ['Morts de cancers','Pesticides', 'Production d\'énergie', 'Chauffage Nucleaire', 'Taxes environnementales','Taxe transport', 
                 'Morts de maladies cardiaques',  'Moteurs de voitures diesel','Energie renouvelable', 'Moteurs de voitures pétrole',
                 'Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium'];
-var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
-                    'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
+var mesuresCodes = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
+                    'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Energie renouvelable' : 'enr',
                     'Fertilisants au Nitrogene' : 'fN','Fertilisants au Phosphore' : 'fPh','Fertilisants au Potassium' : 'fPo'};
 var fieldset,radioSpan;
