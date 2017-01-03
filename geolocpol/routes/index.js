@@ -12,7 +12,7 @@ router.get('/project', function(req, res) {
 });
 
 router.get('/test1', function(req, res) {
-  res.render('project/test1.html');
+  res.render('samples/test1.html');
 });
 
 
