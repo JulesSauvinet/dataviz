@@ -58,7 +58,7 @@ var correspondanceMap = {'NH3' : ['Pesticides','Fertilisants au Nitrogene','Fert
                                     /*'Moteurs de voitures diesel','Production d\'énergie','Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
                          'PM2_5' : ['Moteurs de voitures diesel','Taxe transport','Morts de cancers','Morts de maladies cardiaques'/*,
                                     'Taxes environnementales','Production d\'énergie','Chauffage Nucleaire','Pesticides'*/],
-                         'SOX' : ['Chauffage Nucleaire','Production d\'énergie','Pesticides','Morts de cancers','Morts de maladies cardiaques'/*,
+                         'SOX' : ['Chauffage Nucleaire','Production d\'énergie'/*,'Pesticides','Morts de cancers','Morts de maladies cardiaques',
                                   'Taxes environnementales','Taxe transport','Moteurs de voitures'*/]
                         };
 
