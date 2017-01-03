@@ -3,7 +3,6 @@
 // ----------- SUPER UTILE -----------
 //TODO plus de données et exploiter plus les données
 //TODO trouver les bonnes suggestions
-//TODO changer position div mesure --> fonction du nombre de map cad 2 lignes de maps = bien placé sinon autant il faut le descendre d'autant de lignes de map en plus des 2 premieres
 //TODO optimiser et nettoyer le code
 
 
