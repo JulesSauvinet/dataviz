@@ -48,7 +48,7 @@ var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques'
                   'PM10' : 'Particules 10', 'PM2_5': 'Particules 2.5', 'SOX' : 'Oxyde de soufre'};
 
 var correspondanceMap = {'NH3' : ['Pesticides','Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium',
-                                  'Morts de cancers','Morts de maladies cardiaques','Taxes environnementales'/*,'Energie',
+                                  'Taxes environnementales'/*,'Energie',
                                   'Chauffage Nucleaire','Transport','Moteurs de voitures'*/],
                          'NMVOC' : ['Morts de cancers','Morts de maladies cardiaques', 'Energie renouvelable',
                                     'Moteurs de voitures pétrole'/*,'Taxes environnementales','Energie','Chauffage Nucleaire','Transport','Pesticides','Moteurs de voitures'*/],
