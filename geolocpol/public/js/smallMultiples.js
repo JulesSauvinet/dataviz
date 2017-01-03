@@ -1,7 +1,6 @@
 //-------------------------------------------- IDEES --------------------------------------------
 
 // ----------- SUPER UTILE -----------
-//TODO position legende
 //TODO utiliser la densité? comment? pour ajuster quelles valeurs?
 //TODO plus de données et exploiter plus les données
 //TODO trouver les bonnes suggestions
@@ -386,7 +385,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     //taxes
     var years4 = [];
     var data4 = JSON.parse(JSON.stringify(dataRaw));
-    var taxes2 = taxes.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["tax"] === "ENV"});
+    var taxes2 = taxes.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["tax"] === "ENV" && d["unit"] === "MIO_EUR"});
     data4 = mergeData(data4,taxes2,'te');
     yearsTmp = Object.keys(taxes2[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years4.push(d);}});
