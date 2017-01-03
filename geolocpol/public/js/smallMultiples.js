@@ -48,8 +48,9 @@ var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","200
 var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
                   'PM10' : 'Particules 10', 'PM2_5': 'Particules 2.5', 'SOX' : 'Oxyde de soufre'};
 
-var correspondanceMap = {'NH3' : ['Pesticides','Morts de cancers','Morts de maladies cardiaques','Taxes environnementales','Energie',
-                                  'Chauffage Nucleaire'/*,'Transport','Moteurs de voitures'*/],
+var correspondanceMap = {'NH3' : ['Pesticides','Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium',
+                                  'Morts de cancers','Morts de maladies cardiaques','Taxes environnementales'/*,'Energie',
+                                  'Chauffage Nucleaire','Transport','Moteurs de voitures'*/],
                          'NMVOC' : ['Morts de cancers','Morts de maladies cardiaques', 'Energie renouvelable',
                                     'Moteurs de voitures pétrole'/*,'Taxes environnementales','Energie','Chauffage Nucleaire','Transport','Pesticides','Moteurs de voitures'*/],
                          'NOX' : ['Chauffage Nucleaire','Energie','Moteurs de voitures pétrole'/*,'Moteurs de voitures','Transport',
@@ -96,16 +97,15 @@ var choiceNorma = ['normaliser par densité', 'normaliser par population'];
 function createNormaDiv() {
     var fieldset = d3.select("#normalisationdiv").append("form").attr('class',"normalegend");
     fieldset.append("legend").html(
-        '<h5>Choix de la normalisation</h5>'+
+        '<h5>Choix de la normalisation :</h5>'+
         '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radPop" value="pop" checked>' +
         '<label class ="radiolabel">Population</label>' +
-        '</span>'+
+        '</span>'+ //'</br>'+
         '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radDens" value="dens">' +
         '<label class ="radiolabel">Densité</label>' +
         '</span>');
-
 
     var buttonsRad = d3.selectAll("input[type=radio][name=choice]");
 
@@ -117,7 +117,6 @@ function createNormaDiv() {
             updatePol();
         }, false);
     }
-    //code de mise a jour des smallMultiples de pollution
 }
 
 /* ----------------------------- fonction pour créer le div des polluants de manière dynamique ----------------------------- */
@@ -135,7 +134,6 @@ function createPolDiv(pollutions){
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
-
 
     radioSpan.append("input")
         .attr({
@@ -162,12 +160,13 @@ function createPolDiv(pollutions){
 }
 
 /* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
-var mesures = ['Morts de cancers','Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales'
-                ,'Transport', 'Morts de maladies cardiaques',  'Moteurs de voitures diesel'
-                , 'Energie renouvelable', 'Moteurs de voitures pétrole'];
+var mesures = ['Morts de cancers','Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales','Transport', 
+                'Morts de maladies cardiaques',  'Moteurs de voitures diesel','Energie renouvelable', 'Moteurs de voitures pétrole',
+                'Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium'];
 var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
-                    'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c'
-                    , 'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Energie renouvelable' : 'enr'};
+                    'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
+                    'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Energie renouvelable' : 'enr',
+                    'Fertilisants au Nitrogene' : 'fN','Fertilisants au Phosphore' : 'fPh','Fertilisants au Potassium' : 'fPo'};
 var fieldset,radioSpan;
 function createMesureDiv() {
     fieldset = d3.select("#mesurediv").append("form");
@@ -177,8 +176,6 @@ function createMesureDiv() {
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
-
-
 
     radioSpan.append("input")
         .attr({
@@ -352,7 +349,7 @@ var geoMes = {};
 var mesureMap = {};
 var yearsMesureMap = {};
 function createMesureData(europe, pesticides, energie, nuclear, taxes,transport, heartdiseases, cancer, motorcars,
-                          enerrenouv){
+                          enerrenouv, fertiNitro, fertiPhos, fertiPota){
 
     var dataRaw = topojson.feature(europe, europe.objects.regions).features;
 
@@ -438,7 +435,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     mesureMap['mvp'] = data92;
     yearsMesureMap['mvp'] = years9;
 
-    //motor cars
+    //energie renouvelable
     var years10 = [];
     var data10 = JSON.parse(JSON.stringify(dataRaw));
     yearsTmp = Object.keys(enerrenouv[0]);
@@ -446,6 +443,33 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     data10 = mergeData(data10,enerrenouv, 'enr');
     mesureMap['enr'] = data10;
     yearsMesureMap['enr'] = years10;
+
+    //fertilisants au nitrogene
+    var years11 = [];
+    var data11 = JSON.parse(JSON.stringify(dataRaw));
+    yearsTmp = Object.keys(fertiNitro[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years11.push(parseInt(d));}});
+    data11 = mergeData(data11,fertiNitro, 'fN');
+    mesureMap['fN'] = data11;
+    yearsMesureMap['fN'] = years11;
+
+    //fertilisants au phosphore
+    var years12 = [];
+    var data12 = JSON.parse(JSON.stringify(dataRaw));
+    yearsTmp = Object.keys(fertiPhos[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years12.push(parseInt(d));}});
+    data12 = mergeData(data12,fertiPhos, 'fPh');
+    mesureMap['fPh'] = data12;
+    yearsMesureMap['fPh'] = years12;
+
+    //fertilisants au potassium
+    var years13 = [];
+    var data13 = JSON.parse(JSON.stringify(dataRaw));
+    yearsTmp = Object.keys(fertiPota[0]);
+    yearsTmp.forEach(function(d) {if(parseInt(d)) {years13.push(parseInt(d));}});
+    data13 = mergeData(data13,fertiPota, 'fPo');
+    mesureMap['fPo'] = data13;
+    yearsMesureMap['fPo'] = years13;
 
     for (var mesure in mesureMap){
         geoMes[mesure]=[];
@@ -888,12 +912,13 @@ function insertDataAttribute(data1, data2, attribute){
 }
 
 function init(error,pollutions,density, population, pesticides, energie, nuclear, taxes,
-              transport, heartdiseases, cancer, motorcars, animals, enerrenouv, europe){
+              transport, heartdiseases, cancer, motorcars, animals, enerrenouv, fertiNitro, fertiPhos, fertiPota, europe){
 
     if (error) throw error;
 
     //on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
-    var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,motorcars,enerrenouv];
+    var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,motorcars,enerrenouv,fertiNitro,fertiPhos,fertiPota];
+
     density.forEach(function(dens){
         dataMesures.forEach(function(dataM){insertDataAttribute(dens,dataM,'dens');});
     });
@@ -919,7 +944,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     createMergedPolAndMapData(europe);
 
     //on créé des variables globales pour les données des mesures
-    createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases, cancer, motorcars, enerrenouv);
+    createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases, cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota);
 
     //on affiche les smallMultiples de mesure
     updateMes();
@@ -957,6 +982,12 @@ queue()
     .defer(d3.csv, "data/eurostats/clean/agr_r_animal.tsv")
     //les energies renouvelables
     .defer(d3.tsv, "data/eurostats/clean/tsdcc330.tsv")
+    //les donnees de fetilisants au nitrogen
+    .defer(d3.csv, "data/eurostats/clean/Consumption estimate of manufactured fertilizers(Nitrogen).csv")
+    //les donnees de fertilisants au phosphore
+    .defer(d3.csv, "data/eurostats/clean/Consumption estimate of manufactured fertilizers(Phosphorus).csv")
+    //les donnees de fertilisants au potassium
+    .defer(d3.csv, "data/eurostats/clean/Consumption estimate of manufactured fertilizers(Potassium).csv")
     //la map de l'europe
     .defer(d3.json,"geodata/euro/eurotopo.json")
     .await(init);
