@@ -18,7 +18,6 @@
 //TODO faire des graphiques quand on selectionne une region?
 //TODO zoom sur les cartes?
 
-
 //le polluant/mesure courant(e) sélectionné(e)
 var curPol = "NH3";
 var curMes = "c";

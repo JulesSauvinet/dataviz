@@ -1,0 +1,285 @@
+
+/* specific */
+body, html {
+    padding:10px 50px 0 0;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #232323;
+    background-color: #FBFAF7;
+    margin: 0;
+    line-height: 1.8em;
+    -webkit-font-smoothing: antialiased;
+    height: 100%;
+}
+h4{
+    font-family: Georgia,Gadugi,  Arial, Serif, sans-serif!important;
+    font-weight: 900;
+    margin: 0px!important;
+    padding: 0px!important;
+    margin-left : 13px!important;
+    margin-top: 5px!important;
+}
+.pmap {
+    height : 15px;
+    margin : 0px!important;
+    padding : 0px!important;
+    margin-bottom : 5px!important;
+}
+.maptitle{
+    font-size: 18px!important;
+    margin-top:0px!important;
+    padding-top:0px!important;
+}
+
+#content{
+    /*min-height: 100%;*/
+    clear:both;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*min-height: 100vh;*/
+    /*height :auto;*/
+}
+
+#mapsdiv{
+    flex: 1;
+    position: absolute;
+    left: 0px;
+    width: 76%;
+    padding-right : 20px;
+    padding-left : 10px;
+    margin-left:30px;
+
+}
+#maps{
+    height : 45%;
+    padding-left: 30px;
+    padding-right: 10px;
+}
+
+#maps2{
+    height : 45%;
+    padding-left: 30px;
+    padding-right: 10px;
+}
+
+.map{
+    display: inline-block;
+    text-align: center;
+    margin:0px!important;
+    padding:0px!important;
+}
+
+.svgmap{
+
+    margin:0px!important;
+    padding:0px!important;
+}
+
+.mappath{
+    stroke-width:1;
+    fill : 'lightgrey';
+}
+
+.choicediv{
+    position: relative;
+    /*border:1pt solid black;*/
+    padding: 7px;
+    /*width : 230px;*/
+}
+#pollutiondiv{
+}
+
+#mesurediv{
+}
+#position-element{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+#settings {
+    display:block;
+    position:absolute;
+    height : 100vh;
+    right: 0px;
+    width: 21%;
+
+}
+
+#normalisationdiv{
+    position: relative;
+    margin: 10px;
+    /*border:1pt solid black;*/
+    padding: 4px;
+    width : 250px;
+    height : 10%;
+}
+
+.halfsettings{
+    /*height : 45%;*/
+}
+
+.legend{
+    position : relative;
+}
+
+
+#pollegend{
+    margin-top: 300px;
+    bottom : 10px;
+}
+
+#meslegend{
+    margin-top: 330px;
+}
+
+.divchoicetitle{
+    font-weight: bold;
+}
+
+form {
+    padding: 7px;
+}
+
+.normalegend{
+    border: 1px solid lightgray;
+}
+
+form > label,
+span > label {
+    margin-left: 10px;
+    font-size: 14px;
+}
+label.selected {
+    color: black;
+}
+label.notSelected {
+    color: lightgray;
+}
+
+.legend{
+    margin-left: 30px;
+}
+
+.background {
+    fill: #fff;
+    stroke: #ccc;
+}
+.d3-tip {
+    line-height: 1.3;
+    font-weight: bold;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #efefef;
+    border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}
+
+footer{position : absolute; bottom : -15px; margin-top : 20px;}
+
+/* generic */
+h1, h2, h3, h4, h5, h6 {
+    color:#232323;
+    margin:10px 0 10px;
+}
+
+p, ul, ol, table, dl {
+    margin:0 0 22px;
+}
+
+h1, h2, h3 {
+    font-family: Arvo, Monaco, serif;
+    line-height:1.3;
+    font-weight: normal;
+}
+
+h1,h2, h3 {
+    display: block;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+h4, h5, h6 {
+    font-family: Arvo, Monaco, serif;
+    font-weight: 700;
+}
+
+a {
+    /*color:#C30000;*/
+    color: #00B7FF;
+    font-weight:200;
+    text-decoration:none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a small {
+    font-size: 12px;
+}
+
+hr {
+    border:0;
+    background:#ccc;
+    height:1px;
+    margin:0 0 24px;
+}
+
+a.header {
+    text-decoration: underline;
+}
+
+a.name {
+    white-space: nowrap;
+}
+
+
+a.buttons {
+    -webkit-font-smoothing: antialiased;
+    background: url(../img/arrow-down.png) no-repeat;
+    font-weight: normal;
+    text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0;
+    padding: 2px 2px 2px 22px;
+    height: 30px;
+}
+
+a.github {
+    background: url(../img/octocat-small.png) no-repeat 1px;
+}
+
+a.buttons:hover {
+    color: #fff;
+    text-decoration: none;
+}
