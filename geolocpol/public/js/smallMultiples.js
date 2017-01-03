@@ -609,6 +609,7 @@ function updateScalesColor(){
                 break;
             case "mvd":
                 color.range(['pink', 'darkred']);
+                break;
             case "mvp":
                 color.range(['pink', 'darkred']);
                 break;
@@ -734,8 +735,7 @@ function buildLegend(isPol){
         .append("circle")
         .attr("r", 5)
         .attr("fill", function(d,i) {
-            i=i+1;
-            return colorScale[curVar]((colorScale[curVar].domain()[1]/5)*i);})
+            return colorScale[curVar]((colorScale[curVar].domain()[1]/5)*(i+1));})
         .attr("x", 40);
 
     legend.append("text")
@@ -762,12 +762,7 @@ function buildLegend(isPol){
 
 /* fonction de mise a jour des dates */
 function updateDate(){
-
-    //d3.selectAll('.maptitle').remove();
     d3.selectAll('div.map').remove();
-
-    //d3.select("#maps").append("h4").attr("id", "maptitle").attr("class", "maptitle");
-    //d3.select("#maps2").append("h4").attr("id", "map2title").attr("class", "maptitle");
 
     dateJoin = d3.select('#maps').selectAll('div.map').data(years);
     dateJoin2 = d3.select('#maps2').selectAll('div.map').data(years);
