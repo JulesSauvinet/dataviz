@@ -49,17 +49,17 @@ var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques'
 
 var correspondanceMap = {'NH3' : ['Pesticides','Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium'/*,
                                   'Morts de cancers','Morts de maladies cardiaques','Taxes environnementales','Production d\'énergie,
-                                  'Chauffage Nucleaire','Transport','Moteurs de voitures'*/],
+                                  'Chauffage Nucleaire','Taxe transport','Moteurs de voitures'*/],
                          'NMVOC' : ['Moteurs de voitures pétrole','Energie renouvelable','Morts de cancers','Morts de maladies cardiaques'/*, 
-                                    /*,'Taxes environnementales','Production d\'énergie'','Chauffage Nucleaire','Transport','Pesticides','Moteurs de voitures'*/],
-                         'NOX' : ['Chauffage Nucleaire','Moteurs de voitures pétrole','Production d\'énergie'/*,'Moteurs de voitures','Transport',
+                                    /*,'Taxes environnementales','Production d\'énergie'','Chauffage Nucleaire','Taxe transport','Pesticides','Moteurs de voitures'*/],
+                         'NOX' : ['Chauffage Nucleaire','Moteurs de voitures pétrole','Production d\'énergie'/*,'Moteurs de voitures','Taxe transport',
                                   'Morts de cancers','Morts de maladies cardiaques','Pesticides','Taxes environnementales'*/],
-                         'PM10' : ['Taxes environnementales','Production d\'énergie','Transport','Morts de cancers',
-                                   'Morts de maladies cardiaques','Moteurs de voitures diesel'/*,'Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
-                         'PM2_5' : ['Moteurs de voitures diesel','Transport','Morts de cancers','Morts de maladies cardiaques'/*,
+                         'PM10' : ['Taxes environnementales','Taxe transport','Morts de cancers','Morts de maladies cardiaques',
+                                    /*'Moteurs de voitures diesel','Production d\'énergie','Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
+                         'PM2_5' : ['Moteurs de voitures diesel','Taxe transport','Morts de cancers','Morts de maladies cardiaques'/*,
                                     'Taxes environnementales','Production d\'énergie','Chauffage Nucleaire','Pesticides'*/],
                          'SOX' : ['Chauffage Nucleaire','Production d\'énergie','Pesticides','Morts de cancers','Morts de maladies cardiaques'/*,
-                                  'Taxes environnementales','Transport','Moteurs de voitures'*/]
+                                  'Taxes environnementales','Taxe transport','Moteurs de voitures'*/]
                         };
 
 var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'Portugal',
@@ -159,11 +159,11 @@ function createPolDiv(pollutions){
 }
 
 /* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
-var mesures = ['Morts de cancers','Pesticides', 'Production d\'énergie', 'Chauffage Nucleaire', 'Taxes environnementales','Transport', 
+var mesures = ['Morts de cancers','Pesticides', 'Production d\'énergie', 'Chauffage Nucleaire', 'Taxes environnementales','Taxe transport', 
                 'Morts de maladies cardiaques',  'Moteurs de voitures diesel','Energie renouvelable', 'Moteurs de voitures pétrole',
                 'Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium'];
 var mesuresCodes = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
-                    'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
+                    'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Energie renouvelable' : 'enr',
                     'Fertilisants au Nitrogene' : 'fN','Fertilisants au Phosphore' : 'fPh','Fertilisants au Potassium' : 'fPo'};
 var fieldset,radioSpan;
