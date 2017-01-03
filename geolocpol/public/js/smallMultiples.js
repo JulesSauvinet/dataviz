@@ -536,7 +536,8 @@ function updateScalesColor(){
 
     var notYearKeys = ["dens", "pop", "sex", "age", "unit","icd10", "airsect", "geo", "airpol",
                        "prod_nrg","engine", "indic_nv", "nst07", "pe_type", "product","indic_nrg", "tax",
-                        "COUNTRY", "NAME", 'POPULATION', 'NUTS_ID', 'indic_en'];
+                        "COUNTRY", "NAME", 'POPULATION', 'NUTS_ID', 'indic_en', 'nutrient',
+                        ];
 
     mesures.forEach(function(mesure){
         var mes = mesuresCodes[mesure];
@@ -613,6 +614,15 @@ function updateScalesColor(){
                 break;
             case "enr":
                 color.range(['pink', 'darkred']);
+                break;
+            case "fN":
+                color.range(['lightgreen', 'darkgreen']);
+                break;
+            case "fPh":
+                color.range(['lightgreen', 'darkgreen']);
+                break;
+            case "fPo":
+                color.range(['lightgreen', 'darkgreen']);
                 break;
         }
         color.domain([min,max]);
@@ -917,7 +927,8 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     if (error) throw error;
 
     //on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
-    var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,motorcars,enerrenouv,fertiNitro,fertiPhos,fertiPota];
+    var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,
+        heartdiseases,cancer,motorcars,enerrenouv,fertiNitro,fertiPhos,fertiPota];
 
     density.forEach(function(dens){
         dataMesures.forEach(function(dataM){insertDataAttribute(dens,dataM,'dens');});
@@ -944,7 +955,8 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     createMergedPolAndMapData(europe);
 
     //on créé des variables globales pour les données des mesures
-    createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases, cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota);
+    createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases,
+        cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota);
 
     //on affiche les smallMultiples de mesure
     updateMes();
@@ -983,11 +995,11 @@ queue()
     //les energies renouvelables
     .defer(d3.tsv, "data/eurostats/clean/tsdcc330.tsv")
     //les donnees de fetilisants au nitrogen
-    .defer(d3.csv, "data/eurostats/clean/Consumption estimate of manufactured fertilizers(Nitrogen).csv")
+    .defer(d3.csv, "data/eurostats/clean/nitrogen.csv")
     //les donnees de fertilisants au phosphore
-    .defer(d3.csv, "data/eurostats/clean/Consumption estimate of manufactured fertilizers(Phosphorus).csv")
+    .defer(d3.csv, "data/eurostats/clean/phosphore.csv")
     //les donnees de fertilisants au potassium
-    .defer(d3.csv, "data/eurostats/clean/Consumption estimate of manufactured fertilizers(Potassium).csv")
+    .defer(d3.csv, "data/eurostats/clean/potassium.csv")
     //la map de l'europe
     .defer(d3.json,"geodata/euro/eurotopo.json")
     .await(init);

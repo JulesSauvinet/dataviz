@@ -71,3 +71,9 @@ PM2_5 :
 la part du transport routier a fortement augmenté avec l’extension du parc des véhicules diesel, émetteurs notamment de particules « fines »
 <-> type_of_motor_cars (ne prendre que les diesels)
 <-> env_ac_taxes avec TRA
+
+
+Names:
+Consumption estimate of manufactured fertilizers(Nitrogen)
+Consumption estimate of manufactured fertilizers(Phosphorus)
+Consumption estimate of manufactured fertilizers(Potassium)
