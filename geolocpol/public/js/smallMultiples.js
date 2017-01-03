@@ -48,15 +48,15 @@ var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","200
 var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
                   'PM10' : 'Particules 10', 'PM2_5': 'Particules 2.5', 'SOX' : 'Oxyde de soufre'};
 
-var correspondanceMap = {'NH3' : ['Pesticides','Morts de cancers','Taxes environnementales','Energie',
-                                  'Chauffage Nucleaire','Morts de maladies cardiaques'/*,'Transport','Moteurs de voitures'*/],
-                         'NMVOC' : ['Morts de cancers','Morts de maladies cardiaques', 'Energie renouvelable'/*,
-                                    'Taxes environnementales','Energie','Chauffage Nucleaire','Transport','Pesticides','Moteurs de voitures'*/],
-                         'NOX' : ['Chauffage Nucleaire','Energie'/*,'Moteurs de voitures','Transport',
+var correspondanceMap = {'NH3' : ['Pesticides','Morts de cancers','Morts de maladies cardiaques','Taxes environnementales','Energie',
+                                  'Chauffage Nucleaire'/*,'Transport','Moteurs de voitures'*/],
+                         'NMVOC' : ['Morts de cancers','Morts de maladies cardiaques', 'Energie renouvelable',
+                                    'Moteurs de voitures pétrole'/*,'Taxes environnementales','Energie','Chauffage Nucleaire','Transport','Pesticides','Moteurs de voitures'*/],
+                         'NOX' : ['Chauffage Nucleaire','Energie','Moteurs de voitures pétrole'/*,'Moteurs de voitures','Transport',
                                   'Morts de cancers','Morts de maladies cardiaques','Pesticides','Taxes environnementales'*/],
                          'PM10' : ['Taxes environnementales','Energie','Transport','Morts de cancers',
-                                   'Morts de maladies cardiaques','Moteurs de voitures'/*,'Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
-                         'PM2_5' : ['Moteurs de voitures','Transport','Morts de cancers','Morts de maladies cardiaques'/*,
+                                   'Morts de maladies cardiaques','Moteurs de voitures diesel'/*,'Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
+                         'PM2_5' : ['Moteurs de voitures diesel','Transport','Morts de cancers','Morts de maladies cardiaques'/*,
                                     'Taxes environnementales','Energie','Chauffage Nucleaire','Pesticides'*/],
                          'SOX' : ['Chauffage Nucleaire','Energie','Pesticides','Morts de cancers','Morts de maladies cardiaques'/*,
                                   'Taxes environnementales','Transport','Moteurs de voitures'*/]
@@ -162,10 +162,11 @@ function createPolDiv(pollutions){
 
 /* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
 var mesures = ['Morts de cancers','Pesticides', 'Energie', 'Chauffage Nucleaire', 'Taxes environnementales'
-                ,'Transport', 'Morts de maladies cardiaques',  'Moteurs de voitures', 'Energie renouvelable'];
+                ,'Transport', 'Morts de maladies cardiaques',  'Moteurs de voitures diesel'
+                , 'Energie renouvelable', 'Moteurs de voitures pétrole'];
 var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
                     'Transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c'
-                    , 'Moteurs de voitures' : 'mv', 'Energie renouvelable' : 'enr'};
+                    , 'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Energie renouvelable' : 'enr'};
 var fieldset,radioSpan;
 function createMesureDiv() {
     fieldset = d3.select("#mesurediv").append("form");
@@ -354,9 +355,9 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     //pesticides
     var years1 = [];
     var data1 = JSON.parse(JSON.stringify(dataRaw));
-    pesticides.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_1"});
-    data1= mergeData(data1,pesticides,'pe');
-    var yearsTmp = Object.keys(pesticides[0]);
+    var pesticides2 = pesticides.filter(function(d,i){return d["geo"] !== "EU15" && d["pe_type"] === "PE_0"});
+    data1= mergeData(data1,pesticides2,'pe');
+    var yearsTmp = Object.keys(pesticides2[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years1.push(d);}});
     mesureMap['pe'] = data1;
     yearsMesureMap['pe'] = years1;
@@ -364,9 +365,9 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     //energie
     var years2 = [];
     var data2 = JSON.parse(JSON.stringify(dataRaw));
-    energie.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nv"] === "FEC_TOT"});
-    data2= mergeData(data2,energie,'en');
-    yearsTmp = Object.keys(energie[0]);
+    var energie2 = energie.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nv"] === "FEC_TOT"});
+    data2= mergeData(data2,energie2,'en');
+    yearsTmp = Object.keys(energie2[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years2.push(d);}});
     mesureMap['en'] = data2;
     yearsMesureMap['en'] = years2;
@@ -374,9 +375,9 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     //chauffage nucleaire
     var years3 = [];
     var data3 = JSON.parse(JSON.stringify(dataRaw));
-    nuclear.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nrg"] === "B_100100"});
-    data3 = mergeData(data3,nuclear,'cn');
-    yearsTmp = Object.keys(nuclear[0]);
+    var nuclear2 = nuclear.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["indic_nrg"] === "B_100100"});
+    data3 = mergeData(data3,nuclear2,'cn');
+    yearsTmp = Object.keys(nuclear2[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years3.push(d);}});
     mesureMap['cn'] = data3;
     yearsMesureMap['cn'] = years3;
@@ -384,9 +385,9 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     //taxes
     var years4 = [];
     var data4 = JSON.parse(JSON.stringify(dataRaw));
-    taxes.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["tax"] === "ENV"});
-    data4 = mergeData(data4,taxes,'te');
-    yearsTmp = Object.keys(taxes[0]);
+    var taxes2 = taxes.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] !== "EA19" && d["tax"] === "ENV"});
+    data4 = mergeData(data4,taxes2,'te');
+    yearsTmp = Object.keys(taxes2[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years4.push(d);}});
     mesureMap['te'] = data4;
     yearsMesureMap['te'] = years4;
@@ -394,9 +395,9 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     //transport
     var years6 = [];
     var data6 = JSON.parse(JSON.stringify(dataRaw));
-    transport.filter(function(d,i){return d["geo"] != "EU15"});
-    data6 = mergeData(data6,transport,'tr');
-    yearsTmp = Object.keys(transport[0]);
+    var transport2 = transport.filter(function(d,i){return d["geo"] != "EU15"});
+    data6 = mergeData(data6,transport2,'tr');
+    yearsTmp = Object.keys(transport2[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years6.push(d);}});
     mesureMap['tr'] = data6;
     yearsMesureMap['tr'] = years6;
@@ -422,12 +423,16 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     //motor cars
     var years9 = [];
     var data9 = JSON.parse(JSON.stringify(dataRaw));
-    motorcars.filter(function(d,i){return d["prod_nrg"] === "TOTAL" && d["engine"] === "TOTAL"});
+    var motorcars2 = motorcars.filter(function(d,i){return d["prod_nrg"] === "DIESEL" && d["engine"] === "TOTAL"});
     yearsTmp = Object.keys(motorcars[0]);
     yearsTmp.forEach(function(d) {if(parseInt(d)) {years9.push(parseInt(d));}});
-    data9 = mergeData(data9,motorcars, 'mv');
-    mesureMap['mv'] = data9;
-    yearsMesureMap['mv'] = years9;
+    data9 = mergeData(data9,motorcars2, 'mvd');
+    mesureMap['mvd'] = data9;
+    yearsMesureMap['mvd'] = years9;
+    var motorcars3 = motorcars.filter(function(d,i){return d["prod_nrg"] === "PETROL" && d["engine"] === "TOTAL"});
+    var data92 = mergeData(data9,motorcars3, 'mvp');
+    mesureMap['mvp'] = data92;
+    yearsMesureMap['mvp'] = years9;
 
     //motor cars
     var years10 = [];
@@ -573,7 +578,9 @@ function updateScalesColor(){
             case "tr":
                 color.range(['pink', 'purple']);
                 break;
-            case "mv":
+            case "mvd":
+                color.range(['pink', 'darkred']);
+            case "mvp":
                 color.range(['pink', 'darkred']);
                 break;
             case "enr":
