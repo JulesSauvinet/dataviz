@@ -47,11 +47,12 @@ var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","200
 var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
                   'PM10' : 'Particules 10', 'PM2_5': 'Particules 2.5', 'SOX' : 'Oxyde de soufre'};
 
+
 var correspondanceMap = {'NH3' : ['Pesticides','Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium',
                                   'Taxes environnementales'/*,'Energie',
                                   'Chauffage Nucleaire','Transport','Moteurs de voitures'*/],
-                         'NMVOC' : ['Morts de cancers','Morts de maladies cardiaques', 'Energie renouvelable',
-                                    'Moteurs de voitures pétrole'/*,'Taxes environnementales','Energie','Chauffage Nucleaire','Transport','Pesticides','Moteurs de voitures'*/],
+                         'NMVOC' : ['Moteurs de voitures pétrole','Energie renouvelable','Morts de cancers','Morts de maladies cardiaques'/*, 
+                                    /*,'Taxes environnementales','Energie','Chauffage Nucleaire','Transport','Pesticides','Moteurs de voitures'*/],
                          'NOX' : ['Chauffage Nucleaire','Energie','Moteurs de voitures pétrole'/*,'Moteurs de voitures','Transport',
                                   'Morts de cancers','Morts de maladies cardiaques','Pesticides','Taxes environnementales'*/],
                          'PM10' : ['Taxes environnementales','Energie','Transport','Morts de cancers',
