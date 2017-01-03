@@ -1,9 +1,10 @@
 //-------------------------------------------- IDEES --------------------------------------------
 
 // ----------- SUPER UTILE -----------
-//demographie ou densité?
-//TODO laisser l'utilisateur choisir entre pop et densité?
+//TODO position legende
+//TODO utiliser la densité? comment? pour ajuster quelles valeurs?
 //TODO plus de données et exploiter plus les données
+//TODO trouver les bonnes suggestions
 //TODO changer position div mesure --> fonction du nombre de map cad 2 lignes de maps = bien placé sinon autant il faut le descendre d'autant de lignes de map en plus des 2 premieres
 //TODO optimiser et nettoyer le code
 
@@ -94,10 +95,10 @@ var tip = d3.tip()
 /* -------------------------- fonction pour créer le div du choix de la normalisation des données -------------------------- */
 var choiceNorma = ['normaliser par densité', 'normaliser par population'];
 function createNormaDiv() {
-    var fieldset = d3.select("#normalisationdiv").append("form");
-    fieldset.append("legend").html("<h4>Choix de la normalisation</h4>");
-
-    fieldset.html('<span class="radio">' +
+    var fieldset = d3.select("#normalisationdiv").append("form").attr('class',"normalegend");
+    fieldset.append("legend").html(
+        '<h4>Choix de la normalisation</h4>'+
+        '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radPop" value="pop" checked>' +
         '<label class ="radiolabel">Population</label>' +
         '</span>'+
@@ -130,12 +131,16 @@ function createPolDiv(pollutions){
     });
 
     var fieldset = d3.select("#pollutiondiv").append("form");
-    fieldset.append("legend").html("<h4>Choix du polluant</h4>");
+    fieldset.html('<span class="divchoicetitle">Choix du polluant : </span>');
     var radioSpan = fieldset.selectAll(".radio").data(pollutants);
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
 
+
+    radioSpan.append("label")
+        .attr('class', 'radiolabel')
+        .html(function(d, i) {  return d.last == true ? polNameMap[d] :  polNameMap[d] /*+ '<br>'*/});
     radioSpan.append("input")
         .attr({
             type: "radio",
@@ -147,9 +152,6 @@ function createPolDiv(pollutions){
             checked: function(d,i) { return (i ===0); },
             value: function(d) { return d }
         });
-    radioSpan.append("label")
-        .attr('class', 'radiolabel')
-        .html(function(d, i) {  return d.last == true ? polNameMap[d] :  polNameMap[d] + '<br>'});
 
     radioSpan.exit().remove();
 
@@ -170,11 +172,18 @@ var mesuresCodes = {'Pesticides' : 'pe', 'Energie':'en', 'Chauffage Nucleaire' :
 var fieldset,radioSpan;
 function createMesureDiv() {
     fieldset = d3.select("#mesurediv").append("form");
-    fieldset.append("legend").html("<h4>Choix de la mesure</h4>");
+    fieldset.html('<span class="divchoicetitle">Choix de la mesure : </span>');
+
     radioSpan = fieldset.selectAll(".radio").data(mesures);
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
+
+
+
+    radioSpan.append("label")
+        .attr('class', 'radiolabel')
+        .html(function(d, i) {  return d.last == true ? d :  d /*+ '<br>'*/});
 
     radioSpan.append("input")
         .attr({
@@ -188,11 +197,6 @@ function createMesureDiv() {
             checked: function(d,i) { return (i ===0); },
             value: function(d) { return d; }
         });
-
-    radioSpan.append("label")
-        .attr('class', 'radiolabel')
-        .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
-
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=mesure]")
         .on("change", function() {
@@ -212,6 +216,12 @@ function updateMesureDiv(mesures) {
 
     radioSpan.enter().append("span")
         .attr("class", "radio");
+
+
+
+    radioSpan.append("label")
+        .attr('class', 'radiolabel')
+        .html(function(d, i) {  return d.last == true ? d :  d /*+ '<br>'*/});
 
     radioSpan.append("input")
         .attr({
@@ -239,10 +249,6 @@ function updateMesureDiv(mesures) {
         curMes = mesuresCodes[d3.selectAll(".radiomesure")[0][0].value];
         updateMes();
     }
-
-    radioSpan.append("label")
-        .attr('class', 'radiolabel')
-        .html(function(d, i) {  return d.last == true ? d :  d + '<br>'});
 
     //code de mise a jour des smallMultiples de pollution
     d3.selectAll("input[type=radio][name=mesure]")
@@ -616,7 +622,7 @@ function updatePol() {
 
     curMes = mesuresCodes[choice2];
 
-    d3.select('#maptitle').html(polNameMap[curPol]);
+    d3.select('#map1title').html('<h4>' +polNameMap[curPol]+ '</h4>');
 
     data = dataMap[curPol];
 
@@ -725,11 +731,11 @@ function buildLegend(isPol){
 /* fonction de mise a jour des dates */
 function updateDate(){
 
-    d3.selectAll('.maptitle').remove();
+    //d3.selectAll('.maptitle').remove();
     d3.selectAll('div.map').remove();
 
-    d3.select("#maps").append("h4").attr("id", "maptitle").attr("class", "maptitle");
-    d3.select("#maps2").append("h4").attr("id", "map2title").attr("class", "maptitle");
+    //d3.select("#maps").append("h4").attr("id", "maptitle").attr("class", "maptitle");
+    //d3.select("#maps2").append("h4").attr("id", "map2title").attr("class", "maptitle");
 
     dateJoin = d3.select('#maps').selectAll('div.map').data(years);
     dateJoin2 = d3.select('#maps2').selectAll('div.map').data(years);
@@ -781,7 +787,7 @@ function updateMes(){
     
     updateDate();
 
-    d3.select('#map2title').html(choice);
+    d3.select('#map2title').html('<h4>' +choice+ '</h4>');
 
     data = mesureMap[curMes];
 

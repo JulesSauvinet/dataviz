@@ -17,6 +17,12 @@
     /*body{height : 800px;width:1550px;}*/
 
 
+    h4{
+        font-family: Georgia,Gadugi,  Arial, Serif, sans-serif!important;
+        font-weight: 900;
+        margin: 0px!important;
+        padding: 0px!important;
+    }
     .pmap {
         height : 15px;
         margin : 0px!important;
@@ -29,11 +35,10 @@
         padding-top:0px!important;
     }
 
-    #settings {
-        position: absolute;
-        right: 0px;
-        width: 21%;
+    #content{
     }
+
+
 
 
     #mapsdiv{
@@ -74,39 +79,61 @@
         fill : 'lightgrey';
     }
 
-    #pollutiondiv{
+    .choicediv{
         position: relative;
-        margin : 10px;
-        margin-top:10px;
+        margin : 5px;
         /*border:1pt solid black;*/
-        padding: 4px;
-        width : 230px;
+        padding: 10px;
+        /*width : 230px;*/
+    }
+    #pollutiondiv{
     }
 
     #mesurediv{
-        position: relative;
-        margin: 10px;
-        margin-top:20px;
-        /*border:1pt solid black;*/
-        padding: 4px;
-        width : 250px;
+    }
+
+    #settings {
+        position: absolute;
+        right: 0px;
+        width: 21%;
+        height: 100%;
     }
 
     #normalisationdiv{
         position: relative;
         margin: 10px;
-        margin-top:10px;
         /*border:1pt solid black;*/
         padding: 4px;
         width : 250px;
+        height : 10%;
+    }
+
+    .halfsettings{
+        height : 45%;
+    }
+
+    .legend{
+        position : relative;
     }
 
 
-    form {
-        padding-left: 15px;
-        padding-bottom: 10px;
+    #pollegend{
+    }
 
-        padding-right: 10px;
+    #meslegend{
+    }
+
+    .divchoicetitle{
+        font-weight: bold;
+    }
+
+    form {
+
+        padding: 7px;
+        /*border: 1px solid lightgray;*/
+    }
+
+    .normalegend{
         border: 1px solid lightgray;
     }
     form > label,
@@ -123,7 +150,6 @@
 
     .legend{
         margin-left: 30px;
-
     }
 
     .background {
@@ -165,27 +191,38 @@
 
 <body>
 
-<div id = "mapsdiv">
-    <div id="maps"></div>
-    <div id="maps2"></div>
-    <footer>Source: <a href="http://http://ec.europa.eu/eurostat/data/database">eurostat</a></footer>
+<div id = "content">
 
+    <div id = "mapsdiv">
+
+        <div id = 'map1title' class = "maptitle"></div>
+        <div id="pollutiondiv" class = "choicediv"></div>
+        <div id="maps"></div>
+
+        <div id = 'map2title' class = "maptitle"></div>
+        <div id="mesurediv" class = "choicediv"></div>
+        <div id="maps2"></div>
+        <footer>Source: <a href="http://http://ec.europa.eu/eurostat/data/database">eurostat</a></footer>
+
+    </div>
+
+
+
+    <div id="settings">
+
+        <!--------------- RADIOLIST NORMALISATION ------------------>
+        <div id="normalisationdiv"></div>
+        <!--------------- LEGENDE POLLUANTS ------------------>
+        <div id = "polsettings" class = "halfsettings">
+            <div id="pollegend" class = "legend"></div>
+        </div>
+
+        <!---------------- LEGENDE MESURES ------------------->
+        <div id = "messettings" class = "halfsettings">
+            <div id="meslegend" class = "legend"></div>
+        </div>
+    </div>
 </div>
-
-
-
-<div id="settings">
-
-    <!--------------- RADIOLIST NORMALISATION ------------------>
-    <div id="normalisationdiv"></div>
-    <!--------------- RADIOLIST POLLUANTS ------------------>
-    <div id="pollutiondiv"></div>
-    <div id="pollegend"></div>
-    <!---------------- RADIOLIST MESURES ------------------->
-    <div id="mesurediv"></div>
-    <div id="meslegend"></div>
-</div>
-
 </body>
 
 <script type="text/javascript" src="js/smallMultiples.js"></script>
