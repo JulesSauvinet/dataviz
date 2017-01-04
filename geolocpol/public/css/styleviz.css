@@ -95,7 +95,7 @@ h4{
 
 #mesurediv{
     width : 320px;
-    margin-top : 30px;
+    margin-top : 20px;
 }
 
 #position-element{
@@ -141,11 +141,18 @@ h4{
 }
 
 .normalegend{
-    border: 1px solid red;
+    border: 2px solid red;
+    border-radius: 5px;
 }
 
 .choicelegend{
     border: 1px solid lightgrey;
+
+    border-radius: 5px;
+}
+
+#map2title{
+    margin-top : 40px!important;
 }
 
 form {
