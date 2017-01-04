@@ -139,7 +139,7 @@ function createPolDiv(pollutions){
         }
     });
 
-    var fieldset = d3.select("#pollutiondiv").append("form");
+    var fieldset = d3.select("#pollutiondiv").append("form").attr('class',"choicelegend");
     fieldset.html('<h5> Choix du polluant : </h5>');
     var radioSpan = fieldset.selectAll(".radio").data(pollutants);
 
@@ -174,7 +174,7 @@ function createPolDiv(pollutions){
 /* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
 var fieldset,radioSpan;
 function createMesureDiv() {
-    fieldset = d3.select("#mesurediv").append("form");
+    fieldset = d3.select("#mesurediv").append("form").attr('class',"choicelegend");;
     fieldset.html('<h5>Choix de la mesure : </h5>');
 
     radioSpan = fieldset.selectAll(".radio").data(mesures);
