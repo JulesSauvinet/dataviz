@@ -7,13 +7,13 @@
 
 
 // ----------- AMELIORATION -----------
-//TODO améliorer la légende
+//TODO améliorer la légende (la position notamment)
 //TODO faire du design, sur le panneau de droite notamment
+//TODO proposer aucun normalisation (my apology, voir avec TABARD)
 
 
 // ----------- OPTIMISATION -----------
 //TODO faire des graphiques quand on selectionne une region?
-//TODO zoom sur les cartes?
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -63,14 +63,6 @@ var mesNameMap = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffage
                     'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production d\'énergie renouvelable' : 'enr',
                     'Fertilisants au Nitrogene' : 'fN','Fertilisants au Phosphore' : 'fPh','Fertilisants au Potassium' : 'fPo'};
-
-//fonction de récupération du nom long d'une mesure a partir d'un code
-function getNameFromMesCode(mesCode){
-    for (var mesure in mesNameMap){
-        if (mesNameMap[mesure] === mesCode)
-            return mesure;
-    }
-}
 
 // Map qui permet d'associer a chaque polluant, la liste des mesures pour lesquelles
 // il y a une possible correspondance polluant/mesure, on utilise cette map pour afficher
@@ -142,8 +134,6 @@ function createNormaDiv() {
 }
 
 
-/* ----------           fonction pour créer le div des polluants de manière dynamique          ----------- */
-var pollutants = [];
 /* ----------------------------- fonction pour créer le div des polluants de manière dynamique ----------------------------- */
 var pollutants = [];
 function createPolDiv(pollutions){
@@ -183,6 +173,7 @@ function createPolDiv(pollutions){
             updatePol();
         });
 }
+
 
 /* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
 var fieldset,radioSpan;
@@ -905,6 +896,7 @@ function updateMes(){
     buildLegend(false);
 }
 
+
 //fonction trick pour approximer la densité ou la démographie quand les données sont manquantes
 function approximateDensAndPop(d, datebis){
     if (!d.properties["dens"][datebis]){
@@ -935,6 +927,7 @@ function approximateDensAndPop(d, datebis){
         }
     }
 }
+
 
 /* -  fonction qui ajoute dans nos map de stockage des données polluant/mesure, les valeurs de démographie et de densité -- */
 function insertDataAttribute(data1, data2, attribute){
