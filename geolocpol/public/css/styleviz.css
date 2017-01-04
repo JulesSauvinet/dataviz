@@ -19,6 +19,7 @@ h4{
     margin-left : 13px!important;
     margin-top: 5px!important;
     margin-bottom: 5px!important;
+    margin-top : 70px;
 }
 .pmap {
     height : 15px;
@@ -54,6 +55,7 @@ h4{
     height : 45%;
     padding-left: 30px;
     padding-right: 10px;
+    margin-top : 70px;
 }
 
 #maps2{
@@ -86,6 +88,7 @@ h4{
     padding: 7px;
     /*width : 230px;*/
 }
+
 #pollutiondiv{
     width : 320px;
 }
