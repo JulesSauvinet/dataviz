@@ -81,9 +81,9 @@ var correspondanceMap = {'NH3'   : ['Pesticides','Fertilisants au Nitrogene','Fe
                                     'Production d\'énergie renouvelable'],
                          'NOX'   : ['Production d\'énergie','Production d\'énergie renouvelable',
                                     'Chauffage Nucleaire'],
-                         'PM10'  : ['Taxes environnementales','Taxe transport','Morts de cancers',
+                         'PM10'  : ['Moteurs de voitures diesel','Taxes environnementales','Taxe transport','Morts de cancers',
                                     'Morts de maladies cardiaques'],
-                         'PM2_5' : ['Moteurs de voitures diesel','Taxe transport','Morts de cancers',
+                         'PM2_5' : ['Moteurs de voitures diesel','Taxes environnementales','Taxe transport','Morts de cancers',
                                     'Morts de maladies cardiaques'],
                          'SOX'   : ['Chauffage Nucleaire','Production d\'énergie',
                                     'Production d\'énergie renouvelable']
@@ -122,11 +122,11 @@ function createNormaDiv() {
         '<h5>Choix de la normalisation :</h5>'+
         '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radPop" value="pop" checked>' +
-        '<label class ="radiolabel">Population</label>' +
+        '<label class ="radiolabel">/Population</label>' +
         '</span>'+ //'</br>'+
         '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radDens" value="dens">' +
-        '<label class ="radiolabel">Densité</label>' +
+        '<label class ="radiolabel">*Densité/Population</label>' +
         '</span>');
 
     var buttonsRad = d3.selectAll("input[type=radio][name=choice]");

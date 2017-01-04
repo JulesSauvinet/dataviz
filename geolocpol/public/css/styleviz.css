@@ -87,11 +87,11 @@ h4{
     /*width : 230px;*/
 }
 #pollutiondiv{
-    width : 280px;
+    width : 320px;
 }
 
 #mesurediv{
-    width : 280px;
+    width : 320px;
     margin-top : 70px;
 }
 
@@ -113,7 +113,7 @@ h4{
     margin: 3px;
     /*border:1pt solid black;*/
     padding: 4px;
-    width : 280px;
+    width : 320px;
     height : 10%;
 }
 
