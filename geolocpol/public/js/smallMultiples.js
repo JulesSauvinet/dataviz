@@ -616,7 +616,7 @@ function updateScalesColor(){
 }
 
 
-/* ----------------------------------  fonction de mise a jour des smallMultiples de pollution --------------------------------- */
+/* -------------------------------  fonction de mise a jour des smallMultiples de pollution ------------------------------ */
 function updatePol() {
     // on récupère la valeur du polluant grace au bouton radio validé
     var choice;
@@ -707,8 +707,8 @@ function updatePol() {
 }
 
 
-/* ------------------------------------  fonction de mise a jour de la légende de pollution si isPol == true ----------------------------------- */
-/* ------------------------------------  fonction de mise a jour de la légende des mesures si isPol == false ----------------------------------- */
+/* ------------------------    fonction de mise a jour de la légende de pollution si isPol == true   ------------------------------ */
+/* ------------------------    fonction de mise a jour de la légende des mesures si isPol == false   ------------------------------ */
 function buildLegend(isPol){
 
     var dataUpdate = isPol? [curPol+"1",curPol+"2",curPol+"3",curPol+"4",curPol+"5"] : [curMes+"1",curMes+"2",curMes+"3",curMes+"4",curMes+"5"];
@@ -752,9 +752,8 @@ function buildLegend(isPol){
 }
 
 
-
-/* ------------------------------------  fonction de mise a jour de la légende de pollution si isPol == true ----------------------------------- */
-/* ---------------------------------------- fonction de mise a jour des années que l'on veut afficher ------------------------------------------ */
+/* ------------------------    fonction de mise a jour de la légende de pollution si isPol == true   ------------------------------ */
+/* ------------------------    fonction de mise a jour des années que l'on veut afficher             ------------------------------ */
 // --> le chgmt se fait quand on change de mesure, les polluants faisant tous parti du même fichier de données
 // --> les années ne changent pas d'un polluant à un autre, on appelle cette fonction uniquement dans updateMes
 function updateDate(){
@@ -904,7 +903,7 @@ function updateMes(){
 }
 
 
-/* ------------  fonction qui ajoute dans nos map de stockage des données polluant/mesure, les valeurs normalisées ------------  */
+/* -  fonction qui ajoute dans nos map de stockage des données polluant/mesure, les valeurs de démographie et de densité -- */
 function insertDataAttribute(data1, data2, attribute){
     data2.forEach(function(d){
         if (!d[attribute])
