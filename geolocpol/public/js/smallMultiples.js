@@ -19,7 +19,7 @@
 
 
 //---------------------------------------------------------- CODE -----------------------------------------------------------
-// valeur par défaut pour le polluant, la mesure et la normalisation courant(e) sélectionné(e)
+// valeurs par défaut pour le polluant, la mesure et la normalisation courant(e) sélectionné(e)
 var curPol = "NH3";
 var curMes = "c";
 var normalisation = "pop";
@@ -28,58 +28,69 @@ var normalisation = "pop";
 var unitPolMap = {};
 var unitMesMap = {};
 
-// Construction d'une smallMap : dimensions d'1 smallMap 
-//                             + conteneurs des smallMaps (1 pour les polluants et 1 pour les mesures)
+// construction d'une smallMap : dimensions d'1 smallMap
 var mapWidth = 230;
 var mapHeight = 180;
+
+// conteneurs des smallMaps de pollution
 var dateJoin,divs,SVGs;
+
+// conteneurs des smallMaps de mesure
 var dateJoin2,divs2,SVGs2;
 
-//projection + path de l'europe d'une small map
+// projection + path de l'europe d'une small map
 var projection = d3.geo.stereographic().center([3.9,43.0]).scale(375).translate([mapWidth / 2-20, mapHeight / 2+43]);
 var path = d3.geo.path().projection(projection);
 
-
-// Vecteur des années par défaut pour lesquelles on va afficher des smallMap
+// tableau des années parmi lesquelles on va choisir les années pour lesquelles on va afficher les smallMaps
 var dateFormat = d3.time.format("%Y");
 var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014"];
 
+// tableau contenant toutes les mesures
+var mesures = ['Morts de cancers', 'Pesticides', 'Production d\'énergie', 'Chauffage Nucleaire',
+               'Taxes environnementales', 'Taxe transport', 'Morts de maladies cardiaques',
+               'Moteurs de voitures diesel', 'Production d\'énergie renouvelable',
+               'Moteurs de voitures pétrole', 'Fertilisants au Nitrogene',
+               'Fertilisants au Phosphore','Fertilisants au Potassium'];
 
-// Vecteur contenant toutes les mesures
-var mesures = ['Morts de cancers','Pesticides', 'Production d\'énergie', 'Chauffage Nucleaire', 'Taxes environnementales','Taxe transport', 
-                'Morts de maladies cardiaques',  'Moteurs de voitures diesel','Production d\'énergie renouvelable', 'Moteurs de voitures pétrole',
-                'Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium'];
 
-
-// Map qui associe une abbréviation a chaque polluant + Idem pour les mesures
-// --> plus facile à utiliser
+// map qui associe une abbréviation a chaque polluant
 var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques', 'NOX' : 'Oxyde d\'azote',
                   'PM10' : 'Particules 10μm', 'PM2_5': 'Particules 2.5μm', 'SOX' : 'Oxyde de soufre'};
-var mesuresCodes = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
+                  
+// map qui associe une abbréviation a chaque mesure
+var mesNameMap = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
                     'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production d\'énergie renouvelable' : 'enr',
                     'Fertilisants au Nitrogene' : 'fN','Fertilisants au Phosphore' : 'fPh','Fertilisants au Potassium' : 'fPo'};
 
+//fonction de récupération du nom long d'une mesure a partir d'un code
+function getNameFromMesCode(mesCode){
+    for (var mesure in mesNameMap){
+        if (mesNameMap[mesure] === mesCode)
+            return mesure;
+    }
+}
 
-// Map qui permet d'associer a chaque polluant, la liste des mesures pour lesquelles il y a une possible correspondance polluant/mesure
-// on utilise cette map pour afficher dynamiquement les mesures à afficher une fois le choix du polluant fait
-var correspondanceMap = {'NH3' : ['Pesticides','Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium',
-                                  'Taxes environnementales'/*,'Energie','Chauffage Nucleaire','Transport','Moteurs de voitures'*/],
-                         'NMVOC' : ['Moteurs de voitures pétrole','Production d\'énergie','Production d\'énergie renouvelable'/*,'Morts de cancers','Morts de maladies cardiaques', 
-                                    'Taxes environnementales','Chauffage Nucleaire','Taxe transport','Pesticides','Moteurs de voitures'*/],
-                         'NOX' : ['Production d\'énergie','Production d\'énergie renouvelable','Chauffage Nucleaire'/*,'Moteurs de voitures','Moteurs de voitures pétrole',
-                                  'Taxe transport','Morts de cancers','Morts de maladies cardiaques','Pesticides','Taxes environnementales'*/],
-                         'PM10' : ['Taxes environnementales','Taxe transport','Morts de cancers','Morts de maladies cardiaques',
-                                    /*'Moteurs de voitures diesel','Production d\'énergie','Pesticides','Chauffage Nucleaire','Moteurs de voitures'*/],
-                         'PM2_5' : ['Moteurs de voitures diesel','Taxe transport','Morts de cancers','Morts de maladies cardiaques'/*,
-                                    'Taxes environnementales','Production d\'énergie','Chauffage Nucleaire','Pesticides'*/],
-                         'SOX' : ['Chauffage Nucleaire','Production d\'énergie','Production d\'énergie renouvelable'/*,'Pesticides','Morts de cancers','Morts de maladies cardiaques',
-                                  'Taxes environnementales','Taxe transport','Moteurs de voitures'*/]
+// Map qui permet d'associer a chaque polluant, la liste des mesures pour lesquelles
+// il y a une possible correspondance polluant/mesure, on utilise cette map pour afficher
+// dynamiquement les mesures à afficher une fois le choix du polluant fait
+var correspondanceMap = {'NH3'   : ['Pesticides','Fertilisants au Nitrogene','Fertilisants au Phosphore',
+                                    'Fertilisants au Potassium', 'Taxes environnementales'],
+                         'NMVOC' : ['Moteurs de voitures pétrole','Production d\'énergie',
+                                    'Production d\'énergie renouvelable'],
+                         'NOX'   : ['Production d\'énergie','Production d\'énergie renouvelable',
+                                    'Chauffage Nucleaire'],
+                         'PM10'  : ['Taxes environnementales','Taxe transport','Morts de cancers',
+                                    'Morts de maladies cardiaques'],
+                         'PM2_5' : ['Moteurs de voitures diesel','Taxe transport','Morts de cancers',
+                                    'Morts de maladies cardiaques'],
+                         'SOX'   : ['Chauffage Nucleaire','Production d\'énergie',
+                                    'Production d\'énergie renouvelable']
                         };
 
 
-// Map qui permet de rendre plus lisible le contenu de Nut1
-// dans nut1 les pays sont parfois incorrects parfois affiché en majuscule
+// map qui traduit le nom des pays de l'Europe du nom international utilisé par NUTS1 en français
 // pour rendre la vizu plus claire, on utilise cette map de correspondance
 var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'Portugal',
                     'Suomi / finland' : 'Finlande', 'Sverige' : 'Suède', 'Polska' : 'Pologne',
@@ -92,16 +103,7 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     'Slovenija' : 'Slovénie', '?eská republika' : 'République tchèque', 'Eesti' : 'Estonie',
                     '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte'};
 
-
-function getNameFromMesCode(mesCode){
-    for (var mesure in mesuresCodes){
-        if (mesuresCodes[mesure] === mesCode)
-            return mesure;
-    }
-}
-
-
-/* --------------------- on crée ici le tip qui sera utiliser pour afficher des infos sur les smallMaps --------------------- */
+/* ----------- création du tooltip qui sera utilisé pour afficher des infos sur les smallMaps ----------- */
 var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
@@ -113,8 +115,7 @@ var tip = d3.tip()
     });
 
 
-/* -------------------------- fonction pour créer le div du choix de la normalisation des données -------------------------- */
-var choiceNorma = ['normaliser par densité', 'normaliser par population'];
+/* ----------       fonction pour créer le div du choix de la normalisation des données       ----------- */
 function createNormaDiv() {
     var fieldset = d3.select("#normalisationdiv").append("form").attr('class',"normalegend");
     fieldset.append("legend").html(
@@ -141,6 +142,8 @@ function createNormaDiv() {
 }
 
 
+/* ----------           fonction pour créer le div des polluants de manière dynamique          ----------- */
+var pollutants = [];
 /* ----------------------------- fonction pour créer le div des polluants de manière dynamique ----------------------------- */
 var pollutants = [];
 function createPolDiv(pollutions){
@@ -181,10 +184,8 @@ function createPolDiv(pollutions){
         });
 }
 
-
 /* ----------------------------- fonction pour créer le div des mesures de manière dynamique ----------------------------- */
 var fieldset,radioSpan;
-
 function createMesureDiv() {
     fieldset = d3.select("#mesurediv").append("form");
     fieldset.html('<h5>Choix de la mesure : </h5>');
@@ -200,7 +201,7 @@ function createMesureDiv() {
             name: "mesure",
             class : "radiomesure",
             id : function(d,i) { return 'mesureradio' + i;},
-            value : function(d,i) { return mesuresCodes[d];}
+            value : function(d,i) { return mesNameMap[d];}
         })
         .property({
             checked: function(d,i) { return (i ===0); },
@@ -219,6 +220,7 @@ function createMesureDiv() {
 }
 
 
+/* -----------------      fonction qui met a jour le div des mesures en fcn du polluant     ------------------ */
 /* ----------------------------- fonction qui met a jour le div des mesures en fcn du polluant ----------------------------- */
 function updateMesureDiv(mesures) {
     radioSpan.exit().remove();
@@ -237,10 +239,10 @@ function updateMesureDiv(mesures) {
             name: "mesure",
             class : "radiomesure",
             id : function(d,i) { return 'mesureradio' + i;},
-            value : function(d,i) { return mesuresCodes[d];}
+            value : function(d,i) { return mesNameMap[d];}
         })
         .property({
-            checked: function(d,i) {return (mesuresCodes[d] === curMes); },
+            checked: function(d,i) {return (mesNameMap[d] === curMes); },
             value: function(d) { return d }
         });
 
@@ -258,7 +260,7 @@ function updateMesureDiv(mesures) {
 
     if (!checked){
         d3.selectAll(".radiomesure")[0][0].checked = true;
-        curMes = mesuresCodes[d3.selectAll(".radiomesure")[0][0].value];
+        curMes = mesNameMap[d3.selectAll(".radiomesure")[0][0].value];
         updateMes();
     }
 
@@ -290,7 +292,7 @@ function createPolDatas(pollutions){
 }
 
 
-/* ---------------------- fonction qui réalise le mapping entre les données NUTS et nos données polluants ---------------------- */
+/* -------------------- fonction qui réalise le mapping entre les données NUTS et nos donnéees de polluants ---------------------- */
 var dataMap = {};
 var geoPol = {};
 function createMergedPolAndMapData(europe){
@@ -332,7 +334,8 @@ function createMergedPolAndMapData(europe){
 }
 
 
-/* ---------------------- A DECRIRE ---------------------- */
+/* ------------- fonction pour unifier les données des polluants et d'une   ---------------------- */
+/* ------------- mesure au sein d'un meme et unique dataset                ---------------------- */
 function mergeData(data1,data2,mes){
     var geos = [];
     data2.forEach(function(p){if (!geos.includes(p["geo"]))geos.push(p["geo"]);});
@@ -362,7 +365,7 @@ function mergeData(data1,data2,mes){
 }
 
 
-/* ---------------------------------- fonction qui lit les données de mesure et qui les stocke --------------------------------- */
+/* ------------------------     fonction qui lit les données de mesure et qui les stocke     -------------------------- */
 var geoMes = {};
 var mesureMap = {};
 var yearsMesureMap = {};
@@ -398,9 +401,9 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
 }
 
 
-/* ------------------------- fonction qui filtre les données mesures des valeurs non désirées ---------------------------------- */
-/* ----------------------------- on récupère aussi les années disponibles dans le fichier polluant ----------------------------- */
-/*---> cela permet d'afficher des smallMaps sur des années qui sont communes au poluant et a la mesure */
+/* -----------------------     fonction qui filtre les données mesures des valeurs non désirées -----------------------  */
+/* ---------------------       on récupère aussi les années disponibles dans le fichier polluant        --------------  */
+/* ---------------> cela permet d'afficher des smallMaps sur des années qui sont communes au poluant et a la mesure -- */
 function buildMesureData(mes, data, europe){
 
     var dataRaw = topojson.feature(europe, europe.objects.regions).features;
@@ -461,8 +464,8 @@ function buildMesureData(mes, data, europe){
 }
 
 
-/* ------------- Création des scales de couleur avec les valeurs min et max  pour chaque polluant et chaque mesure ------------- */
-/* --> on stocke tous scale de polluants dans la Map colorpol et Idem avec la Map colormes pour les mesures */
+/* -------- Création des scales de couleur avec les valeurs min et max  pour chaque polluant et chaque mesure ------------- */
+/* ----------> on stocke tous scale de polluants dans la Map colorpol et Idem avec la Map colormes pour les mesures -------*/
 var colorpol = {};
 var colormes = {};
 function updateScalesColor(){
@@ -521,7 +524,7 @@ function updateScalesColor(){
     // ----------------------------------- traitement des données mesures -----------------------------------
     mesures.forEach(function(mesure) {
 
-        var mes = mesuresCodes[mesure];
+        var mes = mesNameMap[mesure];
         var mesureData=mesureMap[mes];
         var min = Number.MAX_VALUE;
 
@@ -637,7 +640,7 @@ function updatePol() {
         }
     });
 
-    curMes = mesuresCodes[choice2];
+    curMes = mesNameMap[choice2];
 
     d3.select('#map1title').html('<h4>' +polNameMap[curPol]+ '</h4>');
 
@@ -786,7 +789,7 @@ function updateMes(){
         }
     });
 
-    curMes = mesuresCodes[choice];
+    curMes = mesNameMap[choice];
     yearsMes = yearsMesureMap[curMes];
     years = [];
 
