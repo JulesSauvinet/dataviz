@@ -50,8 +50,8 @@ var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","200
 var mesures = ['Morts de cancers', 'Pesticides', 'Production d\'énergie', 'Chauffage Nucleaire',
                'Taxes environnementales', 'Taxe transport', 'Morts de maladies cardiaques',
                'Moteurs de voitures diesel', 'Production d\'énergie renouvelable',
-               'Moteurs de voitures pétrole', 'Fertilisants au Nitrogene',
-               'Fertilisants au Phosphore','Fertilisants au Potassium'];
+               'Moteurs de voitures pétrole', 'Engrais au Nitrogene',
+               'Engrais au Phosphore','Engrais au Potassium'];
 
 
 // map qui associe une abbréviation a chaque polluant
@@ -62,13 +62,13 @@ var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques'
 var mesNameMap = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
                     'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production d\'énergie renouvelable' : 'enr',
-                    'Fertilisants au Nitrogene' : 'fN','Fertilisants au Phosphore' : 'fPh','Fertilisants au Potassium' : 'fPo'};
+                    'Engrais au Nitrogene' : 'fN','Engrais au Phosphore' : 'fPh','Engrais au Potassium' : 'fPo'};
 
 // Map qui permet d'associer a chaque polluant, la liste des mesures pour lesquelles
 // il y a une possible correspondance polluant/mesure, on utilise cette map pour afficher
 // dynamiquement les mesures à afficher une fois le choix du polluant fait
-var correspondanceMap = {'NH3'   : ['Pesticides','Fertilisants au Nitrogene','Fertilisants au Phosphore',
-                                    'Fertilisants au Potassium', 'Taxes environnementales'],
+var correspondanceMap = {'NH3'   : ['Engrais au Nitrogene','Engrais au Phosphore',
+                                    'Engrais au Potassium','Pesticides', 'Taxes environnementales'],
                          'NMVOC' : ['Moteurs de voitures pétrole','Production d\'énergie',
                                     'Production d\'énergie renouvelable'],
                          'NOX'   : ['Production d\'énergie','Production d\'énergie renouvelable',
@@ -574,7 +574,7 @@ function updateScalesColor(){
                 color.range(['lightgreen', 'darkgreen']);
                 break;
             case "en":
-                color.range(['lightblue', 'darkblue']);
+                color.range(['yellow', 'darkblue']);
                 break;
             case "cn":
                 color.range(['pink', 'magenta']);
@@ -589,7 +589,7 @@ function updateScalesColor(){
                 color.range(['pink', 'purple']);
                 break;
             case "tr":
-                color.range(['pink', 'purple']);
+                color.range(['pink', 'darkred']);
                 break;
             case "mvd":
                 color.range(['pink', 'darkred']);
@@ -598,7 +598,7 @@ function updateScalesColor(){
                 color.range(['pink', 'darkred']);
                 break;
             case "enr":
-                color.range(['pink', 'darkred']);
+                color.range(['yellow', 'darkblue']);
                 break;
             case "fN":
                 color.range(['lightgreen', 'darkgreen']);
