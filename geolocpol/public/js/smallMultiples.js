@@ -11,10 +11,6 @@
 //TODO faire du design, sur le panneau de droite notamment
 //TODO proposer aucun normalisation (my apology, voir avec TABARD)
 
-
-// ----------- OPTIMISATION -----------
-//TODO faire des graphiques quand on selectionne une region?
-
 //---------------------------------------------------------------------------------------------------------------------------
 
 
