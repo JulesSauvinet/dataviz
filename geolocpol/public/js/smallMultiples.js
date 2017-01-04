@@ -65,8 +65,8 @@ var mesuresCodes = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffa
 // on utilise cette map pour afficher dynamiquement les mesures à afficher une fois le choix du polluant fait
 var correspondanceMap = {'NH3' : ['Pesticides','Fertilisants au Nitrogene','Fertilisants au Phosphore','Fertilisants au Potassium',
                                   'Taxes environnementales'/*,'Energie','Chauffage Nucleaire','Transport','Moteurs de voitures'*/],
-                         'NMVOC' : ['Moteurs de voitures pétrole','Production d\'énergie renouvelable','Morts de cancers','Morts de maladies cardiaques'/*, 
-                                    /*,'Taxes environnementales','Production d\'énergie'','Chauffage Nucleaire','Taxe transport','Pesticides','Moteurs de voitures'*/],
+                         'NMVOC' : ['Moteurs de voitures pétrole','Production d\'énergie','Production d\'énergie renouvelable','Morts de cancers','Morts de maladies cardiaques'/*, 
+                                    /*,'Taxes environnementales','Chauffage Nucleaire','Taxe transport','Pesticides','Moteurs de voitures'*/],
                          'NOX' : ['Chauffage Nucleaire','Moteurs de voitures pétrole','Production d\'énergie'/*,'Moteurs de voitures','Taxe transport',
                                   'Morts de cancers','Morts de maladies cardiaques','Pesticides','Taxes environnementales'*/],
                          'PM10' : ['Taxes environnementales','Taxe transport','Morts de cancers','Morts de maladies cardiaques',
