@@ -93,6 +93,17 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     'Slovenija' : 'Slovénie', '?eská republika' : 'République tchèque', 'Eesti' : 'Estonie',
                     '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte', 'Magyarország' : 'Hongrie'};
 
+
+var countriesEU = {'FR' : 'France','DK' : 'Danemark','DE' : 'Allemagne','ES' : 'Espagne', 'PT' : 'Portugal', 'BE' : 'Belgique',
+                   'EL' : 'Grèce','NO' : 'Norvège','SE' : 'Suède', 'FI' : 'Finlande', 'CZ' : 'République Tchèque', 'MT' : 'Malte',
+                   'CY' : 'Chypre', 'LU' : 'Luxembourg', 'NL' : 'Pays-Bas', 'EE' : 'Estonie', 'IE' : 'Irlande', 'IT' : 'Italie',
+                   'HU' : 'Hongrie', 'RO' : 'Roumanie', 'UA' : 'Ukraine', 'LV' : 'Lettonie', 'LT' : 'Litunaie', 'AT' : 'Autriche',
+                   'BG' : 'Bulgarie', 'LI' : 'Liechenstein', 'MD' : 'Moldavie', 'UK' : 'Grande-Bretagne','AL' : 'Albanie',
+                   'SI' : 'Slovénie', 'SK' : 'Slovaquie', 'TR' : 'Turquie', 'CH' : 'Suisse' , 'SE' : 'Serbie' ,
+                   'HR' : 'Croatie', 'BA' : 'Bosnie-Herzégovine', 'BY' : 'Biélorussie', 'PL' : 'Pologne'};
+
+var countries = [];
+
 /* ----------- création du tooltip qui sera utilisé pour afficher des infos sur les smallMaps ----------- */
 var tip = d3.tip()
     .attr('class', 'd3-tip')
@@ -475,17 +486,19 @@ function updateScalesColor(){
 
         var min = Number.MAX_VALUE;
         pollution.forEach(function(pol){
-            if (geoPol[pollutant].includes(pol['geo'])){
-                for (var key in pol){
-                    if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
-                        //on ne base la scale que s'il y a une densité associé au code NUTS
-                        var value = parseFloat(pol[key]) / parseFloat(pol["pop"][key]);
-                        if (normalisation === "dens")
-                            value = value *  parseFloat(pol["dens"][key]);
-                        var year = parseInt(key);
-                        if (years.includes(key)) {
-                            if (parseFloat(pol[key]) !== 0 && value < parseFloat(min)) {
-                                min = value;
+            if (countries.includes(pol['geo'])){
+                if (geoPol[pollutant].includes(pol['geo'])){
+                    for (var key in pol){
+                        if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
+                            //on ne base la scale que s'il y a une densité associé au code NUTS
+                            var value = parseFloat(pol[key]) / parseFloat(pol["pop"][key]);
+                            if (normalisation === "dens")
+                                value = value *  parseFloat(pol["dens"][key]);
+                            var year = parseInt(key);
+                            if (years.includes(key)) {
+                                if (parseFloat(pol[key]) !== 0 && value < parseFloat(min)) {
+                                    min = value;
+                                }
                             }
                         }
                     }
@@ -495,17 +508,19 @@ function updateScalesColor(){
 
         var max = Number.MIN_VALUE;
         pollution.forEach(function(pol){
-            if (geoPol[pollutant].includes(pol['geo'])) {
-                for (var key in pol) {
-                    if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
-                        //on ne base la scale que s'il y a une densité associé au code NUTS
-                        var year = parseInt(key);
-                        var value = parseFloat(pol[key]) / parseFloat(pol["pop"][year]);
-                        if (normalisation === "dens")
-                            value = value *  parseFloat(pol["dens"][year]);
-                        if (years.includes(key)) {
-                            if (value > parseFloat(max)) {
-                                max = value;
+            if (countries.includes(pol['geo'])) {
+                if (geoPol[pollutant].includes(pol['geo'])) {
+                    for (var key in pol) {
+                        if (key !== "unit" && key !== "airsect" && key !== "geo" && key !== "airpol" && key !== "dens" && key !== "pop") {
+                            //on ne base la scale que s'il y a une densité associé au code NUTS
+                            var year = parseInt(key);
+                            var value = parseFloat(pol[key]) / parseFloat(pol["pop"][year]);
+                            if (normalisation === "dens")
+                                value = value * parseFloat(pol["dens"][year]);
+                            if (years.includes(key)) {
+                                if (value > parseFloat(max)) {
+                                    max = value;
+                                }
                             }
                         }
                     }
@@ -532,18 +547,20 @@ function updateScalesColor(){
 
         mesureData.forEach(function(md){
             md = md.properties;
-            if (geoMes[mes].includes(md['NUTS_ID'])){
-                for (var key in md){
-                    if (!notYearKeys.includes(key)) {
-                        //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
-                        var value = parseFloat(md[key]) / parseFloat(md["pop"][key])*10000.0;
-                        if (normalisation === "dens")
-                            value = value *  parseFloat(md["dens"][year]);
+            if (countries.includes(md['NUTS_ID'])) {
+                if (geoMes[mes].includes(md['NUTS_ID'])) {
+                    for (var key in md) {
+                        if (!notYearKeys.includes(key)) {
+                            //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
+                            var value = parseFloat(md[key]) / parseFloat(md["pop"][key]) * 10000.0;
+                            if (normalisation === "dens")
+                                value = value * parseFloat(md["dens"][year]);
 
-                        var year = parseInt(key);
-                        if (years.includes(key)) {
-                            if (parseFloat(md[key]) !== 0 && value < parseFloat(min)) {
-                                min = value;
+                            var year = parseInt(key);
+                            if (years.includes(key)) {
+                                if (parseFloat(md[key]) !== 0 && value < parseFloat(min)) {
+                                    min = value;
+                                }
                             }
                         }
                     }
@@ -554,17 +571,19 @@ function updateScalesColor(){
         var max = Number.MIN_VALUE;
         mesureData.forEach(function(md){
             md = md.properties;
-            if (geoMes[mes].includes(md['NUTS_ID'])) {
-                for (var key in md) {
-                    if (!notYearKeys.includes(key)) {
-                        //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
-                        var value = parseFloat(md[key]) / parseFloat(md["pop"][key])*10000.0;
-                        if (normalisation === "dens")
-                            value = value *  parseFloat(md["dens"][year]);
-                        var year = parseInt(key);
-                        if (years.includes(key)) {
-                            if (value > parseFloat(max)) {
-                                max = value;
+            if (countries.includes(md['NUTS_ID'])) {
+                if (geoMes[mes].includes(md['NUTS_ID'])) {
+                    for (var key in md) {
+                        if (!notYearKeys.includes(key)) {
+                            //var value = parseFloat(md[key]) / parseFloat(md["POPULATION"]);//parseFloat(md["dens"][key]);
+                            var value = parseFloat(md[key]) / parseFloat(md["pop"][key]) * 10000.0;
+                            if (normalisation === "dens")
+                                value = value * parseFloat(md["dens"][year]);
+                            var year = parseInt(key);
+                            if (years.includes(key)) {
+                                if (value > parseFloat(max)) {
+                                    max = value;
+                                }
                             }
                         }
                     }
@@ -699,8 +718,6 @@ function updatePol() {
                     }
 
 
-
-
                     if (d2){
                         if(parseFloat(d2.properties[year])) {
                             var value2 = (parseFloat(d2.properties[year])/parseFloat(d2.properties["pop"][year])*10000.0).toFixed(4);
@@ -728,16 +745,21 @@ function updatePol() {
             });
 
         map.style("fill", function (d) {
-            if (!isNaN(d.properties[date])){
+            if (countries.includes(d.properties["NUTS_ID"])){
+                if (!isNaN(d.properties[date])){
 
-                date = parseInt(date);
-                approximateDensAndPop(d, date);
+                    date = parseInt(date);
+                    approximateDensAndPop(d, date);
 
-                var value = (parseFloat(d.properties[date])/parseFloat(d.properties["pop"][date]));
-                if (normalisation === "dens")
-                    value = value * parseFloat(d.properties["dens"][date]);
+                    var value = (parseFloat(d.properties[date])/parseFloat(d.properties["pop"][date]));
+                    if (normalisation === "dens")
+                        value = value * parseFloat(d.properties["dens"][date]);
 
-                return colorpol[curPol](value);
+                    return colorpol[curPol](value);
+                }
+                else{
+                    return "lightgrey";
+                }
             }
             else{
                 return "lightgrey";
@@ -870,14 +892,19 @@ function updateMes(){
             .data(data);
 
         map.style("fill", function (d) {
-            if (!isNaN(d.properties[date])){
-                var datebis = date;
-                var value = parseFloat(d.properties[date])/parseFloat(d.properties["pop"][datebis]);
-                if (normalisation === "dens")
-                    value = value * parseFloat(d.properties["dens"][datebis]);
-                return colormes[curMes](value);
+            if (countries.includes(d.properties["NUTS_ID"])) {
+                if (!isNaN(d.properties[date])) {
+                    var datebis = date;
+                    var value = parseFloat(d.properties[date]) / parseFloat(d.properties["pop"][datebis]);
+                    if (normalisation === "dens")
+                        value = value * parseFloat(d.properties["dens"][datebis]);
+                    return colormes[curMes](value);
+                }
+                else {
+                    return "lightgrey";
+                }
             }
-            else{
+            else {
                 return "lightgrey";
             }
         });
@@ -890,22 +917,27 @@ function updateMes(){
                     return d.properties["NUTS_ID"] + '2' + date;
                 }
             }).style("fill", function (d) {
-                if (!isNaN(d.properties[date])){
-                    var datebis = parseInt(date);
+                if (countries.includes(d.properties["NUTS_ID"])) {
+                    if (!isNaN(d.properties[date])) {
+                        var datebis = parseInt(date);
 
-                    approximateDensAndPop(d, datebis);
+                        approximateDensAndPop(d, datebis);
 
-                    if (d.properties["pop"][datebis] && d.properties[normalisation][datebis]){
-                        var value = parseFloat(d.properties[date])/parseFloat(d.properties["pop"][datebis])*10000.0;
-                        if (normalisation === "dens")
-                            value = value*parseFloat(d.properties["dens"][datebis]);
-                        return colormes[curMes](value);
+                        if (d.properties["pop"][datebis] && d.properties[normalisation][datebis]) {
+                            var value = parseFloat(d.properties[date]) / parseFloat(d.properties["pop"][datebis]) * 10000.0;
+                            if (normalisation === "dens")
+                                value = value * parseFloat(d.properties["dens"][datebis]);
+                            return colormes[curMes](value);
+                        }
+                        else {
+                            return "lightgrey";
+                        }
                     }
                     else {
                         return "lightgrey";
                     }
                 }
-                else{
+                else {
                     return "lightgrey";
                 }
             }).on('mouseover', function(d){
@@ -1016,6 +1048,47 @@ function insertDataAttribute(data1, data2, attribute){
     });
 }
 
+/* création du div de choix des pays inclus dans la visualisation */
+var countriesCheckBoxes;
+function createCountryDiv() {
+    countriesCheckBoxes = d3.select("#countriesdiv").selectAll(".checkcountry")
+        .data(countries);
+
+    countriesCheckBoxes.enter().append("span")
+        .attr("class", "check");
+
+    countriesCheckBoxes.append('label')
+        .attr('for',function(d,i){ return 'a'+i; })
+        .text(function(d) { return countriesEU[d]; });
+    countriesCheckBoxes.append("input")
+        .attr("class", "checkcountry")
+        .attr("checked", true)
+        .attr("type", "checkbox")
+        .attr("value", function(d,i){return d;})
+        .attr("id", function(d,i) { return 'a'+i; })
+        .attr("onClick", "updateCountry(this)");
+}
+
+/* prototype de suppression d'un element dans un tableau */
+Array.prototype.suppr = function(item) {
+    var i = this.indexOf(item);
+    if(i != -1) {
+        this.splice(i, 1);
+    }
+};
+
+function updateCountry(checkBox){
+    if (!checkBox.checked){
+        countries.suppr(checkBox.value);
+    }
+    else{
+        countries.push(checkBox.value);
+    }
+
+    updateScalesColor();
+    updateMes();
+    updatePol();
+}
 
 /* ----------------------------------------------------  fonction initiale ----------------------------------------------------  */
 function init(error,pollutions,density, population, pesticides, energie, nuclear, taxes,
@@ -1023,6 +1096,9 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
               tot_petrol_prod,tot_gas_prod,coal_prod, europe){
 
     if (error) throw error;
+
+    countries = Object.keys(countriesEU);
+    createCountryDiv();
 
     // on crée un vecteur contenant tous nos parametres 
     // --> facile à manipuler pour normaliser les données en fcn de la population et de la densité
