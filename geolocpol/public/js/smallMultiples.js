@@ -97,6 +97,14 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
 
 var countriesEU = new Map();
  countriesEU = {'FR' : 'France','DK' : 'Danemark','DE' : 'Allemagne','ES' : 'Espagne', 'PT' : 'Portugal', 'BE' : 'Belgique',
+                'EL' : 'Grèce','SE' : 'Suède', 'FI' : 'Finlande', 'CZ' : 'République Tchèque', 'MT' : 'Malte',
+                'CY' : 'Chypre', 'LU' : 'Luxembourg', 'NL' : 'Pays-Bas', 'EE' : 'Estonie', 'IE' : 'Irlande', 'IT' : 'Italie',
+                'HU' : 'Hongrie', 'RO' : 'Roumanie', 'UA' : 'Ukraine', 'LV' : 'Lettonie', 'LT' : 'Lituanie', 'AT' : 'Autriche',
+                'BG' : 'Bulgarie', 'UK' : 'Grande-Bretagne',
+                'SI' : 'Slovénie', 'SK' : 'Slovaquie', 
+                'HR' : 'Croatie',  'PL' : 'Pologne'};
+
+ var countriesEU2 = {'FR' : 'France','DK' : 'Danemark','DE' : 'Allemagne','ES' : 'Espagne', 'PT' : 'Portugal', 'BE' : 'Belgique',
                 'EL' : 'Grèce','NO' : 'Norvège','SE' : 'Suède', 'FI' : 'Finlande', 'CZ' : 'République Tchèque', 'MT' : 'Malte',
                 'CY' : 'Chypre', 'LU' : 'Luxembourg', 'NL' : 'Pays-Bas', 'EE' : 'Estonie', 'IE' : 'Irlande', 'IT' : 'Italie',
                 'HU' : 'Hongrie', 'RO' : 'Roumanie', 'UA' : 'Ukraine', 'LV' : 'Lettonie', 'LT' : 'Lituanie', 'AT' : 'Autriche',

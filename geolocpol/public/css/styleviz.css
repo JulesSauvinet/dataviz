@@ -28,7 +28,7 @@ body, html {
     font-size: 14px;
     margin-left: 0px;
 	margin-right:8px;
-	min-width: 100!important;
+	min-width: 100px!important;
 }
 
 /*reset titles*/
@@ -51,7 +51,7 @@ h4{
 #presentation-text{
     font-family: roboto_slab, serif!important;
     position: absolute;
-    width: 92%;
+    width: 65%;
     left: 50px;
     top : 20px;
     font-size: 20px;
@@ -88,7 +88,7 @@ h4{
     position:absolute;
     left: 40px;
     top: 370px;
-    width: 92%;
+    width : 100%;
 	text-align:justify;
 }
 
