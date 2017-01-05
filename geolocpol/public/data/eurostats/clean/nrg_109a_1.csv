@@ -1,0 +1,223 @@
+geo,unit,product,indic_en,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014
+AL,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AL,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AL,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AL,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AL,KTOE,lignite/brown_coal,primary_prod,18.8,26.6,9.2,11.5,11.5,7.1,4.9,3.5,13.6,13.6,10.6,10.6,10.6,14.3,2.4,2.4,1.2,1.2,0.7,0
+AL,KTOE,total_coal,primary_prod,18.8,26.6,9.2,11.5,11.5,7.1,4.9,3.5,13.6,13.6,10.6,10.6,10.6,14.3,2.4,2.4,1.2,1.2,0.7,0
+AT,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AT,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AT,KTOE,other_bituminous_coal,primary_prod,0.7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AT,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AT,KTOE,lignite/brown_coal,primary_prod,337.7,262,267.2,269.6,265.3,292.4,282.9,331.2,270.2,55,0,0,0,0,0,0,0,0,0,0
+AT,KTOE,total_coal,primary_prod,338.4,262,267.2,269.6,265.3,292.4,282.9,331.2,270.2,55,0,0,0,0,0,0,0,0,0,0
+BE,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BE,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BE,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BE,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BE,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BE,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BA,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BA,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BA,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BA,KTOE,Sub-bituminous Coal,primary_prod,0,290.6,835.3,1028.3,1038.2,1735.9,1707.1,1963.3,2008.5,1984.8,1996,2181.7,2137.9,2461.6,2511,2307.3,2725.1,2733.7,2602.6,2556.6
+BA,KTOE,lignite/brown_coal,primary_prod,348.3,215.4,745.5,986.2,925.5,722.4,760.6,711.3,905.3,906.3,950.7,1038.7,1017.8,1172.1,1195.4,1193.3,1335.8,1239.6,1213,1211.6
+BA,KTOE,total_coal,primary_prod,348.3,506,1580.8,2014.5,1963.7,2458.3,2467.7,2674.6,2913.8,2891.1,2946.7,3220.4,3155.7,3633.7,3706.4,3500.6,4060.9,3973.3,3815.6,3768.2
+BG,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BG,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BG,KTOE,other_bituminous_coal,primary_prod,92.1,66.6,51.8,37.5,51.7,44.9,43.8,38.3,20.7,14,4.1,12.6,12.7,16.7,15.8,5.6,5,3.3,2.9,0
+BG,KTOE,Sub-bituminous Coal,primary_prod,878.2,851,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BG,KTOE,lignite/brown_coal,primary_prod,4316.5,4484,4959.8,5029,4224.3,4249.9,4453.5,4390,4624.6,4524.3,4173.9,4294.8,4732.9,4798.9,4544.1,4921.8,6201.8,5604.6,4779.4,5106
+BG,KTOE,total_coal,primary_prod,5286.8,5401.6,5011.6,5066.5,4276,4294.8,4497.3,4428.3,4645.3,4538.3,4178,4307.4,4745.6,4815.6,4559.9,4927.4,6206.8,5607.9,4782.3,5106
+HR,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+HR,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+HR,KTOE,other_bituminous_coal,primary_prod,45,38.4,29.4,30.6,8.7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+HR,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+HR,KTOE,lignite/brown_coal,primary_prod,2.5,0.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+HR,KTOE,total_coal,primary_prod,47.5,38.9,29.4,30.6,8.7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CY,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CY,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CY,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CY,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CY,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CY,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CZ,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CZ,KTOE,coking_coal,primary_prod,7239.9,6982.4,6982.2,6608.6,5555.4,5544.3,5398,5207.3,5364.7,5016.3,4843.9,5290.4,5240.6,5128.6,4030.4,4111.7,3541.9,3464.4,3126.1,3135.4
+CZ,KTOE,other_bituminous_coal,primary_prod,3260.5,3130.5,3446.6,3774.7,3569.2,3878,4128.3,3876.9,3424.1,3503.1,3566.1,3217.2,3260.6,3209.7,3092.2,3296.1,3637.6,3884.9,2587.7,2461.7
+CZ,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CZ,KTOE,lignite/brown_coal,primary_prod,16777,17519.2,17561.2,15718.1,14008.9,15626.3,15820.7,15170.7,15596.4,15043.2,15160,15354,15302.8,14446.9,13730.7,13322.1,13716.1,12792.3,11959.8,11249.4
+CZ,KTOE,total_coal,primary_prod,27277.4,27632.1,27990,26101.4,23133.5,25048.6,25347,24254.9,24385.2,23562.6,23570,23861.6,23804,22785.2,20853.3,20729.9,20895.6,20141.6,17673.6,16846.5
+DK,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+DK,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+DK,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+DK,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+DK,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+DK,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+EE,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+EE,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+EE,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+EE,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+EE,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+EE,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FI,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FI,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FI,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FI,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FI,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FI,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FR,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FR,KTOE,coking_coal,primary_prod,303.1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FR,KTOE,other_bituminous_coal,primary_prod,4194.9,4665.1,3687,3019.3,2814.4,1966.1,1224.6,920.9,1074.3,99.4,0,0,0,0,0,0,0,0,0,0
+FR,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FR,KTOE,lignite/brown_coal,primary_prod,573.2,326.5,421.4,299.3,227.4,120.2,131.6,60.1,3.7,0,0,0,0,0,0,0,0,0,0,0
+FR,KTOE,total_coal,primary_prod,5071.2,4991.6,4108.4,3318.6,3041.8,2086.3,1356.2,981,1078,99.4,0,0,0,0,0,0,0,0,0,0
+DE,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,1347.2,1391.1,1418.7,1374.3,1377,1372.2,1334,1402,1436,1423,1440,1438.6
+DE,KTOE,coking_coal,primary_prod,21947.4,19929,18721,16368.1,16499.7,13064.8,11852.7,12440.7,11964.9,11522.3,10508.2,9082.8,9526.1,7310.3,6278.2,5641.7,5059.1,4374.8,3294.3,3282.5
+DE,KTOE,other_bituminous_coal,primary_prod,16153.4,14330.6,14509.9,13112.5,12006.3,11099.2,7845.8,6434.3,5240,5787.4,6105.4,4806.5,4586.5,3722.7,2259.7,2204.3,2100.9,1769.5,738.1,774
+DE,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+DE,KTOE,lignite/brown_coal,primary_prod,40804.3,39609.6,37524,35417.5,34661.7,36435.6,38450.4,39470.3,39146.5,39611.1,38425.8,37956.9,38875.8,37652,36512.7,36657.9,38101.3,40029,39582.4,38637.6
+DE,KTOE,total_coal,primary_prod,78905.1,73869.2,70754.9,64898.1,63167.7,60599.6,58148.9,58345.3,57698.6,58311.9,56458.1,53220.5,54365.4,50057.2,46384.6,45905.9,46697.3,47596.3,45054.8,44132.7
+EL,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+EL,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+EL,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+EL,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+EL,KTOE,lignite/brown_coal,primary_prod,7510.1,7189.2,7706.2,8126,8034.3,8221.6,8392,8582.1,8176,8546.8,8538,8170.3,8389.1,8129.5,8175.9,7315.4,7504.9,8044.7,6728.3,6384.2
+EL,KTOE,total_coal,primary_prod,7510.1,7189.2,7706.2,8126,8034.3,8221.6,8392,8582.1,8176,8546.8,8538,8170.3,8389.1,8129.5,8175.9,7315.4,7504.9,8044.7,6728.3,6384.2
+HU,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+HU,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+HU,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+HU,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+HU,KTOE,lignite/brown_coal,primary_prod,3265.7,3333.7,3481.6,3158.3,2950.5,2892.9,2663.6,2683,2708.6,2182.2,1748.1,1756.6,1772.8,1693.6,1556,1593.3,1645.4,1606.5,1611.7,1588
+HU,KTOE,total_coal,primary_prod,3265.7,3333.7,3481.6,3158.3,2950.5,2892.9,2663.6,2683,2708.6,2182.2,1748.1,1756.6,1772.8,1693.6,1556,1593.3,1645.4,1606.5,1611.7,1588
+IS,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IS,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IS,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IS,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IS,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IS,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IE,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IE,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IE,KTOE,other_bituminous_coal,primary_prod,0.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IE,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IE,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IE,KTOE,total_coal,primary_prod,0.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IT,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IT,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IT,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,88.3,103.5,158.8,62.2,60.3,13.3,100.3,74.3,45.7,64.1,58.4,50.8,46.4,54.6
+IT,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IT,KTOE,lignite/brown_coal,primary_prod,43,34.2,54,47.2,28.7,3.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IT,KTOE,total_coal,primary_prod,43,34.2,54,47.2,28.7,3.5,88.3,103.5,158.8,62.2,60.3,13.3,100.3,74.3,45.7,64.1,58.4,50.8,46.4,54.6
+LV,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LV,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LV,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LV,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LV,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LV,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LT,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LT,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LT,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LT,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LT,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LT,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LU,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LU,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LU,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LU,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LU,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LU,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MT,KTOE,anthracite,primary_prod,:,:,:,:,:,:,:,:,:,:,:,0,0,0,0,0,0,0,:,:
+MT,KTOE,coking_coal,primary_prod,:,:,:,:,:,:,:,:,:,:,:,0,0,0,0,0,0,0,:,:
+MT,KTOE,other_bituminous_coal,primary_prod,:,:,:,:,:,:,:,:,:,:,:,0,0,0,0,0,0,0,:,:
+MT,KTOE,Sub-bituminous Coal,primary_prod,:,:,:,:,:,:,:,:,:,:,:,0,0,0,0,0,0,0,:,:
+MT,KTOE,lignite/brown_coal,primary_prod,:,:,:,:,:,:,:,:,:,:,:,0,0,0,0,0,0,0,:,:
+MT,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MV,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MV,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MV,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MV,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MV,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MV,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MO,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MO,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MO,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MO,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+MO,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,286.9,330.4,265.9,382.8,210.5,426.3,434,392.9,372.2,364.1
+MO,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,286.9,330.4,265.9,382.8,210.5,426.3,434,392.9,372.2,364.1
+NL,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NL,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NL,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NL,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NL,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NL,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NO,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NO,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NO,KTOE,other_bituminous_coal,primary_prod,196,154.4,259.1,220.1,271.1,424.2,1200,1430.9,1975.9,1949,987.3,1607.4,2733.6,2302.1,1772.5,1298.7,930.2,824.9,1245,1124.2
+NO,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NO,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NO,KTOE,total_coal,primary_prod,196,154.4,259.1,220.1,271.1,424.2,1200,1430.9,1975.9,1949,987.3,1607.4,2733.6,2302.1,1772.5,1298.7,930.2,824.9,1245,1124.2
+PL,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PL,KTOE,coking_coal,primary_prod,20197.5,16942.8,18622.5,15475.9,14882.5,12068.7,11996.5,11135.3,11342.4,11639.5,9948,10282,9603,8489.3,6037.6,8216.1,8080.2,8326.3,8571.9,8681.5
+PL,KTOE,other_bituminous_coal,primary_prod,57465.3,60306,60102.1,50902.8,48247.5,46499.9,46825.7,47402,46465,44240.8,45736.1,44230.2,40454.7,39319.2,37877.4,35301.8,34667.3,36446.7,35146,32523.5
+PL,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PL,KTOE,lignite/brown_coal,primary_prod,12886.1,13204.2,12990.5,12903.7,12496.8,12121.8,12204,12123.6,12354.8,12924.3,12735.6,12593.7,11934.2,12726.6,12180.5,11559,12550.8,12733.8,13117,12434.3
+PL,KTOE,total_coal,primary_prod,90548.9,90453,91715.1,79282.4,75626.8,70690.4,71026.2,70660.9,70162.2,68804.6,68419.7,67105.9,61991.9,60535.1,56095.5,55076.9,55298.3,57506.8,56834.9,53639.3
+PT,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PT,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PT,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PT,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PT,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PT,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+RO,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+RO,KTOE,coking_coal,primary_prod,219.5,195.8,203.6,120.8,68.2,8.1,8,7.5,5.8,0,0,0,0,0,0,0,0,0,0,0
+RO,KTOE,other_bituminous_coal,primary_prod,6,5.6,6,1.3,0,154,56.3,0,0,0,0,0,0,0,0,0,0,0,0,0
+RO,KTOE,Sub-bituminous Coal,primary_prod,426.8,551,641.2,540.2,441,0,0,0,0,26.8,16.2,10.6,6.6,4.5,5.8,2.1,17.8,23.3,24.3,43.7
+RO,KTOE,lignite/brown_coal,primary_prod,7234.1,7311.6,5752.1,4487.3,4135,5439.5,5633.4,6088.5,6530.4,6270.8,5777.2,6467.2,6851.5,6956.7,6557.6,5900.8,6644.1,6322.4,4632.1,4405
+RO,KTOE,total_coal,primary_prod,7886.4,8064,6602.9,5149.6,4644.2,5601.6,5697.7,6096,6536.2,6297.6,5793.4,6477.8,6858.1,6961.2,6563.4,5902.9,6661.9,6345.7,4656.4,4448.7
+SE,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SE,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SE,KTOE,other_bituminous_coal,primary_prod,30.9,38,52.6,60.4,31.2,54.3,44.2,44.5,35.5,43.7,0,0,0,0,0,0,0,0,0,0
+SE,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,34,27.1,27.1,20.9,27.9,10.4,13.7,3.9,3.4,3.9,0,0,0,0,0
+SE,KTOE,lignite/brown_coal,primary_prod,8819.1,9054.4,9494.6,9855.4,7471.5,8263.1,8125.7,8607.8,9057.4,9228.6,7450.3,7805.3,7888.7,8220.5,7327.2,7229.1,7824.8,7278.2,7670.9,5712.9
+SE,KTOE,total_coal,primary_prod,8850,9092.4,9547.2,9915.8,7502.7,8351.4,8197,8679.4,9113.8,9300.2,7460.7,7819,7892.6,8223.9,7331.1,7229.1,7824.8,7278.2,7670.9,5712.9
+SK,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SK,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SK,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SK,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SK,KTOE,lignite/brown_coal,primary_prod,1016.6,1027,1061.7,1063.8,1083.5,1018.2,979.9,930.4,819,817,637.1,561.8,550.7,623.7,653.3,613.4,601.6,567.4,584.3,579.3
+SK,KTOE,total_coal,primary_prod,1016.6,1027,1061.7,1063.8,1083.5,1018.2,979.9,930.4,819,817,637.1,561.8,550.7,623.7,653.3,613.4,601.6,567.4,584.3,579.3
+SI,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SI,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SI,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SI,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SI,KTOE,lignite/brown_coal,primary_prod,1191.7,1103.4,1179,1193.8,1087.1,1062,1008,1175.4,1184.2,1200.8,1184,1209.6,1239.3,1184.8,1159.8,1196,1200.5,1093.2,1074.9,818.1
+SI,KTOE,total_coal,primary_prod,1191.7,1103.4,1179,1193.8,1087.1,1062,1008,1175.4,1184.2,1200.8,1184,1209.6,1239.3,1184.8,1159.8,1196,1200.5,1093.2,1074.9,818.1
+ES,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,1747.3,1787.2,1668.3,1594.2,1388.2,1767.3,1396.5,1133.3,1016.6,344.6,619.5
+ES,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+ES,KTOE,other_bituminous_coal,primary_prod,6849.7,6747.2,6981.5,6271.8,5861.4,5409.8,5139.3,4663.8,4409.6,2431.3,2336.8,2026.8,1982.9,1910.1,1263.6,1134.2,762,697.2,837.3,603.8
+ES,KTOE,Sub-bituminous Coal,primary_prod,1397.4,1398.3,1327.6,1265.3,1176.7,1054.2,1008.4,1092.7,958.5,956.3,962.4,1007.5,878.6,895.8,780,765.7,753.4,746.9,581,404.9
+ES,KTOE,lignite/brown_coal,primary_prod,1874.8,1672.7,1513,1743.1,1556,1501.7,1620,1693.4,1606.9,1318.5,1178.4,1346.4,1000.8,0,0,0,0,0,0,0
+ES,KTOE,total_coal,primary_prod,10121.9,9818.2,9822.1,9280.2,8594.1,7965.7,7767.7,7449.9,6975,6453.4,6264.8,6049,5456.5,4194.1,3810.9,3296.4,2648.7,2460.7,1762.9,1628.2
+SE,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SE,KTOE,coking_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SE,KTOE,other_bituminous_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SE,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SE,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SE,KTOE,total_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+TR,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+TR,KTOE,coking_coal,primary_prod,697.5,672.1,519.9,381.7,306.4,500.3,626.1,509.5,487.8,469.2,453.4,453.7,458,538.1,834.1,656.8,705.5,665.4,531.2,569.2
+TR,KTOE,other_bituminous_coal,primary_prod,621.7,709.7,826.9,760.8,723.4,560.1,518.3,537.6,643.7,611.3,729.9,894.2,631.1,666.1,460.1,854.3,796,630.6,646,548.8
+TR,KTOE,Sub-bituminous Coal,primary_prod,28.8,14.6,12.5,9.9,12.3,9.5,13.3,2.1,144.5,310.4,381.8,194.3,335.8,264.6,475.9,507.8,448.1,566.6,487.4,410.9
+TR,KTOE,lignite/brown_coal,primary_prod,10734.8,10872.1,11756.2,12790.7,12240.4,11415.6,11121,10309,9498.7,9138.9,9241.4,11542.6,13368.9,15205.8,15632.4,15505.1,15890,13726.5,13977.5,14673.3
+TR,KTOE,total_coal,primary_prod,12082.8,12268.5,13115.5,13943.1,13282.5,12485.5,12278.7,11358.2,10774.7,10529.8,10806.5,13084.8,14793.8,16674.6,17402.5,17524,17839.6,15589.1,15642.1,16202.2
+UA,KTOE,anthracite,primary_prod,9419.1,5926.8,5737.8,6142.1,6402.9,5823.2,6109.3,6177.5,6592.4,8012.1,8189.5,8215.7,6936.7,6911.7,6148.7,6655.1,8313,9074.4,8979.3,4798.1
+UA,KTOE,coking_coal,primary_prod,17614.8,13978.8,15858.3,16885.8,17933.9,19022.9,19441.7,18803.6,17998.1,17885.4,15826.9,15748.3,14711.9,13510.9,13147.4,12084.3,13533.4,14264.4,13433.7,8213.4
+UA,KTOE,other_bituminous_coal,primary_prod,14950.7,12041.1,11609.5,11025.8,11638.3,11237.5,10276.3,10637.6,12308.5,8640.8,10429.9,11185.5,13370.9,14345.4,13098.3,13402.5,14734.6,15713.5,15800.2,13335.5
+UA,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+UA,KTOE,lignite/brown_coal,primary_prod,424.3,175.6,192,155.8,161.5,148.2,148.9,140.8,90.5,85,65.4,42.9,0,0,0,0,0,0,0,30.3
+UA,KTOE,total_coal,primary_prod,42408.9,32122.3,33397.6,34209.5,36136.6,36231.8,35976.2,35759.5,36989.5,34623.3,34511.7,35192.4,35019.5,34768,32394.4,32141.9,36581,39052.3,38213.2,26377.3
+UK,KTOE,anthracite,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+UK,KTOE,coking_coal,primary_prod,424.1,480.9,766.6,384.9,186.8,181.5,229.5,270.2,270.6,258.7,202,194.9,193,227.3,182.1,197.3,280,283.4,131,72.7
+UK,KTOE,other_bituminous_coal,primary_prod,30733.5,28779.8,27914.9,23484.6,21586.5,18119.4,18556.1,17207.2,16056.3,14091.7,11413.5,10278.6,9614.8,10112,9884.6,10204.6,10166.3,9247.5,7254.1,6720.1
+UK,KTOE,Sub-bituminous Coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+UK,KTOE,lignite/brown_coal,primary_prod,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+UK,KTOE,total_coal,primary_prod,31157.6,29260.7,28681.5,23869.5,21773.3,18300.9,18785.6,17477.4,16326.9,14350.4,11615.5,10473.5,9807.8,10339.3,10066.7,10401.9,10446.3,9530.9,7385.1,6792.8

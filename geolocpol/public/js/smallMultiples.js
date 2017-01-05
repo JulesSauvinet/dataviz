@@ -52,7 +52,7 @@ var mesures = ['Morts de cancers', 'Pesticides', 'Production d\'énergie', 'Chau
                'Moteurs de voitures diesel', 'Production d\'énergie renouvelable',
                'Moteurs de voitures pétrole', 'Engrais au Nitrogene',
                'Engrais au Phosphore','Engrais au Potassium','Production primaire de pétrole',
-               'Production primaire de gaz'];
+               'Production primaire de gaz','Production de charbon'];
 
 
 // map qui associe une abbréviation a chaque polluant
@@ -64,7 +64,7 @@ var mesNameMap = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffage
                     'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production d\'énergie renouvelable' : 'enr',
                     'Engrais au Nitrogene' : 'fN','Engrais au Phosphore' : 'fPh','Engrais au Potassium' : 'fPo',
-                    'Production primaire de pétrole' : 'tpd','Production primaire de gaz' : 'tgp'};
+                    'Production primaire de pétrole' : 'tpd','Production primaire de gaz' : 'tgp','Production de charbon' : 'cp'};
 
 // Map qui permet d'associer a chaque polluant, la liste des mesures pour lesquelles
 // il y a une possible correspondance polluant/mesure, on utilise cette map pour afficher
@@ -73,14 +73,14 @@ var correspondanceMap = {'NH3'   : ['Engrais au Nitrogene','Engrais au Phosphore
                                     'Engrais au Potassium','Pesticides', 'Taxes environnementales'],
                          'NMVOC' : ['Moteurs de voitures pétrole','Production d\'énergie',
                                     'Production d\'énergie renouvelable','Production primaire de pétrole'],
-                         'NOX'   : ['Production d\'énergie','Production d\'énergie renouvelable',
+                         'NOX'   : ['Production d\'énergie','Production d\'énergie renouvelable', 'Production de charbon',
                                     'Chauffage Nucleaire','Production primaire de pétrole','Production primaire de gaz'],
                          'PM10'  : ['Moteurs de voitures diesel','Taxes environnementales','Taxe transport','Morts de cancers',
                                     'Morts de maladies cardiaques'],
                          'PM2_5' : ['Moteurs de voitures diesel','Taxes environnementales','Taxe transport','Morts de cancers',
                                     'Morts de maladies cardiaques'],
                          'SOX'   : ['Production primaire de pétrole','Chauffage Nucleaire','Production d\'énergie',
-                                    'Production d\'énergie renouvelable','Production primaire de gaz']
+                                    'Production d\'énergie renouvelable','Production primaire de gaz', 'Production de charbon']
                         };
 
 
@@ -363,9 +363,9 @@ var geoMes = {};
 var mesureMap = {};
 var yearsMesureMap = {};
 function createMesureData(europe, pesticides, energie, nuclear, taxes,transport, heartdiseases, cancer, motorcars,
-                          enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod){
+                          enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod){
 
-    // on appel donc la fonction buildMesureData pour toutes nos données de mesures 
+    // on appelle donc la fonction buildMesureData pour toutes nos données de mesures
     // pesticides, energie, chauffage nucleaire, taxes, transport, heart diseases, cancer, energie renouvelable, 
     // fertilisants au nitrogene, fertilisants au phosphore, fertilisants au potassium, moteurs petrole et moteurs diesel
     buildMesureData('pe', pesticides, europe);
@@ -383,6 +383,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     buildMesureData('mvd', motorcars, europe);
     buildMesureData('tpd',tot_petrol_prod, europe);
     buildMesureData('tgp',tot_gas_prod, europe);
+    buildMesureData('cp',coal_prod, europe);
     // --> mesureMap et yearsMesureMap sont ainsi remplies et prêtes à être lues
     // on peut donc remplir geoMes
 
@@ -450,6 +451,9 @@ function buildMesureData(mes, data, europe){
             break;
         case "tgp":
             dataFiltered = data;
+            break;
+        case "cp":
+            dataFiltered = data.filter(function(d,i){return d["product"] === "total_coal";});
             break;
     }
 
@@ -621,6 +625,9 @@ function updateScalesColor(){
                 color.range(['yellow', 'darkblue']);
                 break;
             case "tgp":
+                color.range(['yellow', 'darkblue']);
+                break;
+            case "cp":
                 color.range(['yellow', 'darkblue']);
                 break;
         }
@@ -962,14 +969,14 @@ function insertDataAttribute(data1, data2, attribute){
 /* ----------------------------------------------------  fonction initiale ----------------------------------------------------  */
 function init(error,pollutions,density, population, pesticides, energie, nuclear, taxes,
               transport, heartdiseases, cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota,
-              tot_petrol_prod,tot_gas_prod, europe){
+              tot_petrol_prod,tot_gas_prod,coal_prod, europe){
 
     if (error) throw error;
 
     // on crée un vecteur contenant tous nos parametres 
     // --> facile à manipuler pour normaliser les données en fcn de la population et de la densité
     var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,
-                       motorcars,enerrenouv,fertiNitro,fertiPhos,fertiPota,tot_petrol_prod,tot_gas_prod];
+                       motorcars,enerrenouv,fertiNitro,fertiPhos,fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod];
 
     // on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
     density.forEach(function(dens){
@@ -998,7 +1005,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
 
     // on créé des variables globales pour les données des mesures
     createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases,
-        cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod);
+        cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod);
 
     // on affiche les smallMultiples de mesure et de pollution (les mesures avant pour ne pas avoir a faire une MAJ de l'affichage des map polluants)
     updateMes();
@@ -1041,6 +1048,8 @@ queue()
     .defer(d3.csv, "data/eurostats/clean/nrg_102a_1.csv")
     //les donnees de production total de gaz
     .defer(d3.tsv, "data/eurostats/clean/nrg_103a_1.tsv")
+    //les donnees de production total de charbon (faits a la main)
+    .defer(d3.csv, "data/eurostats/clean/nrg_109a_1.csv")
     //la map de l'europe
     .defer(d3.json,"geodata/euro/eurotopo.json")
     .await(init);
