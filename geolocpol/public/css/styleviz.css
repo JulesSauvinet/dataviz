@@ -28,8 +28,8 @@ body, html {
     font-size: 14px;
     padding: 0px;
     margin: 1px;
-	/*min-width: 400px!important;*/
-	width:400px!important;
+	min-width: 400px;
+	width:400px!important;*/
 }
 
 /*reset titles*/
