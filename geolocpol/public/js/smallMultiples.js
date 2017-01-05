@@ -4,7 +4,11 @@
 //TODO plus de données et exploiter plus les données
 //TODO trouver les bonnes suggestions
 //TODO optimiser et nettoyer le code
-
+//TODO pouvoir selectionner les pays en cliquant..
+//TODO afficher toutes les valeurs des pays quand on clique sur une carte?
+//TODO bien normaliser les unités et préciser exactement a quoi correspond chaque mesure
+//TODO phrase de pres?
+//->https://blogs.mediapart.fr/la-redaction-de-mediapart/blog/180314/co2-la-carte-de-la-pollution-mondiale
 
 // ----------- AMELIORATION -----------
 //TODO améliorer la légende (la position notamment)
@@ -47,7 +51,8 @@ var mesures = ['Morts de cancers', 'Pesticides', 'Production d\'énergie', 'Chau
                'Taxes environnementales', 'Taxe transport', 'Morts de maladies cardiaques',
                'Moteurs de voitures diesel', 'Production d\'énergie renouvelable',
                'Moteurs de voitures pétrole', 'Engrais au Nitrogene',
-               'Engrais au Phosphore','Engrais au Potassium'];
+               'Engrais au Phosphore','Engrais au Potassium','Production primaire de pétrole',
+               'Production primaire de gaz'];
 
 
 // map qui associe une abbréviation a chaque polluant
@@ -58,7 +63,8 @@ var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques'
 var mesNameMap = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
                     'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production d\'énergie renouvelable' : 'enr',
-                    'Engrais au Nitrogene' : 'fN','Engrais au Phosphore' : 'fPh','Engrais au Potassium' : 'fPo'};
+                    'Engrais au Nitrogene' : 'fN','Engrais au Phosphore' : 'fPh','Engrais au Potassium' : 'fPo',
+                    'Production primaire de pétrole' : 'tpd','Production primaire de gaz' : 'tgp'};
 
 // Map qui permet d'associer a chaque polluant, la liste des mesures pour lesquelles
 // il y a une possible correspondance polluant/mesure, on utilise cette map pour afficher
@@ -66,15 +72,15 @@ var mesNameMap = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffage
 var correspondanceMap = {'NH3'   : ['Engrais au Nitrogene','Engrais au Phosphore',
                                     'Engrais au Potassium','Pesticides', 'Taxes environnementales'],
                          'NMVOC' : ['Moteurs de voitures pétrole','Production d\'énergie',
-                                    'Production d\'énergie renouvelable'],
+                                    'Production d\'énergie renouvelable','Production primaire de pétrole'],
                          'NOX'   : ['Production d\'énergie','Production d\'énergie renouvelable',
-                                    'Chauffage Nucleaire'],
+                                    'Chauffage Nucleaire','Production primaire de pétrole','Production primaire de gaz'],
                          'PM10'  : ['Moteurs de voitures diesel','Taxes environnementales','Taxe transport','Morts de cancers',
                                     'Morts de maladies cardiaques'],
                          'PM2_5' : ['Moteurs de voitures diesel','Taxes environnementales','Taxe transport','Morts de cancers',
                                     'Morts de maladies cardiaques'],
-                         'SOX'   : ['Chauffage Nucleaire','Production d\'énergie',
-                                    'Production d\'énergie renouvelable']
+                         'SOX'   : ['Production primaire de pétrole','Chauffage Nucleaire','Production d\'énergie',
+                                    'Production d\'énergie renouvelable','Production primaire de gaz']
                         };
 
 
@@ -357,7 +363,7 @@ var geoMes = {};
 var mesureMap = {};
 var yearsMesureMap = {};
 function createMesureData(europe, pesticides, energie, nuclear, taxes,transport, heartdiseases, cancer, motorcars,
-                          enerrenouv, fertiNitro, fertiPhos, fertiPota){
+                          enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod){
 
     // on appel donc la fonction buildMesureData pour toutes nos données de mesures 
     // pesticides, energie, chauffage nucleaire, taxes, transport, heart diseases, cancer, energie renouvelable, 
@@ -375,7 +381,8 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     buildMesureData('fPo', fertiPota, europe);
     buildMesureData('mvp', motorcars, europe);
     buildMesureData('mvd', motorcars, europe);
-
+    buildMesureData('tpd',tot_petrol_prod, europe);
+    buildMesureData('tgp',tot_gas_prod, europe);
     // --> mesureMap et yearsMesureMap sont ainsi remplies et prêtes à être lues
     // on peut donc remplir geoMes
 
@@ -437,6 +444,12 @@ function buildMesureData(mes, data, europe){
             break;
         case "fPo":
             dataFiltered = data.filter(function(d,i){return d["geo"] !== "EU28" && d["geo"] != "EU15"});
+            break;
+        case "tpd":
+            dataFiltered = data;
+            break;
+        case "tgp":
+            dataFiltered = data;
             break;
     }
 
@@ -510,7 +523,6 @@ function updateScalesColor(){
 
     var notYearKeys = ["dens", "pop", "sex", "age", "unit","icd10", "airsect", "geo", "airpol","prod_nrg","engine", "indic_nv", "nst07", 
                         "pe_type", "product","indic_nrg", "tax","COUNTRY", "NAME", 'POPULATION', 'NUTS_ID', 'indic_en', 'nutrient'];
-
 
     // ----------------------------------- traitement des données mesures -----------------------------------
     mesures.forEach(function(mesure) {
@@ -604,6 +616,12 @@ function updateScalesColor(){
                 break;
             case "fPo":
                 color.range(['lightgreen', 'darkgreen']);
+                break;
+            case "tpd":
+                color.range(['yellow', 'darkblue']);
+                break;
+            case "tgp":
+                color.range(['yellow', 'darkblue']);
                 break;
         }
         color.domain([min,max]);
@@ -896,7 +914,7 @@ function updateMes(){
 //fonction trick pour approximer la densité ou la démographie quand les données sont manquantes
 function approximateDensAndPop(d, datebis){
     if (!d.properties["dens"][datebis]){
-        console.log(datebis);
+        //console.log(datebis);
 
         for (var i=1; i<=10; i++){
             if(d.properties["dens"][datebis+i]){
@@ -944,13 +962,15 @@ function insertDataAttribute(data1, data2, attribute){
 
 /* ----------------------------------------------------  fonction initiale ----------------------------------------------------  */
 function init(error,pollutions,density, population, pesticides, energie, nuclear, taxes,
-              transport, heartdiseases, cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota, europe){
+              transport, heartdiseases, cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota,
+              tot_petrol_prod,tot_gas_prod, europe){
 
     if (error) throw error;
 
     // on crée un vecteur contenant tous nos parametres 
     // --> facile à manipuler pour normaliser les données en fcn de la population et de la densité
-    var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,motorcars,enerrenouv,fertiNitro,fertiPhos,fertiPota];
+    var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,
+                       motorcars,enerrenouv,fertiNitro,fertiPhos,fertiPota,tot_petrol_prod,tot_gas_prod];
 
     // on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
     density.forEach(function(dens){
@@ -979,7 +999,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
 
     // on créé des variables globales pour les données des mesures
     createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases,
-        cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota);
+        cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod);
 
     // on affiche les smallMultiples de mesure et de pollution (les mesures avant pour ne pas avoir a faire une MAJ de l'affichage des map polluants)
     updateMes();
@@ -1018,6 +1038,10 @@ queue()
     .defer(d3.csv, "data/eurostats/clean/phosphore.csv")
     //les donnees de fertilisants au potassium
     .defer(d3.csv, "data/eurostats/clean/potassium.csv")
+    //les donnees de production total de petrole
+    .defer(d3.csv, "data/eurostats/clean/nrg_102a_1.csv")
+    //les donnees de production total de gaz
+    .defer(d3.tsv, "data/eurostats/clean/nrg_103a_1.tsv")
     //la map de l'europe
     .defer(d3.json,"geodata/euro/eurotopo.json")
     .await(init);
