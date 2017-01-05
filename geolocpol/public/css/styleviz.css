@@ -95,11 +95,11 @@ h4{
 #pollutiondiv{
 
     margin-top : 20px;
-    width : 320px;
+    width : 350px;
 }
 
 #mesurediv{
-    width : 320px;
+    width : 350px;
     margin-top : 20px;
 }
 
@@ -211,7 +211,10 @@ label.notSelected {
     left: 0;
 }
 
-sup{font-size : 12px;font-weight:bold;}
+sup{
+	font-size : 12px;
+	font-weight:bold;
+}
 
 .footnotes{
 	font-size : 13px;
