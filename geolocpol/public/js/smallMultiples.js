@@ -1105,8 +1105,9 @@ function createCountryDiv() {
         .attr("onClick", "updateCountry(this)");
 
     countriesCheckBoxes.append('label')
+        .attr('class','sizelabelcheckcountry')
         .attr('for',function(d,i){ return 'a'+i; })
-        .text(function(d) { return countriesEU[d]; });
+        .html(function(d) { return countriesEU[d] + "&nbsp"; });
 }
 
 /* prototype de suppression d'un element dans un tableau */

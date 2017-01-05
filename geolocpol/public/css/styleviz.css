@@ -23,6 +23,14 @@ body, html {
     src: url(RobotoSlab-Regular.ttf);
 }
 
+.sizelabelcheckcountry{
+    font-weight: bold;
+    font-size: 14px;
+    padding: 0px;
+    margin: 1px;
+	/*min-width: 400px!important;*/
+	width:400px!important;
+}
 
 /*reset titles*/
 #presentation-title{
