@@ -80,7 +80,6 @@ var correspondanceMap = {'NH3'   : ['Engrais au Nitrogene','Engrais au Phosphore
                                     'Production primaire d\'énergie renouvelable','Production primaire de gaz', 'Production de primaire charbon']
                         };
 
-
 // map qui traduit le nom des pays de l'Europe du nom international utilisé par NUTS1 en français
 // pour rendre la vizu plus claire, on utilise cette map de correspondance
 var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'Portugal',
@@ -93,15 +92,13 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     'Lietuva' : 'Lituanie', 'Hrvatska' : 'Croatie', 'Slovensko' :'Slovaquie',
                     'Slovenija' : 'Slovénie', '?eská republika' : 'République tchèque', 'Eesti' : 'Estonie',
                     '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte', 'Magyarország' : 'Hongrie'};
+
 /* ----------- création du tooltip qui sera utilisé pour afficher des infos sur les smallMaps ----------- */
 var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d,date, isPol) {
-        var name = d.properties["NAME"];
-        var name = regionNameMap[name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()];
-        if(!name)
-            console.log(d.properties["NAME"]);
+        var name = regionNameMap[d.properties["NAME"].charAt(0).toUpperCase() + d.properties["NAME"].slice(1).toLowerCase()];
         var toDisplay = name +'</br>';
         return toDisplay;
     });
