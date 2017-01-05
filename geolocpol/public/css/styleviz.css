@@ -39,7 +39,7 @@ body, html {
     padding-top: 5px;
     font-family: roboto_slab,Arvo, Monaco, serif!important;
     font-weight: bold;
-    font-size: 42px;
+    font-size: 40px;
 }
 
 h4{
@@ -51,10 +51,10 @@ h4{
 #presentation-text{
     font-family: roboto_slab, serif!important;
     position: absolute;
-    width: 65%;
+    width: 63%;
     left: 50px;
     top : 20px;
-    font-size: 20px;
+    font-size: 22px;
     padding: 2px;
     margin: 2px;
 	text-align:justify;
@@ -88,7 +88,7 @@ h4{
     position:absolute;
     left: 40px;
     top: 370px;
-    width : 100%;
+    width : 75%;
 	text-align:justify;
 }
 
