@@ -120,7 +120,7 @@ var tip = d3.tip()
 function createNormaDiv() {
     var fieldset = d3.select("#normalisationdiv").append("form").attr('class',"normalegend");
     fieldset.append("legend").html(
-        '<h5>Choix de la normalisation <sup> (1) </sup> :</h5>'+
+        '<h5>Choix de la normalisation <sup> (2) </sup> :</h5>'+
         '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radPop" value="pop" checked>' +
         '<label class ="radiolabel">Population</label>' +
