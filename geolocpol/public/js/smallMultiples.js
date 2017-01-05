@@ -44,12 +44,12 @@ var dateFormat = d3.time.format("%Y");
 var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014"];
 
 // tableau contenant toutes les mesures
-var mesures = ['Morts de cancers', 'Pesticides', 'Production d\'énergie', 'Production primaire de nucleaire',
+var mesures = ['Morts de cancers', 'Pesticides', 'Production primaire d\'énergie', 'Production primaire de nucleaire',
                'Taxes environnementales', 'Taxe transport', 'Morts de maladies cardiaques',
-               'Moteurs de voitures diesel', 'Production d\'énergie renouvelable',
+               'Moteurs de voitures diesel', 'Production primaire d\'énergie renouvelable',
                'Moteurs de voitures pétrole', 'Engrais au Nitrogene',
                'Engrais au Phosphore','Engrais au Potassium','Production primaire de pétrole',
-               'Production primaire de gaz','Production de charbon'];
+               'Production primaire de gaz','Production primaire de charbon'];
 
 
 // map qui associe une abbréviation a chaque polluant
@@ -57,27 +57,27 @@ var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques'
                   'PM10' : 'Particules 10μm', 'PM2_5': 'Particules 2.5μm', 'SOX' : 'Oxyde de soufre'};
                   
 // map qui associe une abbréviation a chaque mesure
-var mesNameMap = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Production primaire de nucleaire' :'cn', 'Taxes environnementales' : 'te',
+var mesNameMap = {'Pesticides' : 'pe', 'Production primaire d\'énergie':'en', 'Production primaire de nucleaire' :'cn', 'Taxes environnementales' : 'te',
                     'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
-                    'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production d\'énergie renouvelable' : 'enr',
+                    'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production primaire d\'énergie renouvelable' : 'enr',
                     'Engrais au Nitrogene' : 'fN','Engrais au Phosphore' : 'fPh','Engrais au Potassium' : 'fPo',
-                    'Production primaire de pétrole' : 'tpd','Production primaire de gaz' : 'tgp','Production de charbon' : 'cp'};
+                    'Production primaire de pétrole' : 'tpd','Production primaire de gaz' : 'tgp','Production primaire de charbon' : 'cp'};
 
 // Map qui permet d'associer a chaque polluant, la liste des mesures pour lesquelles
 // il y a une possible correspondance polluant/mesure, on utilise cette map pour afficher
 // dynamiquement les mesures à afficher une fois le choix du polluant fait
 var correspondanceMap = {'NH3'   : ['Engrais au Nitrogene','Engrais au Phosphore',
                                     'Engrais au Potassium','Pesticides', 'Taxes environnementales'],
-                         'NMVOC' : ['Moteurs de voitures pétrole','Production d\'énergie',
-                                    'Production d\'énergie renouvelable','Production primaire de pétrole'],
-                         'NOX'   : ['Production d\'énergie','Production d\'énergie renouvelable', 'Production de charbon',
-                                    'Production primaire de nucleaire','Production primaire de pétrole','Production primaire de gaz'],
+                         'NMVOC' : ['Moteurs de voitures pétrole','Production primaire de pétrole',
+                                    'Production primaire d\'énergie','Production primaire d\'énergie renouvelable'],
+                         'NOX'   : ['Production primaire d\'énergie','Production primaire d\'énergie renouvelable', 'Production primaire de nucleaire',
+                                    'Production primaire de gaz','Production primaire de pétrole','Production primaire de charbon'],
                          'PM10'  : ['Moteurs de voitures diesel','Taxes environnementales','Taxe transport','Morts de cancers',
                                     'Morts de maladies cardiaques'],
                          'PM2_5' : ['Moteurs de voitures diesel','Taxes environnementales','Taxe transport','Morts de cancers',
                                     'Morts de maladies cardiaques'],
-                         'SOX'   : ['Production primaire de pétrole','Production primaire de nucleaire','Production d\'énergie',
-                                    'Production d\'énergie renouvelable','Production primaire de gaz', 'Production de charbon']
+                         'SOX'   : ['Production primaire de pétrole','Production primaire de nucleaire','Production primaire d\'énergie',
+                                    'Production primaire d\'énergie renouvelable','Production primaire de gaz', 'Production de primaire charbon']
                         };
 
 
@@ -1034,7 +1034,7 @@ queue()
     //les donnees de moteurs de voiture
     .defer(d3.csv, "data/eurostats/clean/type_of_motor_cars.csv")
     //les energies renouvelables
-    .defer(d3.tsv, "data/eurostats/clean/tsdcc330.tsv")
+    .defer(d3.csv, "data/eurostats/clean/production_renewable_energy.csv")
     //les donnees de fetilisants au nitrogen
     .defer(d3.csv, "data/eurostats/clean/nitrogen.csv")
     //les donnees de fertilisants au phosphore
