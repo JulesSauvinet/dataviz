@@ -10,6 +10,7 @@
 // ----------- AMELIORATION -----------
 //TODO faire du design, sur le panneau de droite notamment
 //TODO des graphiques
+//TODO nettoyer le code
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -48,7 +49,7 @@ var mesures = ['Morts de cancers', 'Pesticides', 'Production primaire d\'énergi
                'Moteurs de voitures diesel', 'Production primaire d\'énergie renouvelable',
                'Moteurs de voitures pétrole', 'Engrais au Nitrogene',
                'Engrais au Phosphore','Engrais au Potassium','Production primaire de pétrole',
-               'Production primaire de gaz','Production primaire de charbon'];
+               'Production primaire de gaz','Production primaire de charbon','Jours d\'hospitalisation pour maladie pulmmonaire'];
 
 
 // map qui associe une abbréviation a chaque polluant
@@ -60,7 +61,8 @@ var mesNameMap = {'Pesticides' : 'pe', 'Production primaire d\'énergie':'en', '
                     'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production primaire d\'énergie renouvelable' : 'enr',
                     'Engrais au Nitrogene' : 'fN','Engrais au Phosphore' : 'fPh','Engrais au Potassium' : 'fPo',
-                    'Production primaire de pétrole' : 'tpd','Production primaire de gaz' : 'tgp','Production primaire de charbon' : 'cp'};
+                    'Production primaire de pétrole' : 'tpd','Production primaire de gaz' : 'tgp',
+                    'Production primaire de charbon' : 'cp', 'Jours d\'hospitalisation pour maladie pulmmonaire' : 'hs'};
 
 // Map qui permet d'associer a chaque polluant, la liste des mesures pour lesquelles
 // il y a une possible correspondance polluant/mesure, on utilise cette map pour afficher
@@ -72,9 +74,9 @@ var correspondanceMap = {'NH3'   : ['Engrais au Nitrogene','Engrais au Phosphore
                          'NOX'   : ['Production primaire d\'énergie','Production primaire d\'énergie renouvelable', 'Production primaire de nucleaire',
                                     'Production primaire de gaz','Production primaire de pétrole','Production primaire de charbon'],
                          'PM10'  : ['Moteurs de voitures diesel','Taxe environnementale','Taxe transport','Morts de cancers',
-                                    'Morts de maladies cardiaques'],
+                                    'Morts de maladies cardiaques','Jours d\'hospitalisation pour maladie pulmmonaire'],
                          'PM2_5' : ['Moteurs de voitures diesel','Taxe environnementale','Taxe transport','Morts de cancers',
-                                    'Morts de maladies cardiaques'],
+                                    'Morts de maladies cardiaques', 'Jours d\'hospitalisation pour maladie pulmmonaire'],
                          'SOX'   : ['Production primaire de pétrole','Production primaire de nucleaire','Production primaire d\'énergie',
                                     'Production primaire d\'énergie renouvelable','Production primaire de gaz', 'Production de primaire charbon']
                         };
@@ -128,10 +130,11 @@ var countriesEU =  {'FR' : 'France              ',
                     'SK' : 'Slovaquie           ',
                     'TR' : 'Turquie             ',
                     'CH' : 'Suisse              ',
-                    'SE' : 'Serbie              ',
+                    'RS' : 'Serbie              ',
                     'HR' : 'Croatie             ',
                     'BA' : 'Bosnie-Herzégovine  ',
                     'BY' : 'Biélorussie         ',
+                    'MK' : 'Macédoine           ',
                     'PL' : 'Pologne             '};
 var countries = [];
 
@@ -400,7 +403,7 @@ var geoMes = {};
 var mesureMap = {};
 var yearsMesureMap = {};
 function createMesureData(europe, pesticides, energie, nuclear, taxes,transport, heartdiseases, cancer, motorcars,
-                          enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod){
+                          enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod, hopital_stayed){
 
     // on appelle donc la fonction buildMesureData pour toutes nos données de mesures
     // pesticides, energie, Production primaire de nucleaire, taxes, transport, heart diseases, cancer, energie renouvelable, 
@@ -421,6 +424,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
     buildMesureData('tpd',tot_petrol_prod, europe);
     buildMesureData('tgp',tot_gas_prod, europe);
     buildMesureData('cp',coal_prod, europe);
+    buildMesureData('hs',hopital_stayed, europe);
     // --> mesureMap et yearsMesureMap sont ainsi remplies et prêtes à être lues
     // on peut donc remplir geoMes
 
@@ -491,6 +495,9 @@ function buildMesureData(mes, data, europe){
             break;
         case "cp":
             dataFiltered = data.filter(function(d,i){return d["product"] === "total_coal";});
+            break;
+        case "hs":
+            dataFiltered = data.filter(function(d,i){return d["icd10"] === "J";});
             break;
     }
 
@@ -566,7 +573,7 @@ function updateScalesColor(){
         colorpol[pollutant] = color;
     });
 
-    var notYearKeys = ["dens", "pop", "sex", "age", "unit","icd10", "airsect", "geo", "airpol","prod_nrg","engine", "indic_nv", "nst07", 
+    var notYearKeys = ["indic_he","icd10", "dens", "pop", "sex", "age", "unit","icd10", "airsect", "geo", "airpol","prod_nrg","engine", "indic_nv", "nst07",
                         "pe_type", "product","indic_nrg", "tax","COUNTRY", "NAME", 'POPULATION', 'NUTS_ID', 'indic_en', 'nutrient'];
 
     // ----------------------------------- traitement des données mesures -----------------------------------
@@ -674,6 +681,9 @@ function updateScalesColor(){
                 break;
             case "cp":
                 color.range(['yellow', 'darkblue']);
+                break;
+            case "hs":
+                color.range(['pink', 'purple']);
                 break;
         }
         color.domain([min,max]);
@@ -1126,7 +1136,7 @@ function updateCountry(checkBox){
 /* ----------------------------------------------------  fonction initiale ----------------------------------------------------  */
 function init(error,pollutions,density, population, pesticides, energie, nuclear, taxes,
               transport, heartdiseases, cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota,
-              tot_petrol_prod,tot_gas_prod,coal_prod, europe){
+              tot_petrol_prod,tot_gas_prod,coal_prod,hopital_stayed, europe){
 
     if (error) throw error;
 
@@ -1136,7 +1146,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     // on crée un vecteur contenant tous nos parametres 
     // --> facile à manipuler pour normaliser les données en fcn de la population et de la densité
     var dataMesures = [pollutions,pesticides,energie,nuclear,taxes,transport,heartdiseases,cancer,
-                       motorcars,enerrenouv,fertiNitro,fertiPhos,fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod];
+                       motorcars,enerrenouv,fertiNitro,fertiPhos,fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod, hopital_stayed];
 
     // on intègre la données de densité aux autres données pour calibrer les scales de couleurs notamment
     density.forEach(function(dens){
@@ -1165,7 +1175,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
 
     // on créé des variables globales pour les données des mesures
     createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases,
-        cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod);
+        cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod,hopital_stayed);
 
     // on affiche les smallMultiples de mesure et de pollution (les mesures avant pour ne pas avoir a faire une MAJ de l'affichage des map polluants)
     updateMes();
@@ -1210,6 +1220,8 @@ queue()
     .defer(d3.tsv, "data/eurostats/clean/nrg_103a_1.tsv")
     //les donnees de production total de charbon (faits a la main)
     .defer(d3.csv, "data/eurostats/clean/nrg_109a_1.csv")
+    //les donnees de durée d'hospitalisation pour maladies pulmonaires (pneumonie, asthme...)
+    .defer(d3.tsv, "data/eurostats/clean/hopital_stayed.tsv")
     //la map de l'europe
     .defer(d3.json,"geodata/euro/eurotopo.json")
     .await(init);
