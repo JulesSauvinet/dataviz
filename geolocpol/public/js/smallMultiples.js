@@ -93,14 +93,46 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte', 'Magyarország' : 'Hongrie'};
 
 
-var countriesEU = {'FR' : 'France','DK' : 'Danemark','DE' : 'Allemagne','ES' : 'Espagne', 'PT' : 'Portugal', 'BE' : 'Belgique',
-                   'EL' : 'Grèce','NO' : 'Norvège','SE' : 'Suède', 'FI' : 'Finlande', 'CZ' : 'République Tchèque', 'MT' : 'Malte',
-                   'CY' : 'Chypre', 'LU' : 'Luxembourg', 'NL' : 'Pays-Bas', 'EE' : 'Estonie', 'IE' : 'Irlande', 'IT' : 'Italie',
-                   'HU' : 'Hongrie', 'RO' : 'Roumanie', 'UA' : 'Ukraine', 'LV' : 'Lettonie', 'LT' : 'Litunaie', 'AT' : 'Autriche',
-                   'BG' : 'Bulgarie', 'LI' : 'Liechenstein', 'MD' : 'Moldavie', 'UK' : 'Grande-Bretagne','AL' : 'Albanie',
-                   'SI' : 'Slovénie', 'SK' : 'Slovaquie', 'TR' : 'Turquie', 'CH' : 'Suisse' , 'SE' : 'Serbie' ,
-                   'HR' : 'Croatie', 'BA' : 'Bosnie-Herzégovine', 'BY' : 'Biélorussie', 'PL' : 'Pologne'};
 
+var countriesEU =  {'FR' : 'France              ',
+                    'DK' : 'Danemark            ',
+                    'DE' : 'Allemagne           ',
+                    'ES' : 'Espagne             ',
+                    'PT' : 'Portugal            ',
+                    'BE' : 'Belgique            ',
+                    'EL' : 'Grèce               ',
+                    'NO' : 'Norvège             ',
+                    'NO' : 'Norvège             ',
+                    'SE' : 'Suède               ',
+                    'FI' : 'Finlande            ',
+                    'CZ' : 'Rép. Tchèque        ',
+                    'MT' : 'Malte               ',
+                    'CY' : 'Chypre              ',
+                    'LU' : 'Luxembourg          ',
+                    'NL' : 'Pays-Bas            ',
+                    'EE' : 'Estonie             ',
+                    'IE' : 'Irlande             ',
+                    'IT' : 'Italie              ',
+                    'HU' : 'Hongrie             ',
+                    'RO' : 'Roumanie            ',
+                    'UA' : 'Ukraine             ',
+                    'LV' : 'Lettonie            ',
+                    'LT' : 'Litunaie            ',
+                    'AT' : 'Autriche            ',
+                    'BG' : 'Bulgarie            ',
+                    'LI' : 'Liechenstein        ',
+                    'MD' : 'Moldavie            ',
+                    'UK' : 'Grande-Bretagne     ',
+                    'AL' : 'Albanie             ',
+                    'SI' : 'Slovénie            ',
+                    'SK' : 'Slovaquie           ',
+                    'TR' : 'Turquie             ',
+                    'CH' : 'Suisse              ',
+                    'SE' : 'Serbie              ',
+                    'HR' : 'Croatie             ',
+                    'BA' : 'Bosnie-Herzégovine  ',
+                    'BY' : 'Biélorussie         ',
+                    'PL' : 'Pologne             '};
 var countries = [];
 
 /* ----------- création du tooltip qui sera utilisé pour afficher des infos sur les smallMaps ----------- */
@@ -1054,10 +1086,7 @@ function createCountryDiv() {
 
     countriesCheckBoxes.enter().append("span")
         .attr("class", "check");
-
-    countriesCheckBoxes.append('label')
-        .attr('for',function(d,i){ return 'a'+i; })
-        .text(function(d) { return countriesEU[d]; });
+        
     countriesCheckBoxes.append("input")
         .attr("class", "checkcountry")
         .attr("checked", true)
@@ -1065,6 +1094,10 @@ function createCountryDiv() {
         .attr("value", function(d,i){return d;})
         .attr("id", function(d,i) { return 'a'+i; })
         .attr("onClick", "updateCountry(this)");
+
+    countriesCheckBoxes.append('label')
+        .attr('for',function(d,i){ return 'a'+i; })
+        .text(function(d) { return countriesEU[d]; });
 }
 
 /* prototype de suppression d'un element dans un tableau */
