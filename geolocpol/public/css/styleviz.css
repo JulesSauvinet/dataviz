@@ -39,7 +39,7 @@ h4{
 /* le conteneur du panneau de droite de configuration */
 #settings {
     position:absolute;
-    right: 0px;
+    right:45px;
     top : 110px;
     width: 20%;
 }
@@ -53,7 +53,7 @@ h4{
     position:absolute;
     left: 40px;
     top: 20px;
-    width: 95%;
+    width: 93%;
 }
 
 /*le premier conteneur de smallMaps*/
