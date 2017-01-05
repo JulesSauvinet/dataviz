@@ -7,13 +7,14 @@
 //TODO pouvoir selectionner les pays en cliquant..
 //TODO afficher toutes les valeurs des pays quand on clique sur une carte?
 //TODO bien normaliser les unités et préciser exactement a quoi correspond chaque mesure
-//TODO phrase de pres?
+//TODO phrase de pres/intro accrocheur avec explications
+//TODO afficher les 12 valeurs sur les 2 lots de map
+//TODO faire une legende pour la normalisation en expliquant les calculs
 //->https://blogs.mediapart.fr/la-redaction-de-mediapart/blog/180314/co2-la-carte-de-la-pollution-mondiale
 
 // ----------- AMELIORATION -----------
 //TODO améliorer la légende (la position notamment)
 //TODO faire du design, sur le panneau de droite notamment
-//TODO proposer aucun normalisation (my apology, voir avec TABARD)
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -47,7 +48,7 @@ var dateFormat = d3.time.format("%Y");
 var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014"];
 
 // tableau contenant toutes les mesures
-var mesures = ['Morts de cancers', 'Pesticides', 'Production d\'énergie', 'Chauffage Nucleaire',
+var mesures = ['Morts de cancers', 'Pesticides', 'Production d\'énergie', 'Production primaire de nucleaire',
                'Taxes environnementales', 'Taxe transport', 'Morts de maladies cardiaques',
                'Moteurs de voitures diesel', 'Production d\'énergie renouvelable',
                'Moteurs de voitures pétrole', 'Engrais au Nitrogene',
@@ -60,7 +61,7 @@ var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques'
                   'PM10' : 'Particules 10μm', 'PM2_5': 'Particules 2.5μm', 'SOX' : 'Oxyde de soufre'};
                   
 // map qui associe une abbréviation a chaque mesure
-var mesNameMap = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Chauffage Nucleaire' :'cn', 'Taxes environnementales' : 'te',
+var mesNameMap = {'Pesticides' : 'pe', 'Production d\'énergie':'en', 'Production primaire de nucleaire' :'cn', 'Taxes environnementales' : 'te',
                     'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production d\'énergie renouvelable' : 'enr',
                     'Engrais au Nitrogene' : 'fN','Engrais au Phosphore' : 'fPh','Engrais au Potassium' : 'fPo',
@@ -74,12 +75,12 @@ var correspondanceMap = {'NH3'   : ['Engrais au Nitrogene','Engrais au Phosphore
                          'NMVOC' : ['Moteurs de voitures pétrole','Production d\'énergie',
                                     'Production d\'énergie renouvelable','Production primaire de pétrole'],
                          'NOX'   : ['Production d\'énergie','Production d\'énergie renouvelable', 'Production de charbon',
-                                    'Chauffage Nucleaire','Production primaire de pétrole','Production primaire de gaz'],
+                                    'Production primaire de nucleaire','Production primaire de pétrole','Production primaire de gaz'],
                          'PM10'  : ['Moteurs de voitures diesel','Taxes environnementales','Taxe transport','Morts de cancers',
                                     'Morts de maladies cardiaques'],
                          'PM2_5' : ['Moteurs de voitures diesel','Taxes environnementales','Taxe transport','Morts de cancers',
                                     'Morts de maladies cardiaques'],
-                         'SOX'   : ['Production primaire de pétrole','Chauffage Nucleaire','Production d\'énergie',
+                         'SOX'   : ['Production primaire de pétrole','Production primaire de nucleaire','Production d\'énergie',
                                     'Production d\'énergie renouvelable','Production primaire de gaz', 'Production de charbon']
                         };
 
@@ -113,14 +114,14 @@ var tip = d3.tip()
 function createNormaDiv() {
     var fieldset = d3.select("#normalisationdiv").append("form").attr('class',"normalegend");
     fieldset.append("legend").html(
-        '<h5>Choix de la normalisation :</h5>'+
+        '<h5>Choix de la normalisation <sup> (1) </sup> :</h5>'+
         '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radPop" value="pop" checked>' +
-        '<label class ="radiolabel">/Population</label>' +
+        '<label class ="radiolabel">Population</label>' +
         '</span>'+ //'</br>'+
         '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radDens" value="dens">' +
-        '<label class ="radiolabel">*Densité/Population</label>' +
+        '<label class ="radiolabel">Densité</label>' +
         '</span>');
 
     var buttonsRad = d3.selectAll("input[type=radio][name=choice]");
@@ -366,7 +367,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
                           enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod){
 
     // on appelle donc la fonction buildMesureData pour toutes nos données de mesures
-    // pesticides, energie, chauffage nucleaire, taxes, transport, heart diseases, cancer, energie renouvelable, 
+    // pesticides, energie, Production primaire de nucleaire, taxes, transport, heart diseases, cancer, energie renouvelable, 
     // fertilisants au nitrogene, fertilisants au phosphore, fertilisants au potassium, moteurs petrole et moteurs diesel
     buildMesureData('pe', pesticides, europe);
     buildMesureData('en', energie, europe);
@@ -1024,13 +1025,13 @@ queue()
     .defer(d3.tsv, "data/eurostats/clean/pesticides_sales2.tsv")
     //production d'energie 
     .defer(d3.csv, "data/eurostats/clean/production_energy.csv")
-    //les donnees du chauffage nucleaire
+    //les donnees du Production primaire de nucleaire
     .defer(d3.csv, "data/eurostats/clean/nuclear_heat.csv")
     //les donnees des taxes sur l'environnement
     .defer(d3.csv, "data/eurostats/clean/env_ac_taxes.csv")
     //les donnees du transport
     .defer(d3.csv, "data/eurostats/clean/road_go_na_rl3g_transport2.csv")
-    //les donnees du chauffage nucleaire
+    //les donnees du Production primaire de nucleaire
     .defer(d3.csv, "data/eurostats/clean/tgs00059_ischaemic_heart_diseases2.csv")
     //les donnees des morts de cancer
     .defer(d3.csv, "data/eurostats/clean/tgs00058_cancer2.csv")

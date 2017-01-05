@@ -211,7 +211,14 @@ label.notSelected {
     left: 0;
 }
 
-footer{position : absolute; bottom : -15px; margin-top : 10px;}
+sup{font-size : 12px;font-weight:bold;}
+
+.footnotes{
+		font-size : 13px;
+		margin-top:30px;
+}
+
+footer{position : absolute; bottom : -65px; margin-top : 10px;}
 
 
 /* generic */
