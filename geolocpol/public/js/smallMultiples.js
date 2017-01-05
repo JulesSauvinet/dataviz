@@ -2,10 +2,8 @@
 
 // ----------- SUPER UTILE -----------
 //TODO trouver les bonnes suggestions (Marine)
-//TODO afficher toutes les valeurs des pays quand on clique sur une carte = afficher les 12 valeurs sur les 2 lots de map (Jules)
 //TODO bien normaliser les unités et préciser exactement a quoi correspond chaque mesure son nom etc (Marine)
 //TODO map + switch sur *1000 ou *10000 (Marine)
-//TODO pouvoir selectionner un pays quand on clique dessus --> les outliers avec Islande, chypre Etc (Jules)
 //TODO phrase de pres/intro accrocheur avec explications (Marine + Jules)
 //->https://blogs.mediapart.fr/la-redaction-de-mediapart/blog/180314/co2-la-carte-de-la-pollution-mondiale
 
@@ -1051,6 +1049,7 @@ function insertDataAttribute(data1, data2, attribute){
 /* création du div de choix des pays inclus dans la visualisation */
 var countriesCheckBoxes;
 function createCountryDiv() {
+    countries = countries.sort();
     countriesCheckBoxes = d3.select("#countriesdiv").selectAll(".checkcountry")
         .data(countries);
 
