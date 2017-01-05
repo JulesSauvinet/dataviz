@@ -100,9 +100,9 @@ var countriesEU = new Map();
                 'EL' : 'Grèce','NO' : 'Norvège','SE' : 'Suède', 'FI' : 'Finlande', 'CZ' : 'République Tchèque', 'MT' : 'Malte',
                 'CY' : 'Chypre', 'LU' : 'Luxembourg', 'NL' : 'Pays-Bas', 'EE' : 'Estonie', 'IE' : 'Irlande', 'IT' : 'Italie',
                 'HU' : 'Hongrie', 'RO' : 'Roumanie', 'UA' : 'Ukraine', 'LV' : 'Lettonie', 'LT' : 'Lituanie', 'AT' : 'Autriche',
-                'BG' : 'Bulgarie', 'LI' : 'Liechenstein', 'MD' : 'Moldavie', 'UK' : 'Grande-Bretagne','AL' : 'Albanie',
-                'SI' : 'Slovénie', 'SK' : 'Slovaquie', 'TR' : 'Turquie', 'CH' : 'Suisse' , 'RS' : 'Serbie' , 
-                'HR' : 'Croatie', 'BA' : 'Bosnie-Herzégovine', 'BY' : 'Biélorussie', 'PL' : 'Pologne', 'IS' : 'Islande'};
+                'BG' : 'Bulgarie', 'MD' : 'Moldavie', 'UK' : 'Grande-Bretagne','AL' : 'Albanie',
+                'SI' : 'Slovénie', 'SK' : 'Slovaquie', 'TR' : 'Turquie', 'CH' : 'Suisse' , 'RS' : 'Serbie' ,
+                'HR' : 'Croatie', 'BA' : 'Bosnie-Herzégovine',  'PL' : 'Pologne', 'IS' : 'Islande'};
 var countries = [];
 
 /* ----------- création du tooltip qui sera utilisé pour afficher des infos sur les smallMaps ----------- */
