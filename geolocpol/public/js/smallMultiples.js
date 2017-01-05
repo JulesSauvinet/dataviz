@@ -761,7 +761,7 @@ function buildLegend(isPol){
                 if (isPol)
                     return parseInt((colorScale[curVar].domain()[1]*10000/5)*i)/10000 + ' ' + unitTab[curVar] + '/10000 habs';
                 else
-                    return ((colorScale[curVar].domain()[1]/5)*i).toFixed(4)/10000 + ' ' + unitTab[curVar] + '/10000 habs';
+                    return (((colorScale[curVar].domain()[1]/5)*i)/10000).toFixed(4) + ' ' + unitTab[curVar] + '/10000 habs';
             }
         });
 
@@ -914,7 +914,6 @@ function updateMes(){
 //fonction trick pour approximer la densité ou la démographie quand les données sont manquantes
 function approximateDensAndPop(d, datebis){
     if (!d.properties["dens"][datebis]){
-        //console.log(datebis);
 
         for (var i=1; i<=10; i++){
             if(d.properties["dens"][datebis+i]){
