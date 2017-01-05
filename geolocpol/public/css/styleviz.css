@@ -1,3 +1,20 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Gist
+ @MarineRu
+ Unwatch 2
+  Unstar 1
+  Fork 0 JulesSauvinet/dataviz
+ Code  Issues 0  Pull requests 0  Projects 1  Wiki  Pulse  Graphs
+Tree: 5df981e780 Find file Copy pathdataviz/geolocpol/public/css/styleviz.css
+5df981e  4 hours ago
+@JulesSauvinet JulesSauvinet ajout d'une police plus moderne
+1 contributor
+RawBlameHistory     
+333 lines (286 sloc)  5.53 KB
 /* Jules Sauvinet */
 /* Marine Ruiz */
 
@@ -26,8 +43,8 @@ body, html {
 .sizelabelcheckcountry{
     font-weight: bold;
     font-size: 14px;
-    padding: 0px;
-    margin: 1px;
+    margin-left: 0px;
+	margin-right:3px;
 	min-width: 400;
 }
 
@@ -242,13 +259,12 @@ sup{
     font-weight: 600;
 }
 
-/* le bas de page avec les sources */
 footer{
 	position : absolute; 
 	bottom : -100px;
 	margin-top : 10px;
 	font-size : 16px;
-	width : 650px;
+	width : 1000px;
 }
 
 /* generic */
@@ -339,3 +355,5 @@ a.buttons:hover {
     color: #fff;
     text-decoration: none;
 }
+Contact GitHub API Training Shop Blog About
+© 2017 GitHub, Inc. Terms Privacy Security Status Help
