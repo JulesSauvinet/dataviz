@@ -18,18 +18,40 @@ body, html {
     height: 100%;
 }
 
-/*reset title*/
+/*reset titles*/
+#presentation-title{
+    padding-bottom: 5px;
+    margin-bottom: 30px;
+    margin-top: 5px;
+    padding-top: 5px;
+    font-family: 'Roboto Slab',Arvo, Monaco, serif;
+    font-weight: bold;
+    font-size: 42px;
+}
+
 h4{
     padding: 0px;
     margin: 0px;
 }
 
+/* la phrase d'accroche de la vizu */
+#presentation-text{
+    font-family: 'Roboto Slab',Arvo, Monaco, serif;
+    position: absolute;
+    width: 76%;
+    left: 50px;
+    top : 20px;
+    font-size: 22px;
+    padding: 2px;
+    margin: 2px;
+
+}
 /*le conteneur des 2 conteneurs de smallMaps */
 #mapsdiv{
     flex: 1;
     position: absolute;
     left: 20px;
-    top : 110px;
+    top : 310px;
     width: 76%;
     padding-right : 10px;
     padding-left : 10px;
@@ -40,7 +62,7 @@ h4{
 #settings {
     position:absolute;
     right:45px;
-    top : 110px;
+    top : 310px;
     width: 20%;
 }
 
@@ -52,7 +74,7 @@ h4{
     margin: 6px;
     position:absolute;
     left: 40px;
-    top: 20px;
+    top: 220px;
     width: 93%;
 }
 

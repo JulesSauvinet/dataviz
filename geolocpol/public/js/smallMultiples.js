@@ -9,6 +9,7 @@
 
 // ----------- AMELIORATION -----------
 //TODO faire du design, sur le panneau de droite notamment
+//TODO des graphiques
 
 //---------------------------------------------------------------------------------------------------------------------------
 
