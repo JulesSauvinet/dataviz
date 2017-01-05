@@ -92,7 +92,8 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     '?????? (ellada)' : 'Grèce', 'Magyarorszàg' : 'Hongrie', 'Österreich' : 'Autriche',
                     'Lietuva' : 'Lituanie', 'Hrvatska' : 'Croatie', 'Slovensko' :'Slovaquie',
                     'Slovenija' : 'Slovénie', '?eská republika' : 'République tchèque', 'Eesti' : 'Estonie',
-                    '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte', 'Magyarország' : 'Hongrie'};
+                    '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte', 'Turkey':'Turquie', 'Norway' : 'Norvège',
+                    'Iceland':'Islande'};
 
 var countriesEU = new Map();
  countriesEU = {'FR' : 'France','DK' : 'Danemark','DE' : 'Allemagne','ES' : 'Espagne', 'PT' : 'Portugal', 'BE' : 'Belgique',
@@ -100,8 +101,8 @@ var countriesEU = new Map();
                 'CY' : 'Chypre', 'LU' : 'Luxembourg', 'NL' : 'Pays-Bas', 'EE' : 'Estonie', 'IE' : 'Irlande', 'IT' : 'Italie',
                 'HU' : 'Hongrie', 'RO' : 'Roumanie', 'UA' : 'Ukraine', 'LV' : 'Lettonie', 'LT' : 'Lituanie', 'AT' : 'Autriche',
                 'BG' : 'Bulgarie', 'LI' : 'Liechenstein', 'MD' : 'Moldavie', 'UK' : 'Grande-Bretagne','AL' : 'Albanie',
-                'SI' : 'Slovénie', 'SK' : 'Slovaquie', 'TR' : 'Turquie', 'CH' : 'Suisse' , 'SE' : 'Serbie' ,
-                'HR' : 'Croatie', 'BA' : 'Bosnie-Herzégovine', 'BY' : 'Biélorussie', 'PL' : 'Pologne'};
+                'SI' : 'Slovénie', 'SK' : 'Slovaquie', 'TR' : 'Turquie', 'CH' : 'Suisse' , 'RS' : 'Serbie' , 
+                'HR' : 'Croatie', 'BA' : 'Bosnie-Herzégovine', 'BY' : 'Biélorussie', 'PL' : 'Pologne', 'IS' : 'Islande'};
 var countries = [];
 
 /* ----------- création du tooltip qui sera utilisé pour afficher des infos sur les smallMaps ----------- */
@@ -370,6 +371,7 @@ var mesureMap = {};
 var yearsMesureMap = {};
 function createMesureData(europe, pesticides, energie, nuclear, taxes,transport, heartdiseases, cancer, motorcars,
                           enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod, hopital_stayed){
+
 
     // on appelle donc la fonction buildMesureData pour toutes nos données de mesures
     // pesticides, energie, Production primaire de nucleaire, taxes, transport, heart diseases, cancer, energie renouvelable, 
