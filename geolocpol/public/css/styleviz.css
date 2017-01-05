@@ -64,7 +64,7 @@ h4{
     flex: 1;
     position: absolute;
     left: 20px;
-    top : 310px;
+    top : 450px;
     width: 76%;
     padding-right : 10px;
     padding-left : 10px;
@@ -75,7 +75,7 @@ h4{
 #settings {
     position:absolute;
     right:45px;
-    top : 310px;
+    top : 450px;
     width: 20%;
 }
 
@@ -87,7 +87,7 @@ h4{
     margin: 6px;
     position:absolute;
     left: 40px;
-    top: 220px;
+    top: 350px;
     width: 92%;
 }
 
