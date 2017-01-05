@@ -92,8 +92,7 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     '?????? (ellada)' : 'Grèce', 'Magyarorszàg' : 'Hongrie', 'Österreich' : 'Autriche',
                     'Lietuva' : 'Lituanie', 'Hrvatska' : 'Croatie', 'Slovensko' :'Slovaquie',
                     'Slovenija' : 'Slovénie', '?eská republika' : 'République tchèque', 'Eesti' : 'Estonie',
-                    '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte'};
-
+                    '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte', 'Magyarország' : 'Hongrie'};
 /* ----------- création du tooltip qui sera utilisé pour afficher des infos sur les smallMaps ----------- */
 var tip = d3.tip()
     .attr('class', 'd3-tip')
@@ -101,6 +100,8 @@ var tip = d3.tip()
     .html(function(d,date, isPol) {
         var name = d.properties["NAME"];
         var name = regionNameMap[name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()];
+        if(!name)
+            console.log(d.properties["NAME"]);
         var toDisplay = name +'</br>';
         return toDisplay;
     });
@@ -680,6 +681,13 @@ function updatePol() {
             })
             .on('mouseover', function(d){
                 tip.show(d,date, true);
+
+                var d2;
+                mesureMap[curMes].forEach(function(mes){
+                    if (mes.properties["NUTS_ID"] === d.properties["NUTS_ID"])
+                        d2=mes;
+                });
+
                 // on affiche au dessus de toutes les smallMap polluant, la valeur pour ce pays --> facilite la vizu de l'évolution des valeurs
                 years.forEach(function(year){
                     var value = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*10000.0).toFixed(4);
@@ -692,12 +700,33 @@ function updatePol() {
                     else {
                         d3.select('.title'+year).html("");
                     }
+
+
+
+
+                    if (d2){
+                        if(parseFloat(d2.properties[year])) {
+                            var value2 = (parseFloat(d2.properties[year])/parseFloat(d2.properties["pop"][year])*10000.0).toFixed(4);
+                            if (normalisation === "dens")
+                                value2 = value2 *parseFloat(d2.properties["dens"][year]);
+                            normalisation === 'pop' ? value2 += ' ' + unitMesMap[curMes] + '/10000 habs' : value2 = parseInt(value2)/10000+' ' + unitMesMap[curMes] + '/10000 habs';
+                            d3.select('.title2'+year).html(value2);
+                        }
+                        else {
+                            d3.select('.title2'+year).html("");
+                        }
+                    }
+                    else {
+                        d3.select('.title2'+year).html("");
+                    }
                 });
+
             })
             .on('mouseout', function(d,i){
                 tip.hide();
                 years.forEach(function(year){
                     d3.select('.title'+year).html(year);
+                    d3.select('.title2'+year).html(year);
                 });
             });
 
@@ -884,6 +913,13 @@ function updateMes(){
                 }
             }).on('mouseover', function(d){
                     tip.show(d,date, false);
+
+                    var d2;
+                    polMap[curPol].forEach(function(pol){
+                        if (pol["geo"] === d.properties["NUTS_ID"])
+                            d2=pol;
+                    });
+
                     // on affiche au dessus de toutes les smallMap polluant, la valeur pour ce pays --> facilite la vizu de l'évolution des valeurs
                     years.forEach(function(year){
                         var value = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*10000.0).toFixed(4);
@@ -898,11 +934,32 @@ function updateMes(){
                         else {
                             d3.select('.title2'+year).html("");
                         }
+
+                        if (d2){
+                            if(parseFloat(d2[year])) {
+                                var value2 = (parseFloat(d2[year])/parseFloat(d2["pop"][year])*10000.0).toFixed(4);
+                                if (normalisation === "dens")
+                                    value2 = value2 *parseFloat(d2["dens"][year]);
+                                normalisation === 'pop' ? value2 += ' ' + unitPolMap[curPol] + '/10000 habs' : value2 = parseInt(value2)/10000+' ' + unitPolMap[curPol] + '/10000 habs';
+                                d3.select('.title'+year).html(value2);
+                            }
+                            else {
+                                d3.select('.title'+year).html("");
+                            }
+                        }
+                        else {
+                            d3.select('.title'+year).html("");
+                        }
                     });
+
+
+
+
                 })
               .on('mouseout', function(d,i){
                   tip.hide();
                   years.forEach(function(year){
+                      d3.select('.title'+year).html(year);
                       d3.select('.title2'+year).html(year);
                   });
               });
