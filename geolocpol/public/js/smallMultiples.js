@@ -1,19 +1,15 @@
 //---------------------------------------------------------- IDEES ----------------------------------------------------------
 
 // ----------- SUPER UTILE -----------
-//TODO plus de données et exploiter plus les données
-//TODO trouver les bonnes suggestions
-//TODO optimiser et nettoyer le code
-//TODO pouvoir selectionner les pays en cliquant..
-//TODO afficher toutes les valeurs des pays quand on clique sur une carte?
-//TODO bien normaliser les unités et préciser exactement a quoi correspond chaque mesure
-//TODO phrase de pres/intro accrocheur avec explications
-//TODO afficher les 12 valeurs sur les 2 lots de map
-//TODO faire une legende pour la normalisation en expliquant les calculs
+//TODO trouver les bonnes suggestions (Marine)
+//TODO afficher toutes les valeurs des pays quand on clique sur une carte = afficher les 12 valeurs sur les 2 lots de map (Jules)
+//TODO bien normaliser les unités et préciser exactement a quoi correspond chaque mesure son nom etc (Marine)
+//TODO map + switch sur *1000 ou *10000 (Marine)
+//TODO pouvoir selectionner un pays quand on clique dessus --> les outliers avec Islande, chypre Etc (Jules)
+//TODO phrase de pres/intro accrocheur avec explications (Marine + Jules)
 //->https://blogs.mediapart.fr/la-redaction-de-mediapart/blog/180314/co2-la-carte-de-la-pollution-mondiale
 
 // ----------- AMELIORATION -----------
-//TODO améliorer la légende (la position notamment)
 //TODO faire du design, sur le panneau de droite notamment
 
 //---------------------------------------------------------------------------------------------------------------------------
