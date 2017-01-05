@@ -1,7 +1,14 @@
-/* specific */
+/* Jules Sauvinet */
+/* Marine Ruiz */
+
+
+/* le conteneur basique principal de la page */
+html{
+    padding: 10px 80px 0 60px;
+    /*rappel ordre top right bottom left*/
+}
 body, html {
-    padding:10px 50px 0 0;
-    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #232323;
     background-color: #FBFAF7;
@@ -11,127 +18,13 @@ body, html {
     height: 100%;
 }
 
+/*reset title*/
 h4{
-    font-family: Georgia,Gadugi,  Arial, Serif, sans-serif!important;
-    font-weight: 900;
-    margin: 0px!important;
-    padding: 0px!important;
-    margin-left : 13px!important;
-    margin-top: 5px!important;
-    margin-bottom: 5px!important;
+    padding: 0px;
+    margin: 0px;
 }
 
-.pmap {
-    height : 15px;
-    margin : 0px!important;
-    padding : 0px!important;
-    margin-bottom : 5px!important;
-}
-
-.maptitle{
-    font-size: 18px!important;
-    margin-top:0px!important;
-    padding-top:0px!important;
-}
-
-.map{
-    display: inline-block;
-    text-align: center;
-    margin:0px!important;
-    padding:0px!important;
-}
-.svgmap{
-
-    margin:0px!important;
-    padding:0px!important;
-}
-
-.mappath{
-    stroke-width:1;
-    fill : 'lightgrey';
-}
-
-.choicediv{
-    position: relative;
-    /*border:1pt solid black;*/
-    padding: 7px;
-    /*width : 230px;*/
-}
-
-.halfsettings{
-    /*height : 45%;*/
-}
-
-.legend{
-    position : relative;
-}
-
-.divchoicetitle{
-    font-weight: bold;
-}
-
-.normalegend{
-    /*border: 2px solid red;*/
-    border-radius: 5px;
-}
-
-.choicelegend{
-    border: 1px solid lightgrey;
-
-    border-radius: 5px;
-}
-
-#maps{
-    height : 45%;
-    padding-left: 30px;
-    padding-right: 10px;
-}
-
-#maps2{
-    height : 45%;
-    padding-left: 30px;
-    padding-right: 10px;
-}
-#pollutiondiv{
-
-    margin-top : 20px;
-    width : 350px;
-}
-
-#mesurediv{
-    width : 350px;
-    margin-top : 20px;
-}
-
-#position-element{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-}
-
-#settings {
-    position:absolute;
-    right: 0px;
-    width: 21%;
-
-}
-
-#normalisationdiv{
-    position: relative;
-    margin: 3px;
-    padding: 4px;
-    width : 320px;
-    height : 10%;
-}
-
-#content{
-    /*min-height: 100%;*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*min-height: 100vh;*/
-    /*height :auto;*/
-}
-
+/*le conteneur des 2 conteneurs de smallMaps */
 #mapsdiv{
     flex: 1;
     position: absolute;
@@ -140,28 +33,114 @@ h4{
     padding-right : 20px;
     padding-left : 10px;
     margin-left:30px;
-
 }
 
-#pollegend{
-    margin-top: 10px;
+/* le conteneur du panneau de droite de configuration */
+#settings {
+    position:absolute;
+    right: 0px;
+    width: 21%;
 }
 
-#meslegend{
-    margin-top: 10px;
+
+/*le premier conteneur de smallMaps*/
+#maps{
+    height : 45%;
+    padding-left: 30px;
+    padding-right: 10px;
 }
 
+/*le deuxieme conteneur de smallMaps*/
+#maps2{
+    height : 45%;
+    padding-left: 30px;
+    padding-right: 10px;
+}
+
+/*les titres des 2 conteneurs de smallMaps*/
+.maptitle{
+    font-family: Georgia,Gadugi,  Arial, Serif, sans-serif!important;
+    font-weight: 900;
+    margin: 0px;
+    padding: 0px;
+    margin-left : 13px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+
+    font-size: 20px;
+}
 #map2title{
-    margin-top : 40px!important;
+    margin-top : 25px;
 }
 
+/* les titres d'une smallmaps*/
+.pmap {
+    height : 15px;
+    margin : 0px!important;
+    padding : 0px!important;
+    margin-bottom : 5px!important;
+}
+
+/*le conteneur d'une smallMap*/
+.map{
+    display: inline-block;
+    text-align: center;
+    margin:0px!important;
+    padding:0px!important;
+}
+
+/*les conteneurs du panneau de droite de configration utilisateur*/
+.choicediv{
+    position: relative;
+    padding: 7px;
+}
+
+/*le conteneur du panneau de droite de polluants*/
+#pollutiondiv{
+    margin-top : 20px;
+    width : 350px;
+}
+
+/*le conteneur du panneau de droite de mesures*/
+#mesurediv{
+    width : 350px;
+    margin-top : 15px;
+}
+
+/*le titre de ces conteneurs*/
+.divchoicetitle{
+    font-weight: bold;
+}
+
+/*les conteneurs du choix de polluants et de mesures*/
+.choicelegend{
+    border: 1px outset lightgrey;
+    border-radius: 5px;
+}
+
+/* les légendes des cartes */
+.legend{
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+/* le div du choix entre population et densité */
+#normalisationdiv{
+    position: relative;
+    margin: 3px;
+    padding: 4px;
+    width : 320px;
+    height : 10%;
+}
+
+/* les listes de boutons radio */
 form {
     margin-left: 28px;
     padding: 7px;
     padding-left:15px;
 }
 
-
+/* techniquement, devrait TODO etre les labels des boutons radios selectionnés */
 form > label,
 span > label {
     margin-left: 10px;
@@ -174,14 +153,7 @@ label.notSelected {
     color: lightgray;
 }
 
-.legend{
-    margin-left: 30px;
-}
-
-.background {
-    fill: #fff;
-    stroke: #ccc;
-}
+/* le tooltip quand on survole un pays d'une smallMap */
 .d3-tip {
     line-height: 1.3;
     font-weight: bold;
@@ -191,7 +163,6 @@ label.notSelected {
     border-radius: 2px;
 }
 
-/* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
     box-sizing: border-box;
     display: inline;
@@ -204,18 +175,19 @@ label.notSelected {
     text-align: center;
 }
 
-/* Style northward tooltips differently */
 .d3-tip.n:after {
     margin: -1px 0 0 0;
     top: 100%;
     left: 0;
 }
 
+/* l'exposant renvoyat au footnotes */
 sup{
 	font-size : 12px;
 	font-weight:bold;
 }
 
+/* les notes de bas de page */
 .footnotes{
 	font-size : 13px;
 	margin-top:30px;
@@ -223,22 +195,25 @@ sup{
     font-weight: 600;
 }
 
+/* le bas de page avec les sources */
 footer{
 	position : absolute; 
-	bottom : -100px; 
+	bottom : -100px;
 	margin-top : 10px;
 	font-size : 16px;
 }
 
 /* generic */
-h1, h2, h3, h4, h5, h6 {
-    color:#232323;
-}
 
+/* les indentations classiques */
 p, ul, ol, table, dl {
     margin:0 0 22px;
 }
 
+/* les titres */
+h1, h2, h3, h4, h5, h6 {
+    color:#232323;
+}
 h1, h2, h3 {
     font-family: Arvo, Monaco, serif;
     line-height:1.3;
@@ -272,6 +247,8 @@ h5{
     font-size: 16px;
     margin : 5px!important;
 }
+
+/* les liens */
 a {
     /*color:#C30000;*/
     color: #00B7FF;
@@ -291,7 +268,7 @@ hr {
     border:0;
     background:#ccc;
     height:1px;
-    margin:0 0 16px;
+    margin:0 0 20px;
 }
 
 a.header {
@@ -302,7 +279,6 @@ a.name {
     white-space: nowrap;
 }
 
-
 a.buttons {
     -webkit-font-smoothing: antialiased;
     background: url(../img/arrow-down.png) no-repeat;
@@ -310,10 +286,6 @@ a.buttons {
     text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0;
     padding: 2px 2px 2px 22px;
     height: 30px;
-}
-
-a.github {
-    background: url(../img/octocat-small.png) no-repeat 1px;
 }
 
 a.buttons:hover {
