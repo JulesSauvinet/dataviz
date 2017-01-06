@@ -89,7 +89,7 @@ var regionNameMap = {'España' : 'Espagne', 'France' : 'France', 'Portugal' : 'P
                     'United kingdom' : 'Grande-Bretagne', 'Deutschland' : 'Allemagne',
                     'Nederland' : 'Pays-Bas', 'Belgique-belgië' : 'Belgique', 'Danmark' : 'Danemark',
                     'România': 'Roumanie', 'Luxembourg' : 'Luxembourg', '???????? (bulgaria)' : 'Bulgarie',
-                    '?????? (ellada)' : 'Grèce', 'Magyarorszàg' : 'Hongrie', 'Österreich' : 'Autriche',
+                    '?????? (ellada)' : 'Grèce', 'Magyarország' : 'Hongrie', 'Österreich' : 'Autriche',
                     'Lietuva' : 'Lituanie', 'Hrvatska' : 'Croatie', 'Slovensko' :'Slovaquie',
                     'Slovenija' : 'Slovénie', '?eská republika' : 'République tchèque', 'Eesti' : 'Estonie',
                     '?????? (kýpros)' : 'Chypre' , 'Malta' : 'Malte', 'Turkey':'Turquie', 'Norway' : 'Norvège',
@@ -120,6 +120,8 @@ var tip = d3.tip()
     .html(function(d,date, isPol) {
         var name = regionNameMap[d.properties["NAME"].charAt(0).toUpperCase() + d.properties["NAME"].slice(1).toLowerCase()];
         var toDisplay = name +'</br>';
+        if (!name)
+            console.log(d.properties["NAME"]);
         return toDisplay;
     });
 
@@ -736,7 +738,7 @@ function updatePol() {
 
 
                         if (d2){
-                            if(parseFloat(d2.properties[year])) {
+                            if(!isNaN(parseFloat(d2.properties[year]))) {
                                 var value2 = (parseFloat(d2.properties[year])/parseFloat(d2.properties["pop"][year])*10000.0).toFixed(4);
                                 if (normalisation === "dens")
                                     value2 = value2 *parseFloat(d2.properties["dens"][year]);
@@ -945,6 +947,7 @@ function updateMes(){
                             var value = parseFloat(d.properties[date]) / parseFloat(d.properties["pop"][datebis]) * 10000.0;
                             if (normalisation === "dens")
                                 value = value * parseFloat(d.properties["dens"][datebis]);
+
                             return colormes[curMes](value);
                         }
                         else {
@@ -970,7 +973,8 @@ function updateMes(){
                         // on affiche au dessus de toutes les smallMap polluant, la valeur pour ce pays --> facilite la vizu de l'évolution des valeurs
                         years.forEach(function(year){
                             var value = (parseFloat(d.properties[year])/parseFloat(d.properties[normalisation][year])*10000.0).toFixed(4);
-                            if(parseFloat(d.properties[year])) {
+
+                            if(!isNaN(parseFloat(d.properties[year]))) {
                                 var value2;
                                 if (normalisation === 'pop')
                                     value2 = (parseFloat(d.properties[year])/parseFloat(d.properties["pop"][year])*10000.0).toFixed(4) + ' ' + unitMesMap[curMes] + '/10000 habs';
@@ -983,7 +987,7 @@ function updateMes(){
                             }
 
                             if (d2){
-                                if(parseFloat(d2[year])) {
+                                if(!isNaN(parseFloat(d2[year]))) {
                                     var value2 = (parseFloat(d2[year])/parseFloat(d2["pop"][year])*10000.0).toFixed(4);
                                     if (normalisation === "dens")
                                         value2 = value2 *parseFloat(d2["dens"][year]);
