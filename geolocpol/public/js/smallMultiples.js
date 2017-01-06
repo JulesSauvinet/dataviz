@@ -670,6 +670,61 @@ function updateScalesColor(){
 }
 
 
+function updatePolIllustration(){
+    var illDiv = d3.select('#polIllustration');
+
+    var heightImg = 120;
+    var widthImg = 120;
+    var img = "";
+    var def = "";
+    switch(curPol){
+        case "NOX":
+            img = "img/nox.png";
+            def = "Les oxydes NO et NO2 (NOx)sont des polluants sont une source croissante de la pollution de l'air : ils contribuent à l'effet de serre et au dérèglement climatique, "
+            + "et sont acidifiants et eutrophisants.";
+        break;
+        case "NH3":
+            img = "img/nh3.png";
+            def = "L'ammoniac est un polluant de l'air qui contribue à l'eutrophisation et aux dépôts acides. " +
+                  "Il est incolore et irritant (d'odeur piquante à faible dose, il brûle les yeux et les poumons en concentration plus élevée).";
+        break;
+        case "SOX":
+            img = "img/sox.png";
+            def = "Les gaz d’oxydes de soufre (SOx) se constituent durant les processus de combustion et de raffinage, à partir du soufre contenu dans des " +
+                "matières premières telles que le charbon, le pétrole et les minerais contenant du métal.";            //def = "";
+        break;
+        case "NMVOC":
+            img = "img/icon1.png";
+            heightImg = 0;
+            widthImg = 0;
+            def = "Famille des COV, les composés organiques volatils non méthaniques (NMVOC) " +
+                "proviennent notamment des transports (pots d'échappement, évaporation de réservoirs), " +
+                "ainsi que des activités industrielles telles que les activités minières, le raffinage de pétrole, " +
+                "l'industrie chimique, " +
+                "l'application de peintures et de vernis, l'imprimerie...";
+        break;
+        case "PM2_5":
+            heightImg = 170;
+            widthImg = 280;
+            img = "img/pm.png";
+            def = "Les particles en suspension PM2.5 sont inférieures à 2.5 micromètres et pénètrent profondément dans l'appareil respiratoire.";
+        break;
+        case "PM10":
+            heightImg = 180;
+            widthImg = 280;
+            img = "img/pm.png";
+            def = "Les particules en suspension PM10 sont des particules dont le diamètre est inférieur à 10 micromètres.";
+        break;
+    }
+    var toDisplay = '';
+    if (curPol !== 'NMVOC')
+        toDisplay += '<img src="' + img + '" class = "imgPol" alt="Image du Polluant" ' + curPol +' height=\"' +heightImg+ '\" width=\"' + widthImg+ '\"> '
+
+    toDisplay += ' <p>'+def+'</p>';
+
+    illDiv.html(toDisplay);
+}
+
 /* -------------------------------  fonction de mise a jour des smallMultiples de pollution ------------------------------ */
 function updatePol() {
     // on récupère la valeur du polluant grace au bouton radio validé
@@ -683,6 +738,8 @@ function updatePol() {
 
     // on met a jour les mesures en fonction de ce polluant grace a la Map de suggestion
     curPol = choice;
+
+    updatePolIllustration();
     updateMesureDiv(correspondanceMap[curPol]);
 
     // on récupère la valeur de la mesure grace au bouton radio validé

@@ -59,12 +59,37 @@ h4{
     margin: 2px;
 	text-align:justify;
 }
+
+/* l'explication de quelle polluant est quoi */
+#polIllustration{
+	font-family: roboto_slab, serif!important;
+    position: absolute;
+	right : 65px;
+	top:90px;
+	border : 1pt solid lightgrey;
+	border-radius : 3px;
+	width : 290px;
+	max-width : 290px;
+	height : 260px;
+    font-size: 15px;
+    padding: 15px;
+    margin: 2px;
+	text-align:justify;
+    padding-top:20px;
+}
+.imgPol {
+    float:left;
+    margin: 5px;
+    margin-top:0px;
+    margin-right:15px;
+}
+
 /*le conteneur des 2 conteneurs de smallMaps */
 #mapsdiv{
     flex: 1;
     position: absolute;
     left: 20px;
-    top : 450px;
+    top : 480px;
     width: 76%;
     padding-right : 10px;
     padding-left : 10px;
@@ -75,7 +100,7 @@ h4{
 #settings {
     position:absolute;
     right:45px;
-    top : 450px;
+    top : 480px;
     width: 20%;
 }
 
@@ -85,9 +110,10 @@ h4{
     border-radius : 5px;
     padding : 8px;
     margin: 6px;
+	margin-bottom:15px;
     position:absolute;
     left: 40px;
-    top: 370px;
+    top: 390px;
     width : 75%;
 	text-align:justify;
 }
@@ -253,16 +279,16 @@ sup{
 }
 
 .footleft{
-	width : 80%;
+	width : 85%;
     position: absolute;
     left: 20px;
 	
 }
 
 .footright{
-	width : 20%;
+	width : 15%;
     position: absolute;
-    right: 20px;
+    right: 0px;
 }
 
 footer{
