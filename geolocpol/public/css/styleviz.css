@@ -64,18 +64,19 @@ h4{
 #polIllustration{
 	font-family: roboto_slab, serif!important;
     position: absolute;
-	right : 65px;
-	top:90px;
-	border : 1pt solid lightgrey;
+	right : 100px;
+	top: 140px;
+	/*border : 1pt solid lightgrey;*/
 	border-radius : 3px;
-	width : 290px;
-	max-width : 290px;
-	height : 260px;
+	width : 460px;
+	max-width : 460px;
+	height : 160px;
     font-size: 15px;
-    padding: 15px;
+    padding: 2px;
     margin: 2px;
-	text-align:justify;
+	text-align:left;
     padding-top:20px;
+    font-style: italic;
 }
 .imgPol {
     float:left;
