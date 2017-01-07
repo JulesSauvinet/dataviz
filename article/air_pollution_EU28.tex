@@ -1,7 +1,7 @@
-\documentclass[journal]{vgtc}                % final (journal style)
+%\documentclass[journal]{vgtc}                % final (journal style)
 %\documentclass[review,journal]{vgtc}         % review (journal style)
 %\documentclass[widereview]{vgtc}             % wide-spaced review
-%\documentclass[preprint,journal]{vgtc}       % preprint (journal style)
+\documentclass[preprint,journal]{vgtc}       % preprint (journal style)
 
 %% Uncomment one of the lines above depending on where your paper is
 %% in the conference process. ``review'' and ``widereview'' are for review
@@ -42,10 +42,6 @@
 %% it is recomended to use ``\autoref{sec:bla}'' instead of ``Fig.~\ref{sec:bla}''
 \graphicspath{{figures/}{pictures/}{images/}{./}} % where to search for the images
 
-
-%\usepackage[latin1]{inputenc} % un package
-%\usepackage[T1]{fontenc}      % un second package
-%\usepackage[francais]{babel}  % un troisième package
 \usepackage{microtype}                 % use micro-typography (slightly more compact, better to read)
 \PassOptionsToPackage{warn}{textcomp}  % to address font issues with \textrightarrow
 \usepackage{textcomp}                  % use better special symbols
@@ -78,7 +74,7 @@
 %% * evaluation
 %% * system
 %% * theory/model
-\vgtcpapertype{please specify}
+\vgtcpapertype{application/design study}
 
 %% Paper title.
 \title{Exploring potential causes, consequences and visualizing evolution of major air pollutant emissions over EU28}
@@ -90,38 +86,39 @@
 \authorfooter{
 %% insert punctuation at end of each item
 \item
- Jules Sauvinet is studyingViat Universit\'e Claude Bernard Lyon I. E-mail: contact@julessauvinet.fr
+ Jules Sauvinet is studyingViat Universit\'e Claude Bernard Lyon I. E-mail: contact@julessauvinet.fr.
 \item
- Marine Ruiz is studying at Universit\'e Claude Bernard Lyon I. E-mail: marine.ruiz@etu.univ-lyon1.fr
+ Marine Ruiz is studying at Universit\'e Claude Bernard Lyon I. E-mail: marine.ruiz@etu.univ-lyon1.fr.
 }
 
 %other entries to be set up for journal
-\shortauthortitle{Biv \MakeLowercase{\textit{et al.}}: Global Illumination for Fun and Profit}
+%\shortauthortitle{Biv \MakeLowercase{\textit{et al.}}: Global Illumination for Fun and Profit}
 %\shortauthortitle{Firstauthor \MakeLowercase{\textit{et al.}}: Paper Title}
 
 %% Abstract section.
-\abstract{Visualization over 12 years des relevés sur des polluants et des relevés sur des données de santé ou autre afin de visualiser ou non, une possible relation entre le polluant et la mesure.
+\abstract{
+From now on, the media talks about environmental issues on a daily basis. Pollution peaks have become commonplace in large metropolises and air pollution is becoming a subject that is increasingly affecting citizens. As pollution is not only a visual or olfactory discomfort, it is now the main environmental health risk in the world. On average, it causes the premature death of 7 million people worldwide, including 600 000 in Europe and more than 50 000 in France, according to the World Health Organization, the Ministry of the Environment and the Environment. European Environment Agency.
+We propose here a model which allows to visualize the evolution of the emissions of the main harmful pollutants during 12 years and to explore the potential causes and consequences. For instance, does it seems to be an obvious correlation between the fines particles emissions and pulmonary diseases?
 }
 
 %% Keywords that describe your work. Will show as 'Index Terms' in journal
 %% please capitalize first letter and insert punctuation after last keyword
-\keywords{Air pollution, Ammoniac, Sulphur oxides, Non-methane volatil organic compound, Nitrogen oxides, Particule matters, EU28, eurostats, ecology, health}
+\keywords{Air pollution, Pollutant, Ammoniac, Sulphur oxides, Non-methane volatil organic compounds, Nitrogen oxides, Particule matters, EU28, Ecology, Health.}
 
 %% ACM Computing Classification System (CCS). 
 %% See <http://www.acm.org/class/1998/> for details.
 %% The ``\CCScat'' command takes four arguments.
-
 \CCScatlist{ % not used in journal version
- \CCScat{K.6.1}{Management of Computing and Information Systems}%
-{Project and People Management}{Life Cycle};
- \CCScat{K.7.m}{The Computing Profession}{Miscellaneous}{Ethics}
+ \CCScat{Human-centered computing}{Visualization}%
+{Visualization application domains}{Geographic visualization};
 }
+
 
 %% Uncomment below to include a teaser figure.
 \teaser{
   \centering
   \includegraphics[width=\linewidth]{teaserView}
-  \caption{Main view of the visualization: The smallMaps of pollution on the top (the pollutant chose is Ammoniac) and the smallMaps of the mesure below (the mesure chose is the "Engrais azot\'es"')}
+  \caption{Main view of the visualization: 12 small maps of EU28 colored according to ammoniac emissions on the top and 12 small maps of EU28 showing quantity used of Nitrogen fertilizers from 2003 to 2014.}
 	\label{fig:teaser}
 }
 
