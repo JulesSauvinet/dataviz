@@ -1,0 +1,18 @@
+\begin{thebibliography}{1}
+
+\bibitem{Kitware:2003}
+Kitware, Inc.
+\newblock {\em The Visualization Toolkit User's Guide}, January 2003.
+
+\bibitem{Max:1995:OMF}
+N.~Max.
+\newblock Optical models for direct volume rendering.
+\newblock {\em IEEE Transactions on Visualization and Computer Graphics},
+  1(2):99--108, June 1995. doi: {{%
+10\hspace{.1pt}\discretionary{.}{%
+}{.}\hspace{.4pt}1109\discretionary{/}{%
+}{/}2945\hspace{.1pt}\discretionary{.}{%
+}{.}\hspace{.4pt}468400}}
+
+
+\end{thebibliography}

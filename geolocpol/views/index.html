@@ -4,63 +4,77 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
 
-    <title>Dataviz by Jules Sauvinet</title>
+    <title>Dataviz</title>
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/github-light.css">
+    <!-- fonts -->
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/carlito" type="text/css"/>
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/gidole-regular" type="text/css"/>
+    <link rel="stylesheet" href="css/homestyle.css">
+
     <script src="js/lib/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
+
   <body>
     <div class="wrapper">
       <header>
-        <h1 class="header" style="text-align: center">Dataviz</h1>
-        <p class="header">Cette page répertorie des visualisations de mon cours de DataViz de l'Universite Claude Bernard Lyon 1</p>
-
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/JulesSauvinet/dataviz/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/JulesSauvinet/dataviz/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/JulesSauvinet/dataviz">View On GitHub</a></li>
-        </ul>
-
-        <p class="header">Cette page est maintenue par <a class="header name" href="https://github.com/JulesSauvinet">Jules Sauvinet</a></p>
-
-
+        <h1 class="header">Dataviz</h1>
       </header>
+
       <section>
-        <h3>
-        <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
-          <span aria-hidden="true" class="octicon octicon-link"></span></a>Mes visualisations : </h3>
 
 
-        <h3> <span aria-hidden="true" class="octicon octicon-link"></span>Tests : </h3>
+        <!-------------------------------- SAMPLES ------------------------------------->
+        <!--h3> <span aria-hidden="true" class="octicon octicon-link"></span>Tests : </h3>
         <ul>
-          <!-------------------------------- SAMPLES ------------------------------------->
           <li> <p style="text-indent:10px;"> <a href="/mapUK"> Une map du Royaume-Uni </a> </p> </li>
           <li> <p style="text-indent:10px;"> <a href="/densityEurope"> Densité de population en Europe</a>  &nbsp&nbsp (découpage NUTS3) </p> </li>
-
         </ul>
+        -->
 
+        <!-------------------------------- TP ------------------------------------->
         <h3> <span aria-hidden="true" class="octicon octicon-link"></span>TPS : </h3>
         <ul>
-          <!-------------------------------- TP ------------------------------------->
-          <li><p style="text-indent:10px;"> <a href="/grippeNovembre2015"> Les cas de grippe en France :</a> &nbsp&nbsp (novembre 2015) </p> </li>
-          <li> <p style="text-indent:10px;"> <a href="/grippe20132015"> La grippe en France (2)</a>  &nbsp&nbsp (2003-2015) </p> </li>
-          <li> <p style="text-indent:10px;"> <a href="/votesconjoints"> Les votes conjoints en France </a>  &nbsp&nbsp (Graphe sur 1350 scrutins, met du temps à charger) </p> </li>
+          <li><p style="text-indent:10px;"> <a href="/grippeNovembre2015"> Les cas de grippe en France (1) :</a> &nbsp;&nbsp; (novembre 2015) </p> </li>
+          <li> <p style="text-indent:10px;"> <a href="/grippe20132015"> Les cas de grippe en France (2) :</a>  &nbsp;&nbsp; (2003-2015) </p> </li>
+          <li> <p style="text-indent:10px;"> <a href="/votesconjoints"> Les votes conjoints en France &nbsp;&nbsp;:</a>  &nbsp;&nbsp; (Graphe sur 1350 scrutins, ⚠ met du temps à charger) </p> </li>
         </ul>
 
         <h3> <span aria-hidden="true" class="octicon octicon-link"></span>Le projet : </h3>
         <ul>
           <!-------------------------------- PROJECT ------------------------------------->
-          <li> <p style="text-indent:10px;"> <a href="/test1"> Test pour le projet </a>   </p> </li>
-          <li> <p style="text-indent:10px; font-size: 16px!important; font-weight: bold!important;"> <a href="/project"> Le projet (in progress)</a>  &nbsp&nbsp (smallMultiples) </p> </li>
+          <!--li> <p style="text-indent:10px;"> <a href="/test1"> Test pour le projet </a>   </p> </li-->
+
+          <li><a class="" href="https://github.com/JulesSauvinet/dataviz" style = "color : #00B7EF;">
+            La page du projet sur github
+            </a>
+            <span class="download-container">
+              <a class="buttons download-but" href="https://github.com/JulesSauvinet/dataviz/zipball/master">Download ZIP</a>
+              <a class="buttons download-but" href="https://github.com/JulesSauvinet/dataviz/tarball/master">Download TAR</a>
+            </span>
+          </li>
+
+          <li> <a href="/project"> La visualisation</a>  </li>
+
+          <li> <a href="data/docs/cahier_davancement.pdf" download> Télécharger le cahier d'avancement </a> </li>
+
+          <li> <a href="data/docs/air_pollution_EU28.pdf" download> Télécharger l'article de la visualisation </a> </li>
 
         </ul>
 
+        </br>
+
       </section>
+
+      <div class = "github-content">
+        <ul>
+          <li><a class="github buttons" href="https://github.com/JulesSauvinet">Voir le profil de Jules sur GitHub</a></li>
+          <li><a class="github buttons" href="https://github.com/MarineRu">Voir le profil de Marine sur GitHub</a></li>
+        </ul>
+      </div>
     </div>
 		
   </body>

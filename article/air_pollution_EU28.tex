@@ -42,6 +42,10 @@
 %% it is recomended to use ``\autoref{sec:bla}'' instead of ``Fig.~\ref{sec:bla}''
 \graphicspath{{figures/}{pictures/}{images/}{./}} % where to search for the images
 
+
+%\usepackage[latin1]{inputenc} % un package
+%\usepackage[T1]{fontenc}      % un second package
+%\usepackage[francais]{babel}  % un troisième package
 \usepackage{microtype}                 % use micro-typography (slightly more compact, better to read)
 \PassOptionsToPackage{warn}{textcomp}  % to address font issues with \textrightarrow
 \usepackage{textcomp}                  % use better special symbols
@@ -50,11 +54,13 @@
 \renewcommand*\ttdefault{txtt}         % a nicer typewriter font
 \usepackage{cite}                      % needed to automatically sort the references
 \usepackage{tabu}                      % only used for the table example
-\usepackage{booktabs}                  % only used for the table example
+\usepackage{booktabs}                 % only used for the table example
+
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
 %% with other math-related packages, you may want to disable it.
 
+%\inputencoding{latin1}
 %% In preprint mode you may define your own headline.
 %\preprinttext{To appear in IEEE Transactions on Visualization and Computer Graphics.}
 
@@ -84,9 +90,9 @@
 \authorfooter{
 %% insert punctuation at end of each item
 \item
- Jules Sauvinet is studying at Université Claude Bernard Lyon I. E-mail: contact@julessauvinet.fr
+ Jules Sauvinet is studyingViat Universit\'e Claude Bernard Lyon I. E-mail: contact@julessauvinet.fr
 \item
- Marine Ruiz is studying at Université Claude Bernard Lyon I. E-mail: marine.ruiz@etu.univ-lyon1.fr
+ Marine Ruiz is studying at Universit\'e Claude Bernard Lyon I. E-mail: marine.ruiz@etu.univ-lyon1.fr
 }
 
 %other entries to be set up for journal
@@ -94,7 +100,7 @@
 %\shortauthortitle{Firstauthor \MakeLowercase{\textit{et al.}}: Paper Title}
 
 %% Abstract section.
-\abstract{Visualisation sur 12 années au maximum des relevés sur des polluants et des relevés sur des données de santé ou autre afin de visualiser ou non, une possible relation entre le polluant et la mesure.
+\abstract{Visualization over 12 years des relevés sur des polluants et des relevés sur des données de santé ou autre afin de visualiser ou non, une possible relation entre le polluant et la mesure.
 }
 
 %% Keywords that describe your work. Will show as 'Index Terms' in journal
@@ -115,7 +121,7 @@
 \teaser{
   \centering
   \includegraphics[width=\linewidth]{teaserView}
-  \caption{Main view of the visualization: The smallMaps of pollution on the top (the pollutant chose is Ammoniac) and the smallMaps of the mesure below (the mesure chose is the "Engrais azotés"')}
+  \caption{Main view of the visualization: The smallMaps of pollution on the top (the pollutant chose is Ammoniac) and the smallMaps of the mesure below (the mesure chose is the "Engrais azot\'es"')}
 	\label{fig:teaser}
 }
 
@@ -144,7 +150,7 @@
 
 The emissions of most harmful air pollutants has globally decreased over the past 25 years (see the figure 2 below).
 But that doesn't mean that we handle the problem of pollution and that the ...
-Some countries have decided to appliquer une politique de réduction, alors que d'autres continuent d'émettre des quantités très élevés, posant de sérieux problèmes pour l'environnement et la santé.
+Some countries have decided to appliquer une politique de r\'eduction, alors que d'autres continuent d'\'emettre des quantit\'es très élevés, posant de sérieux problèmes pour l'environnement et la santé.
 Etc ...
 
 

@@ -4,6 +4,11 @@
 
 /* le conteneur basique principal de la page */
 html{
+
+    moz-transform: scale(0.90, 0.90);
+    zoom: 0.90;
+    zoom: 90%;
+
     padding: 10px 40px 0 40px;
     /*rappel ordre top right bottom left*/
 }
