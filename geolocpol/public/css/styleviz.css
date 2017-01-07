@@ -64,11 +64,11 @@ h4{
 #polIllustration{
 	font-family: roboto_slab, serif!important;
     position: absolute;
-	right : 100px;
-	top: 140px;
+	right : 70px;
+	top: 80px;
 	/*border : 1pt solid lightgrey;*/
 	border-radius : 3px;
-	width : 470px;
+	width : 16%;
 	max-width : 470px;
 	height : 160px;
     font-size: 15px;
