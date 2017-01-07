@@ -47,8 +47,8 @@ var years = ["1995","1996","1997","1998","1999","2000","2001","2002","2003","200
 var mesures = ['Morts de cancers', 'Pesticides', 'Production primaire d\'énergie', 'Production primaire de nucleaire',
                'Taxe environnementale', 'Taxe transport', 'Morts de maladies cardiaques',
                'Moteurs de voitures diesel', 'Production primaire d\'énergie renouvelable',
-               'Moteurs de voitures pétrole', 'Engrais au Nitrogene',
-               'Engrais au Phosphore','Engrais au Potassium','Production primaire de pétrole',
+               'Moteurs de voitures pétrole', 'Engrais azotés',
+               'Engrais au phosphore','Engrais au potassium','Production primaire de pétrole',
                'Production primaire de gaz','Production primaire de charbon','Jours d\'hospitalisation pour maladie pulmmonaire'];
 
 
@@ -60,15 +60,15 @@ var polNameMap = {'NH3' : 'Ammoniac', 'NMVOC' : 'Composés volatiles organiques'
 var mesNameMap = {'Pesticides' : 'pe', 'Production primaire d\'énergie':'en', 'Production primaire de nucleaire' :'cn', 'Taxe environnementale' : 'te',
                     'Taxe transport' : 'tr', 'Morts de maladies cardiaques':'hd', 'Morts de cancers' : 'c',
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production primaire d\'énergie renouvelable' : 'enr',
-                    'Engrais au Nitrogene' : 'fN','Engrais au Phosphore' : 'fPh','Engrais au Potassium' : 'fPo',
+                    'Engrais azotés' : 'fN','Engrais au phosphore' : 'fPh','Engrais au potassium' : 'fPo',
                     'Production primaire de pétrole' : 'tpd','Production primaire de gaz' : 'tgp',
                     'Production primaire de charbon' : 'cp', 'Jours d\'hospitalisation pour maladie pulmmonaire' : 'hs'};
 
 // Map qui permet d'associer a chaque polluant, la liste des mesures pour lesquelles
 // il y a une possible correspondance polluant/mesure, on utilise cette map pour afficher
 // dynamiquement les mesures à afficher une fois le choix du polluant fait
-var correspondanceMap = {'NH3'   : ['Engrais au Nitrogene','Engrais au Phosphore',
-                                    'Engrais au Potassium','Pesticides', 'Taxe environnementale'],
+var correspondanceMap = {'NH3'   : ['Engrais azotés','Engrais au phosphore',
+                                    'Engrais au potassium','Pesticides', 'Taxe environnementale'],
                          'NMVOC' : ['Moteurs de voitures pétrole','Production primaire de pétrole',
                                     'Production primaire d\'énergie','Production primaire d\'énergie renouvelable'],
                          'NOX'   : ['Production primaire d\'énergie','Production primaire d\'énergie renouvelable', 'Production primaire de nucleaire',
@@ -385,7 +385,7 @@ function createMesureData(europe, pesticides, energie, nuclear, taxes,transport,
 
     // on appelle donc la fonction buildMesureData pour toutes nos données de mesures
     // pesticides, energie, Production primaire de nucleaire, taxes, transport, heart diseases, cancer, energie renouvelable, 
-    // fertilisants au nitrogene, fertilisants au phosphore, fertilisants au potassium, moteurs petrole et moteurs diesel
+    // fertilisants azotés, fertilisants au phosphore, fertilisants au potassium, moteurs petrole et moteurs diesel
     buildMesureData('pe', pesticides, europe);
     buildMesureData('en', energie, europe);
     buildMesureData('cn', nuclear, europe);
