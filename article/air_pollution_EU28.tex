@@ -86,7 +86,7 @@
 \authorfooter{
 %% insert punctuation at end of each item
 \item
- Jules Sauvinet is studyingViat Universit\'e Claude Bernard Lyon I. E-mail: contact@julessauvinet.fr.
+ Jules Sauvinet is studying at Universit\'e Claude Bernard Lyon I. E-mail: contact@julessauvinet.fr.
 \item
  Marine Ruiz is studying at Universit\'e Claude Bernard Lyon I. E-mail: marine.ruiz@etu.univ-lyon1.fr.
 }
@@ -145,7 +145,7 @@ We propose here a model which allows to visualize the evolution of the emissions
 
 \maketitle
 
-The emissions of most harmful air pollutants has globally decreased over the past 25 years (see the figure 2 below).
+The emissions of most harmful air pollutants has globally decreased over the past 25 years in European Union (see the figure 2 below).
 Nevertheless, emissions remain very high, particularly in some countries whose economy depends on sectors responsible for the discharge of certain pollutants. While some countries have taken stock of the issue and taken steps to reduce their emissions, others are struggling to keep pace with economic and political conflicts.
 As a result, there are regularly many pollution peaks in major European cities, posing serious problems for the environment and health.
 
@@ -156,102 +156,29 @@ As a result, there are regularly many pollution peaks in major European cities, 
  \label{fig:pollution decrease}
 \end{figure}
 
+The model we are proposing has two parts.
+
+The first is to be able to visualize the evolution of pollution in the European Union countries for 6 pollutants identified by Eurostats as among the most dangerous for the environment and health: Ammonia (NH3), Sulfur Oxides (SOx) Nitrogen Oxides (NOx), Non-methane volatile organic compounds (NMVOC), Fine Particles less than 2.5um (PM2.5), and Fines Particles less than 10um (PM10).
+
+In order to be able to visualize the evolution of the emission of these pollutants, we have developed an interface composed of 12 small maps from the European Union countries to 28 concerning 12 recent years (the data we have of the pollutants range from 1990 to 2014, and these are more complete the longer the time). The user chooses the pollutant from which he wishes to consult changes in the list of 6 specified earlier. Then, each small map (see the figure 3 below) is colored according to a scale of color more or less intensely depending on the amount of pollution rejected per inhabitant. The countries whose data we do not have are colored gray. The color scale is constructed from two minimum and maximum values ​​which are the minimum and maximum rejected pollution values ​​by a country during the 12 years considered.
+\newline
+Ainsi, l'utilisateur peut observer l'évolution de la pollution pour comparer les pays entre deux pays ou bien pour un même pays pour deux années différentes. Les small maps lui donne une vue d'ensemble lui indiquant la tendance générale de l'évolution de la pollution pour les 12 années et le polluant considéré. De plus l'échelle de couleur permet d'isoler nettement les pays qui ont une émission bien plus élevée que les autres (e.g. l'Irlande sur la figure 3). 
+ 
+
+\begin{figure}[tb]
+ \centering % avoid the use of \begin{center}...\end{center} and use \centering instead (more compact)
+ \includegraphics[width=200px]{smallmap}
+ \caption{A visualization of a small map. The image is from our visualisation.}
+ \label{fig:smallmapammoniac}
+\end{figure}
+
+The second part of our model is the exploration of the potential causes and consequences of pollution among those that we propose. Once the pollutant has been chosen, the user can choose from a list what we will call a comparison measure. For example, for ammonia, the user can choose from the "Nitrogen Fertilizer" measure. A second set of 12 small maps is then made showing this time the evolution of the measure considered for the maximum 12 years common with those of the pollutants whose data are available.
+\newline
+Thus, by comparing the intensity of the coloration of the two series of small maps, the user can identify if there is a potential link between the pollutant and the measure considered. First, it is possible to observe if over a year the color nuances correspond and potentially indicates a correlation for the target year. Secondly, it is possible to observe whether the evolution trends (growth, decay, stagnation) are connected (similar, or opposite). The goal is to invite the user to wonder but obviously does not affirm the observed link.
+~\\
+~\\
 
 
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-
-Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. 
 %% \section{Introduction} %for journal use above \firstsection{..} instead
 
 
@@ -350,6 +277,13 @@ amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
 invidunt ut labore et dolore magna aliquyam erat, sed diam
 voluptua. At vero eos et accusam et justo duo dolores et ea
 rebum.
+
+
+
+
+
+
+
 
 \section{Project Description (2p)}
 
