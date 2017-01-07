@@ -680,7 +680,7 @@ function updatePolIllustration(){
     switch(curPol){
         case "NOX":
             img = "img/nox.png";
-            def = "Les oxydes NO et NO2 (NOx)sont des polluants sont une source croissante de la pollution de l'air : ils contribuent à l'effet de serre et au dérèglement climatique, "
+            def = "Les oxydes NO et NO2 (NOx) sont une source croissante de la pollution de l'air. Ils contribuent à l'effet de serre et au dérèglement climatique, "
             + "et sont acidifiants et eutrophisants.";
         break;
         case "NH3":
@@ -697,17 +697,17 @@ function updatePolIllustration(){
             img = "img/icon1.png";
             heightImg = 0;
             widthImg = 0;
-            def = "Famille des COV, les composés organiques volatils non méthaniques (NMVOC) " +
-                "proviennent notamment des transports (pots d'échappement, évaporation de réservoirs), " +
-                "ainsi que des activités industrielles telles que les activités minières, le raffinage de pétrole, " +
+            def = "La Famille des COV se constitue de tous les composés organiques volatils non méthaniques (NMVOC). " + "</br>" +
+                "Ils proviennent notamment des transports (pots d'échappement, évaporation de réservoirs), " +
+                "et des activités industrielles telles que les activités minières, le raffinage de pétrole, " +
                 "l'industrie chimique, " +
                 "l'application de peintures et de vernis, l'imprimerie...";
         break;
         case "PM2_5":
-            heightImg = 170;
+            heightImg = 180;
             widthImg = 280;
             img = "img/pm.png";
-            def = "Les particles en suspension PM2.5 sont inférieures à 2.5 micromètres et pénètrent profondément dans l'appareil respiratoire.";
+            def = "Les particles en suspension PM2.5 sont des particules dont le diamètre est inférieure à 2.5 micromètres. "+ "</br>" + "Elles pénètrent profondément dans l'appareil respiratoire.";
         break;
         case "PM10":
             heightImg = 180;
