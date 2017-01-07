@@ -24,9 +24,9 @@ time, mark, audio, video {
 /* Base text styles */
 
 body {
-    -moz-transform: scale(0.75, 0.75); /* Moz-browsers */
-    zoom: 0.75; /* Other non-webkit browsers */
-    zoom: 75%; /* Webkit browsers */
+    -moz-transform: scale(0.67, 0.67); /* Moz-browsers */
+    zoom: 0.67; /* Other non-webkit browsers */
+    zoom: 67%; /* Webkit browsers */
     padding:10px 50px 0 0;
     font-family:'CarlitoRegular',"Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
