@@ -52,7 +52,8 @@
 \usepackage{cite}                      % needed to automatically sort the references
 \usepackage{tabu}                      % only used for the table example
 \usepackage{booktabs}                 % only used for the table example
-
+\usepackage{numprint}
+\usepackage[squaren,Gray]{SIunits}
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
 %% with other math-related packages, you may want to disable it.
@@ -254,8 +255,8 @@ We preferred to use NUTS1 because as each map is very small, it is not easy to r
 	\item Ammoniac
 	\item Volatile organic compounds
 	\item Nitrogen oxide
-	\item 10μm particles
-	\item 2.5μm particles
+	\item \unit{10}{\micro\meter} particles
+	\item \unit{2.5}{\micro\meter} particles
 	\item Sulfur oxide
 	\end{itemize}
 \newline
@@ -284,7 +285,7 @@ There are measures dealing with health:
 	\item Heart diseases deaths
 	\item Length of hospitals stays for lung diseases
 	\end{itemize}
-\newline	
+\newline
 Some measures about agriculture:
 	\begin{itemize}
 	\item Pesticides
@@ -304,7 +305,6 @@ Finally, there are some measures dealing with transport:
 	\item Diesel motor cars
 	\item Petrol motor cars
 	\end{itemize}
-\newline		
 Likewise, for pollutant, it is necessary to multiply the normalize value by 10000. So, in the legend, each color represents a value of measure in the measure unit per 10000 inhabitants.
 
 	\subsection{The measure suggestion}
