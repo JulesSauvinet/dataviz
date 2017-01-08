@@ -54,6 +54,8 @@
 \usepackage{booktabs}                 % only used for the table example
 \usepackage{numprint}
 \usepackage[squaren,Gray]{SIunits}
+\usepackage{amssymb}
+\usepackage{enumitem}
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
 %% with other math-related packages, you may want to disable it.
@@ -191,7 +193,7 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 \section{Related Work}
 
 \begin{itemize}
-\item In his visualisation \cite{Boy:2014:TCP}, Boy and Fekete shows C02 emissions in countries around the world as clouds of visual smoke. The visualization is reused here \cite{Mediapart:2014:CPM} as a narrative visualization. The literature in InfoVis (Information Visualization) often states that a narrative visualization (storytelling) can engage the reader in data mining. The visualization allows an exploration in time and the comparison of emission between the different countries. But the reader must take the time to "read the visualization". In addition, it is not possible to directly compare the issue between two years.
+\item In his visualization \cite{Boy:2014:TCP}, Boy and Fekete shows C02 emissions in countries around the world as clouds of visual smoke. The visualization is reused here \cite{Mediapart:2014:CPM} as a narrative visualization. The literature in InfoVis (Information Visualization) often states that a narrative visualization (storytelling) can engage the reader in data mining. The visualization allows an exploration in time and the comparison of emission between the different countries. But the reader must take the time to "read the visualization". In addition, it is not possible to directly compare the issue between two years.
 %http://peopleviz.gforge.inria.fr/trunk/data_blog/environment/co2_FR/index_storytelling.php
 
 \item The concept of displaying a serie of small maps is also known as small multiples as popularized by Tufte \cite{Tufte:1983:VDQ}. In his article \cite{Smith:2005:MSM}, Smith show the interest of small multiples maps for geographical and time visualization. He says that multiple small maps may prove useful as a method of data visualization and/or seeking. Furthermore, according to him, small multiples maps have the potential to address the problem of highly dimensional data, and simplify searches for information over time.
@@ -237,7 +239,7 @@ However, even if we normalize the data, some countries have an outlier value for
 \newline
 So, to solve this problem, we offer on the top of the pollutant area, the list of the all countries for which we have some data. By default, when the Web Page is loaded, all cases are checked. If a country has an outlier value for a pollutant-measure couple, it is possible to un-check this country. That means that, in the pollutant and measure areas, this country turns grey on all the 24 maps and running the mouse over it does not generates any visual effect.  The 24 maps and the two legends are updated, but this time, they do not take into account this un-checked country. It is possible to see now, a better shade with a legend more accurate.
 \paragraph{}
-To conclude this visualization presentation, we offer a small description and an image of the pollutant selected in top right corner. As the Ammoniac is selected by default, we see when the Web Page is loaded, the Ammoniac description.
+To conclude this visualization presentation, we offer a small description and an image of the pollutant selected in top right corner. As the Ammonia is selected by default, we see when the Web Page is loaded, the Ammonia description.
 	
 	\subsection{Choice of data format}
 	\paragraph{}
@@ -251,8 +253,8 @@ We preferred to use NUTS1 because as each map is very small, it is not easy to r
 
 	\subsection{Description of pollutants}
 	We offer 6 very important pollutants:
-	\begin{itemize}
-	\item Ammoniac
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
+	\item Ammonia
 	\item Volatile Organic Compounds
 	\item Nitrogen Oxide
 	\item \unit{10}{\micro\meter} particles
@@ -264,13 +266,12 @@ Each pollutant is told in ton in our data files. As we normalize the values by p
 \newline
 In fact, in the legend, each color represents a value of pollutant in ton per 10000 inhabitants.
 
-	\paragraph{}
 	\subsection{Description of measures }
 	\paragraph{}
 	We chose 18 measures that we considered relevant regarding the pollutants we selected.
 \newline
 There are measures about energy production:
-	\begin{itemize}
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
 	\item Primary production of electricity
 	\item Primary production of renewable electricity
 	\item Primary production of oil
@@ -280,14 +281,14 @@ There are measures about energy production:
 	\end{itemize}
 \newline	
 There are measures dealing with health:
-	\begin{itemize}
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
 	\item Cancer death
 	\item Heart diseases deaths
 	\item Length of hospitals stays for lung diseases
 	\end{itemize}
 \newline
 Some measures about agriculture:
-	\begin{itemize}
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
 	\item Pesticides
 	\item Nitrogen fertilizers
 	\item Potassium fertilizers
@@ -295,13 +296,13 @@ Some measures about agriculture:
 	\end{itemize}
 \newline	
 We have some measures on tax prices:
-	\begin{itemize}
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
 	\item Environmental tax
 	\item Transport tax
 	\end{itemize}
 \newline	
 Finally, there are some measures dealing with transport:
-	\begin{itemize}
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
 	\item Diesel motor cars
 	\item Petrol motor cars
 	\end{itemize}
@@ -309,6 +310,16 @@ Likewise, for pollutant, it is necessary to multiply the normalize value by 1000
 
 	\subsection{The measure suggestion}
 	\paragraph{}
+	To optimize the comparison between these pollutants and these measures, we offer a list of measures for each pollutant. To do so, we first searched for the possible causes and consequences of the emissions of each pollutant and any data which be correlated with it. Then we tried to find adapted measures in our files data, or in the Eurostats’ database.
+\newline
+Thus, the computing of the all of the information gives this:	
+\begin{itemize}[leftmargin=*,parsep=0cm]
+	\item For the Ammonia pollutant, we identified that the major sector that produces rejects was the agriculture. So we created a list with Pesticides, Nitrogen, Potassium and Phosphor fertilizers.
+	\item For the Volatile Organic Compounds pollutant, transports and industrial activity are responsible for the emission of this pollutant. So we created a list with our data on Primary production of electricity, renewable electricity and coal and Petrol motor cars.
+	\item For the Nitrogen Oxide pollutant, every energy transformation produces Nitrogen Oxide. So we created a list with all of our data concerning energy production, that is to say Primary production of electricity, renewable electricity, oil, gas, coal and Nuclear heat.
+	\item For the \unit{10}{\micro\meter} particles and \unit{2.5}{\micro\meter} particles pollutants, we identified that the major sector that produces rejects was car diesel combustion. So, we created a list with Diesel motor cars as a first choice. To see if at least one correlation exists, we add in this list all of our measures dealing with health, this means Cancer death, Heart diseases deaths and Length of hospitals stays for lung diseases. To finish, as particles are a real issue for the government, we add to this same list data about environment and transport taxes.
+	\item For the Sulfur Oxide pollutant, we observed that it was usually created during burning and refining processes, from the sulfur contained in raw materials such as coal, petrol and other ores that contain some metal. That is why we offer, for this pollutant, the same list as for the Nitrogen Oxide pollutant.
+\end{itemize}
 
 \section{Evaluation}
 
