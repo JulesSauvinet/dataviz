@@ -52,7 +52,10 @@
 \usepackage{cite}                      % needed to automatically sort the references
 \usepackage{tabu}                      % only used for the table example
 \usepackage{booktabs}                 % only used for the table example
-
+\usepackage{numprint}
+\usepackage[squaren,Gray]{SIunits}
+\usepackage{amssymb}
+\usepackage{enumitem}
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
 %% with other math-related packages, you may want to disable it.
@@ -190,7 +193,7 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 \section{Related Work}
 
 \begin{itemize}
-\item In his visualisation \cite{Boy:2014:TCP}, Boy and Fekete shows C02 emissions in countries around the world as clouds of visual smoke. The visualization is reused here \cite{Mediapart:2014:CPM} as a narrative visualization. The literature in InfoVis (Information Visualization) often states that a narrative visualization (storytelling) can engage the reader in data mining. The visualization allows an exploration in time and the comparison of emission between the different countries. But the reader must take the time to "read the visualization". In addition, it is not possible to directly compare the issue between two years.
+\item In his visualization \cite{Boy:2014:TCP}, Boy and Fekete shows C02 emissions in countries around the world as clouds of visual smoke. The visualization is reused here \cite{Mediapart:2014:CPM} as a narrative visualization. The literature in InfoVis (Information Visualization) often states that a narrative visualization (storytelling) can engage the reader in data mining. The visualization allows an exploration in time and the comparison of emission between the different countries. But the reader must take the time to "read the visualization". In addition, it is not possible to directly compare the issue between two years.
 %http://peopleviz.gforge.inria.fr/trunk/data_blog/environment/co2_FR/index_storytelling.php
 
 \item The concept of displaying a serie of small maps is also known as small multiples as popularized by Tufte \cite{Tufte:1983:VDQ}. In his article \cite{Smith:2005:MSM}, Smith show the interest of small multiples maps for geographical and time visualization. He says that multiple small maps may prove useful as a method of data visualization and/or seeking. Furthermore, according to him, small multiples maps have the potential to address the problem of highly dimensional data, and simplify searches for information over time.
@@ -214,7 +217,6 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 
 
 \section{Project Description (2p)}
-\paragraph{}
 	\subsection{Web Page description}
 	\paragraph{}
 We organized our Web Page into 3 parts:  first, a header which describes the project, then an area with 12 small maps of the European countries, showing pollution-related data, thanks to the pollutant list, the legend and the colors. On the top of this area, there is a title which displays the name of the pollutant. Finally, an other area with the same 12 small maps, this time to show pollutant-related data such as causes, consequences or correlations to the emission of the pollutant selected.
@@ -237,184 +239,87 @@ However, even if we normalize the data, some countries have an outlier value for
 \newline
 So, to solve this problem, we offer on the top of the pollutant area, the list of the all countries for which we have some data. By default, when the Web Page is loaded, all cases are checked. If a country has an outlier value for a pollutant-measure couple, it is possible to un-check this country. That means that, in the pollutant and measure areas, this country turns grey on all the 24 maps and running the mouse over it does not generates any visual effect.  The 24 maps and the two legends are updated, but this time, they do not take into account this un-checked country. It is possible to see now, a better shade with a legend more accurate.
 \paragraph{}
-To conclude this visualization presentation, we offer a small description and an image of the pollutant selected in top right corner. As the Ammoniac is selected by default, we see when the Web Page is loaded, the Ammoniac description.
-
+To conclude this visualization presentation, we offer a small description and an image of the pollutant selected in top right corner. As the Ammonia is selected by default, we see when the Web Page is loaded, the Ammonia description.
+	
 	\subsection{Choice of data format}
 	\paragraph{}
-	We decided to exhibit 12 maps for one pollutant and 12 maps for one measure. So, one map is very small to describe precisely 28 countries. We had the choice between NUTS1, NUTS2 and NUTS3 formats.
+We decided to present 12 maps for one pollutant and 12 maps for one measure. One map is very small to describe precisely 28 countries. We had the choice between NUTS1, NUTS2 and NUTS3 formats.
 	\newline
 NUTS, The Nomenclature of Territorial Units for Statistics, is a geocode standard for referencing the administrative divisions of countries for statistical purposes. The standard was developed by the European Union. There are three levels of NUTS defined: NUTS1, NUTS2 and NUTS3. NUTS1 is the least precise and NUTS3 is the most precise.
 \newline
-Not all countries have every level of division, depending on their size. One of the most extreme cases is Luxembourg, the three NUTS divisions each correspond to the entire country itself. For France, NUTS1 is just France, NUTS2 is (Auvergne-Rhône-Alpes, Bourgogne-Franche-Comté, etc …) and NUTS3 is (Ain, Aisne, etc …).
+In the case of France, NUTS1 stands for France, NUTS2 stands for a region (Bretagne, Normandie, etc …) and NUTS3 stands for a French department (Ain, Aisne, etc …). Not every country has all levels of division, depending on their size. One of the most extreme cases is Luxembourg, each of the three NUTS divisions corresponds to the entire country itself.
 \newline
-We had preferred use NUTS1 because each map is very small and so, it is not easy to run the mouse over an area if we use NUTS2 or NUTS3 format.
-	\subsection{Choice of the measures}
-	We chose 18 measures that we considered relevant regarding the pollutants we selected : 
-		\begin{itemize}
-		\item Cancer death (Morts de cancers)
-		\item Pesticides (Pesticides)
-		\item Nitrogen fertilizers
-		\item Potassium fertilizers
-		\item Phosphore fertilizers
-		\item Environmental tax (Taxe environnementale)
-		\item Transport tax (Taxe transport)
-		\item Primary production of electricity (Production primaire d\'énergie)
-		\item Primary production of renewable electricity (Production primaire d\'énergie renouvelable)
-		\item Primary production of oil (Production primaire de pétrole)
-		\item Primary production of gas (Production primaire de gaz)
-		\item Primary production of coal (Production primaire de charbon)
-		\item Nuclear heat (Production primaire d'énergie nucleaire)
-		\item Heart diseases deaths (Morts de maladies cardiaques)
-		\item Diesel motor cars (Moteurs de voitures diesel)
-		\item Petrol motor cars (Moteurs de voitures pétrole)
-		\item Length of hospitals stays for lung diseases (Jours d\'hospitalisation pour maladie pulmmonaire)
-		\end{itemize}
-		
-		We first searched for each pollutants the possible causes and consequences of the emissions. Then we tried to find adapted measures in the database for eurostats.
-		For the Ammoniac pollutant, we identified that the major sector produces rejects was the agriculture (figure 3).
-		Etc.. Pesticides et engrais.
-		
-		For the particules matters pollutants (PM2.5 and PM10), we identified that the major sector produces rejects cas diesel combustion ...
-		
-		Since countries are specialized in producing certains type d'énergie etc.. 
-	
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
+We preferred to use NUTS1 because as each map is very small, it is not easy to run the mouse over an area if we use NUTS2 or NUTS3 format (a single area would be too tiny).
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
+	\subsection{Description of pollutants}
+	We offer 6 very important pollutants:
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
+	\item Ammonia
+	\item Volatile Organic Compounds
+	\item Nitrogen Oxide
+	\item \unit{10}{\micro\meter} particles
+	\item \unit{2.5}{\micro\meter} particles
+	\item Sulfur Oxide
+	\end{itemize}
+\newline
+Each pollutant is told in ton in our data files. As we normalize the values by population or by density, the resultant value is very small. So, it is necessary to multiply this resultant value by 10000. 
+\newline
+In fact, in the legend, each color represents a value of pollutant in ton per 10000 inhabitants.
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
+	\subsection{Description of measures }
+	\paragraph{}
+	We chose 18 measures that we considered relevant regarding the pollutants we selected.
+\newline
+There are measures about energy production:
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
+	\item Primary production of electricity
+	\item Primary production of renewable electricity
+	\item Primary production of oil
+	\item Primary production of gas
+	\item Primary production of coal
+	\item Nuclear heat
+	\end{itemize}
+\newline	
+There are measures dealing with health:
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
+	\item Cancer death
+	\item Heart diseases deaths
+	\item Length of hospitals stays for lung diseases
+	\end{itemize}
+\newline
+Some measures about agriculture:
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
+	\item Pesticides
+	\item Nitrogen fertilizers
+	\item Potassium fertilizers
+	\item Phosphor fertilizers
+	\end{itemize}
+\newline	
+We have some measures on tax prices:
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
+	\item Environmental tax
+	\item Transport tax
+	\end{itemize}
+\newline	
+Finally, there are some measures dealing with transport:
+	\begin{itemize}[parsep=0cm,itemsep=0cm]
+	\item Diesel motor cars
+	\item Petrol motor cars
+	\end{itemize}
+Likewise, for pollutant, it is necessary to multiply the normalize value by 10000. So, in the legend, each color represents a value of measure in the measure unit per 10000 inhabitants.
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-invidunt ut labore et dolore magna aliquyam erat, sed diam
-voluptua. At vero eos et accusam et justo duo dolores et ea
-rebum.
-
-\newpage
+	\subsection{The measure suggestion}
+	\paragraph{}
+	To optimize the comparison between these pollutants and these measures, we offer a list of measures for each pollutant. To do so, we first searched for the possible causes and consequences of the emissions of each pollutant and any data which be correlated with it. Then we tried to find adapted measures in our files data, or in the Eurostats’ database.
+\newline
+Thus, the computing of the all of the information gives this:	
+\begin{itemize}[leftmargin=*,parsep=0cm]
+	\item For the Ammonia pollutant, we identified that the major sector that produces rejects was the agriculture. So we created a list with Pesticides, Nitrogen, Potassium and Phosphor fertilizers.
+	\item For the Volatile Organic Compounds pollutant, transports and industrial activity are responsible for the emission of this pollutant. So we created a list with our data on Primary production of electricity, renewable electricity and coal and Petrol motor cars.
+	\item For the Nitrogen Oxide pollutant, every energy transformation produces Nitrogen Oxide. So we created a list with all of our data concerning energy production, that is to say Primary production of electricity, renewable electricity, oil, gas, coal and Nuclear heat.
+	\item For the \unit{10}{\micro\meter} particles and \unit{2.5}{\micro\meter} particles pollutants, we identified that the major sector that produces rejects was car diesel combustion. So, we created a list with Diesel motor cars as a first choice. To see if at least one correlation exists, we add in this list all of our measures dealing with health, this means Cancer death, Heart diseases deaths and Length of hospitals stays for lung diseases. To finish, as particles are a real issue for the government, we add to this same list data about environment and transport taxes.
+	\item For the Sulfur Oxide pollutant, we observed that it was usually created during burning and refining processes, from the sulfur contained in raw materials such as coal, petrol and other ores that contain some metal. That is why we offer, for this pollutant, the same list as for the Nitrogen Oxide pollutant.
+\end{itemize}
 
 \section{Evaluation}
 
