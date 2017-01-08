@@ -134,7 +134,7 @@ We propose here a model which allows to visualize the evolution of the emissions
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% START OF THE PAPER %%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
@@ -158,6 +158,7 @@ As a result, there are regularly many pollution peaks in major European cities, 
  \label{fig:pollution_decrease}
 \end{figure}
 
+\paragraph{}
 The model we are proposing has two parts.
 
 \paragraph{}
@@ -206,51 +207,30 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 
 
 \section{Project Description (2p)}
-We organized our Web Page into 3 parts:  first, a header which describes the project, then an area with 12 small maps of the European countries, showing pollution-related data, thanks to the pollutant list, the legend and the colours. On the top of this area, there is a title which displays the name of the pollutant. Finally, an other area with the same 12 small maps, this time to show pollutant-related data such as causes, consequences or correlations to the emission of the pollutant selected.
-
+\paragraph{}
+	\subsection{Web Page description}
+	\paragraph{}
+We organized our Web Page into 3 parts:  first, a header which describes the project, then an area with 12 small maps of the European countries, showing pollution-related data, thanks to the pollutant list, the legend and the colors. On the top of this area, there is a title which displays the name of the pollutant. Finally, an other area with the same 12 small maps, this time to show pollutant-related data such as causes, consequences or correlations to the emission of the pollutant selected.
+\paragraph{}
 To be more accurate, next to the 12 pollutant small maps, there is a button radio list of 6 pollutants. By default, when the Web Page is loaded, the pollutant on top of the list is selected. When an other button radio of the list is selected, the 12 small maps are updated, as well as the legend and the title. So, we have a dynamic visualization of pollutant emission evolution in time.
-
-Likewise, in the measure map area, there is a list of measures available, and when an other measure is selected, all the area is updated. The origin of the emission is different for each pollutant, so to maximize the relevance of the comparison between pollutant and measure, we offer a different list of measures for each pollutant. That’s why, when the pollutant changes the list also does. 
-Moreover, the number of maps for pollutants and measures depends on the data we have. In fact, when we did not have any data for a year, we preferred not to represent the map of this year at all instead of showing a total grey map. We only selected the years for which we had some data for both pollutant and measure. If we have some data available for more than 12 years since 2001, we take into account the data for the 12 more recent years (for example, from 2003 to 2014). Conversely, if since 2001 we have less than 12 years of available data, we take all the data we have since 2001. So, according to the pollutant and the measure selected, there are more or less maps.
+\paragraph{}
+Likewise, in the measure map area, there is a list of measures available, and when an other measure is selected, all the area is updated. The origin of the emission is different for each pollutant, so to maximize the relevance of the comparison between pollutant and measure, we offer a different list of measures for each pollutant. That’s why, when the pollutant changes the list also does.
+\newline
+Moreover, the number of maps for pollutants and measures depends on the data we have. In fact, when we did not have any data for a year, we preferred not to represent the map of this year at all instead of showing a total gray map. We only selected the years for which we had some data for both pollutant and measure. If we have some data available for more than 12 years since 2001, we take into account the data for the 12 more recent years (for example, from 2003 to 2014). Conversely, if since 2001 we have less than 12 years of available data, we take all the data we have since 2001. So, according to the pollutant and the measure selected, there are more or less maps.
+\newline
 All of these choices enable us to have a dynamic visualization. Indeed, we maximize information by deleting non-pertinent elements. For example, the user avoids losing time with comparisons between pollutant and measure which may lead to nothing and his eye will not be caught by some grey small maps that do not bring any piece of information.
-
-Then, we have chosen to normalize our data because the most populated countries pollute than the least populated countries. If we colour the small maps with the untreated data, the legend will be slanted. Then, to solve this problem, we offer two types of data normalization. By default, when the Web Page is loaded, the “population” normalization is selected, but it’s possible to change it with the two buttons radio. When “density” is selected, all of the 24 small maps are updated, as well as the two legends. Conversely, it’s possible to return to “population” normalization selecting the “population” button radio. 
-	\subsection{Visualization description}
-	
-	\begin{itemize}
-		\item Les 12 maps polluants avec la légende
-			\begin{itemize}
-				\item Si on choisit un autre polluant dans la liste, les maps se mettent à jour
-				\item Permet le dynamisme de la vizu des polluants.
-			\end{itemize}
-			
-		\item Les 12 maps de mesure avec la légende
-			\begin{itemize}
-				\item Si on choisit une autre mesure dans la liste, les maps se mettent à jour et on affiche les maps uniquement avec les années sur lesquelles nous avons des données et polluant et mesure sélectionnés dans la limite de 12 années
-				\item Permet le dynamisme de la vizu des mesures.
-				\item permet de maximiser l’information grâce aux années dynamique, on s’adapte aux données et non l’inverse, on n’affiche jamais de map toute grise
-				\item Si on choisit un autre polluant, la liste des mesures est modifié pour proposer des mesures intéressantes à comparer avec le polluant
-				\item Permet de maximiser les comparaisons, on enlève ce qui n’est pas pertinent pour que l’utilisateur ne perde pas de temps inutilement
-			\end{itemize}
-
-		\item la normalisation des données
-			\begin{itemize}
-				\item Si on change la normalisation des données, les 24 maps et la légende se mettent à jour
-				\item Les pays les plus peuplé pollue plus, il faut faire un pourcentage
-			\end{itemize}
-		
-		
-		\item l’affichage des valeurs
-			\begin{itemize}
-				\item Quand on passe la souris sur un pays de n’importe quelle map, polluant comme mesure, le nom du pays apparaît et les années sont remplacées par la valeur sur les 24 maps (les années où il n’y pas de données pour le pays, rien ne s’affiche)
-				\item L’agencement de la vizu permet dès le premier regard de se faire une idée de la corrélation mais afficher les valeurs sur les 24 maps permet de faire un idée rapide de l’évolution de la donnée. On peut aussi comparer son évolution avec l’autre donnée (corrélation, anti-corrélation, rien)
-				\item on a une liste de tous les pays qui sont pris en compte
-				\item on peut cocher ou décocher tous les pays de la liste suivant si l’on veut les visualiser ou non. 		
-				\item La légende se met à jour si cela est nécessaire. Le pays devient gris sur toutes les maps, et passer la souris dessus ne change rien à la Vizu.
-				\item certains pays biaisent la légende en ayant des valeurs extrêmes. On peut donc choisir de ne pas prendre en compte ce pays et ainsi obtenir une échelle plus raffinée. On peut de ce fait faire une coloration de seulement quelques pays si on le souhaite
-			\end{itemize}
-			
-	\end{itemize}
+\paragraph{}
+The coloration allows a first visualization of the comparison between the pollutant and the measure. But, it is possible to be more specific, by running the mouse over a country on any pollutant- map or measure-map. In fact, the name of the country appears and all the years are replaced by the pollutant emission value for this country in the pollutant area and by the measure value for this same country in the measure area. Once again, in order to keep only the relevant elements, if we don’t have any data for this country for a specific year, the year is replaced by a blank space.
+\newline
+Our visualization arrangement and the colored maps allow, at first sight, to have an idea of the correlation between the pollutant and the measure. Then, showing the values for a country in the 24 maps help us have an idea of the evolution of both of them. Visualizing pollutant and measure values together showcases correlation or anti-correlation in the evolution between the pollutant and the measure.
+\paragraph{}
+Then, we have chosen to normalize our data because the most populated countries pollute than the least populated countries. If we color the small maps with the untreated data, the legend will be slanted. Then, to solve this problem, we offer two types of data normalization. By default, when the Web Page is loaded, the “population” normalization is selected, but it’s possible to change it with the two buttons radio. When “density” is selected, all of the 24 small maps are updated, as well as the two legends. Conversely, it’s possible to return to “population” normalization selecting the “population” button radio. 
+\paragraph{}
+However, even if we normalize the data, some countries have an outlier value for a pollutant or a measure. Consequently, the legend is slanted and the coloration does not bring an accurate piece of information because one country is red and all the others are yellow. We cannot see in the maps real shades. 
+\newline
+So, to solve this problem, we offer on the top of the pollutant area, the list of the all countries for which we have some data. By default, when the Web Page is loaded, all cases are checked. If a country has an outlier value for a pollutant-measure couple, it is possible to un-check this country. That means that, in the pollutant and measure areas, this country turns grey on all the 24 maps and running the mouse over it does not generates any visual effect.  The 24 maps and the two legends are updated, but this time, they do not take into account this un-checked country. It is possible to see now, a better shade with a legend more accurate.
+\paragraph{}
+To conclude this visualization presentation, we offer a small description and an image of the pollutant selected in top right corner. As the Ammoniac is selected by default, we see when the Web Page is loaded, the Ammoniac description.
 
 	\subsection{Choice of the measures}
 	We chose 18 measures that we considered relevant regarding the pollutants we selected : 
