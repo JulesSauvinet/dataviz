@@ -99,18 +99,11 @@ var countriesEU = new Map();
  countriesEU = {'FR' : 'France','DK' : 'Danemark','DE' : 'Allemagne','ES' : 'Espagne', 'PT' : 'Portugal', 'BE' : 'Belgique',
                 'EL' : 'Grèce','SE' : 'Suède', 'FI' : 'Finlande', 'CZ' : 'République Tchèque', 'MT' : 'Malte',
                 'CY' : 'Chypre', 'LU' : 'Luxembourg', 'NL' : 'Pays-Bas', 'EE' : 'Estonie', 'IE' : 'Irlande', 'IT' : 'Italie',
-                'HU' : 'Hongrie', 'RO' : 'Roumanie', 'UA' : 'Ukraine', 'LV' : 'Lettonie', 'LT' : 'Lituanie', 'AT' : 'Autriche',
+                'HU' : 'Hongrie', 'RO' : 'Roumanie', 'LV' : 'Lettonie', 'LT' : 'Lituanie', 'AT' : 'Autriche',
                 'BG' : 'Bulgarie', 'UK' : 'Grande-Bretagne',
                 'SI' : 'Slovénie', 'SK' : 'Slovaquie', 
                 'HR' : 'Croatie',  'PL' : 'Pologne'};
 
- var countriesEU2 = {'FR' : 'France','DK' : 'Danemark','DE' : 'Allemagne','ES' : 'Espagne', 'PT' : 'Portugal', 'BE' : 'Belgique',
-                'EL' : 'Grèce','NO' : 'Norvège','SE' : 'Suède', 'FI' : 'Finlande', 'CZ' : 'République Tchèque', 'MT' : 'Malte',
-                'CY' : 'Chypre', 'LU' : 'Luxembourg', 'NL' : 'Pays-Bas', 'EE' : 'Estonie', 'IE' : 'Irlande', 'IT' : 'Italie',
-                'HU' : 'Hongrie', 'RO' : 'Roumanie', 'UA' : 'Ukraine', 'LV' : 'Lettonie', 'LT' : 'Lituanie', 'AT' : 'Autriche',
-                'BG' : 'Bulgarie', 'MD' : 'Moldavie', 'UK' : 'Grande-Bretagne','AL' : 'Albanie',
-                'SI' : 'Slovénie', 'SK' : 'Slovaquie', 'TR' : 'Turquie', 'CH' : 'Suisse' , 'RS' : 'Serbie' ,
-                'HR' : 'Croatie', 'BA' : 'Bosnie-Herzégovine',  'PL' : 'Pologne', 'IS' : 'Islande'};
 var countries = [];
 
 /* ----------- création du tooltip qui sera utilisé pour afficher des infos sur les smallMaps ----------- */
@@ -134,7 +127,7 @@ function createNormaDiv() {
         '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radPop" value="pop" checked>' +
         '<label class ="radiolabel">Population</label>' +
-        '</span>'+ //'</br>'+
+        '&nbsp;&nbsp;&nbsp;&nbsp;</span>'+ //'</br>'+
         '<span class="radio">' +
         '<input type="radio" name = "choice" class ="choice" id="radDens" value="dens">' +
         '<label class ="radiolabel">Densité</label>' +
@@ -669,7 +662,7 @@ function updateScalesColor(){
     });
 }
 
-
+/* ajout de la définition des polluants en fonction du polluant choisi */
 function updatePolIllustration(){
     var illDiv = d3.select('#polIllustration');
 
@@ -707,7 +700,7 @@ function updatePolIllustration(){
             heightImg = 180;
             widthImg = 280;
             img = "img/pm.png";
-            def = "Les particles en suspension PM2.5 sont des particules dont le diamètre est inférieure à 2.5 micromètres. "+ "</br>" + "Elles pénètrent profondément dans l'appareil respiratoire.";
+            def = "Les particles en suspension PM2.5 sont des particules dont le diamètre est inférieure à 2.5 micromètres. "+ "Elles pénètrent profondément dans l'appareil respiratoire.";
         break;
         case "PM10":
             heightImg = 180;
@@ -717,8 +710,12 @@ function updatePolIllustration(){
         break;
     }
     var toDisplay = '';
-    if (curPol !== 'NMVOC')
-        toDisplay += '<img src="' + img + '" class = "imgPol" alt="Image du Polluant" ' + curPol +' height=\"' +heightImg+ '\" width=\"' + widthImg+ '\"> '
+    if (curPol !== 'NMVOC'){
+        if (curPol === 'PM2_5' || curPol === 'PM10')
+            toDisplay += '<img src="' + img + '" style = "border : none" class = "imgPol" alt="Image du Polluant" ' + curPol +' height=\"' +heightImg+ '\" width=\"' + widthImg+ '\"> '
+        else 
+            toDisplay += '<img src="' + img + '" class = "imgPol" alt="Image du Polluant" ' + curPol +' height=\"' +heightImg+ '\" width=\"' + widthImg+ '\"> '
+    }
 
     toDisplay += ' <p>'+def+'</p>';
 

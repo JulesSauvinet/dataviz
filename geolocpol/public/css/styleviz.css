@@ -55,7 +55,7 @@ h4{
 #presentation-text{
     font-family: roboto_slab, serif!important;
     position: absolute;
-    width: 63%;
+    width: 62%;
     left: 50px;
     top : 20px;
     font-size: 22px;
@@ -69,7 +69,7 @@ h4{
 	font-family: roboto_slab, serif!important;
     position: absolute;
 	right : 80px;
-	top: 80px;
+	top: 70px;
 	/*border : 1pt solid lightgrey;*/
 	border-radius : 3px;
 	width : 16%;
@@ -84,9 +84,10 @@ h4{
 }
 .imgPol {
     float:left;
-    margin: 5px;
-    margin-top:0px;
+    margin: 3px;
+    margin-top:5px;
     margin-right:15px;
+	border : 3pt solid brown;
 }
 
 /*le conteneur des 2 conteneurs de smallMaps */
