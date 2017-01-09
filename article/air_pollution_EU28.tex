@@ -107,7 +107,7 @@ We propose here a model which allows to visualize the evolution of the emissions
 
 %% Keywords that describe your work. Will show as 'Index Terms' in journal
 %% please capitalize first letter and insert punctuation after last keyword
-\keywords{Air pollution, Pollutant, Ammoniac, Sulphur oxides, Non-methane volatil organic compounds, Nitrogen oxides, Particles fines, EU28, Ecology, Small multiple, Small multiple maps, Maps, Data visualization, Geographical data visualization,
+\keywords{Air pollution, Pollutant, Ammonia, Sulfur oxides, Non-methane volatil organic compounds, Nitrogen oxides, Particles fines, EU28, Ecology, Small multiple, Small multiple maps, Maps, Data visualization, Geographical data visualization,
 Dataviz, Data visualisation.}
 
 %% ACM Computing Classification System (CCS). 
@@ -123,7 +123,7 @@ Dataviz, Data visualisation.}
 \teaser{
   \centering
   \includegraphics[width=\linewidth]{teaserView2}
-  \caption{Main view of the visualization: 12 small maps of EU28 colored according to Non-methane volatil oraganic compounds emissions on the top and 12 small multiple maps of EU28 showing primary production of energy from 2003 to 2014.}
+  \caption{Main view of the visualization: 12 small maps of EU28 colored according to Non-methane volatil organic compounds emissions on the top and 12 small multiple maps of EU28 showing primary production of energy from 2003 to 2014.}
 	\label{fig:teaser}
 }
 
@@ -186,7 +186,7 @@ Thus, the user can observe the evolution of the pollution to compare the countri
 \begin{figure}[H]
  \centering % avoid the use of \begin{center}...\end{center} and use \centering instead (more compact)
  \includegraphics[width=130px]{smallmap2}
- \caption{A visualization of a small map of ammonia emissions. The image is from our visualisation.}
+ \caption{A visualization of a small map of Non-methane volatil organic compounds emissions. The image is from our visualization.}
  \label{fig:smallmapammoniac}
 \end{figure}
 
@@ -201,7 +201,7 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 
 \section{Related Work}
 
-\begin{itemize}[parsep=0cm,itemsep=0cm]
+\begin{itemize}[leftmargin=*,parsep=0cm]
 \item In his visualization \cite{Boy:2014:TCP}, Boy and Fekete shows C02 emissions in countries around the world as clouds of visual smoke. The visualization is reused here \cite{Mediapart:2014:CPM} as a narrative visualization. The literature in InfoVis (Information Visualization) often states that a narrative visualization (storytelling) can engage the reader in data mining. The visualization allows an exploration in time and the comparison of emission between the different countries. But the reader must take the time to "read the visualization". In addition, it is not possible to directly compare the issue between two years.
 %http://peopleviz.gforge.inria.fr/trunk/data_blog/environment/co2_FR/index_storytelling.php
 
@@ -225,39 +225,84 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 
 
 
-\section{Project Description (2p)}
+\section{Project Description}
 	\subsection{Web Page description}
-	\paragraph{}
-We organized our Web Page into 3 parts:  first, a header which describes the project, then an area with 12 small maps of the European countries, showing pollution-related data, thanks to the pollutant list, the legend and the colors. On the top of this area, there is a title which displays the name of the pollutant. Finally, an other area with the same 12 small maps, this time to show pollutant-related data such as causes, consequences or correlations to the emission of the pollutant selected.
+We organized our Web Page into 3 parts:
+\begin{itemize}[leftmargin=*,parsep=0cm]
+\item First, a header which describes the project.
+\item Then an area with 12 small maps of the European countries, showing pollution-related data, thanks to the pollutant list, the legend and the colors. On the top of this area, there is a title which displays the name of the pollutant.
+\item Finally, an other area with the same 12 small maps, this time to show pollutant-related data such as causes, consequences or correlations to the emission of the pollutant selected. 
+\end{itemize}
+
+\subsubsection{The pollutant area}
 \paragraph{}
-To be more accurate, next to the 12 pollutant small maps, there is a button radio list of 6 pollutants. By default, when the Web Page is loaded, the pollutant on top of the list is selected. When an other button radio of the list is selected, the 12 small maps are updated, as well as the legend and the title. So, we have a dynamic visualization of pollutant emission evolution in time.
+To be more accurate, next to the 12 pollutant small maps, there is a button radio list of 6 pollutants (see the \autoref{fig:pollutant_choice} below). By default, when the Web Page is loaded, the pollutant on top of the list is selected. When an other button radio of the list is selected, the 12 small maps are updated, as well as the legend and the title. 
 \paragraph{}
-Likewise, in the measure map area, there is a list of measures available, and when an other measure is selected, all the area is updated. The origin of the emission is different for each pollutant, so to maximize the relevance of the comparison between pollutant and measure, we offer a different list of measures for each pollutant. That’s why, when the pollutant changes the list also does.
-\newline
-Moreover, the number of maps for pollutants and measures depends on the data we have. In fact, when we did not have any data for a year, we preferred not to represent the map of this year at all instead of showing a total gray map. We only selected the years for which we had some data for both pollutant and measure. If we have some data available for more than 12 years since 2001, we take into account the data for the 12 more recent years (for example, from 2003 to 2014). Conversely, if since 2001 we have less than 12 years of available data, we take all the data we have since 2001. So, according to the pollutant and the measure selected, there are more or less maps.
-\newline
-All of these choices enable us to have a dynamic visualization. Indeed, we maximize information by deleting non-pertinent elements. For example, the user avoids losing time with comparisons between pollutant and measure which may lead to nothing and his eye will not be caught by some grey small maps that do not bring any piece of information.
+So, we have a dynamic visualization of pollutant emission evolution in time.
+
+\begin{figure}[H]
+ \centering % avoid the use of \begin{center}...\end{center} and use \centering instead (more compact)
+ \includegraphics[width=140px]{choice1}
+ \caption{The pollutant selection box. The image is from our visualization.}
+ \label{fig:pollutant_choice}
+\end{figure}
+
+
+\subsubsection{The measure area}
 \paragraph{}
-The coloration allows a first visualization of the comparison between the pollutant and the measure. But, it is possible to be more specific, by running the mouse over a country on any pollutant- map or measure-map. In fact, the name of the country appears and all the years are replaced by the pollutant emission value for this country in the pollutant area and by the measure value for this same country in the measure area. Once again, in order to keep only the relevant elements, if we don’t have any data for this country for a specific year, the year is replaced by a blank space.
+Likewise, in the measure map area, there is a list of measures available, and when an other measure is selected, all the area is updated. 
+\paragraph{}
+The origin of the emission is different for each pollutant, so to maximize the relevance of the comparison between pollutant and measure, we offer a different list of measures for each pollutant. That’s why, when the pollutant changes the list also does.
+\paragraph{}
+Moreover, the number of maps for pollutants and measures depends on the data we have. In fact, when we did not have any data for a year, we preferred not to represent the map of this year at all instead of showing a total gray map. We only selected the years for which we had some data for both pollutant and measure. 
 \newline
+If we have some data available for more than 12 years since 2001, we take into account the data for the 12 more recent years (for example, from 2003 to 2014). Conversely, if since 2001 we have less than 12 years of available data, we take all the data we have since 2001. So, according to the pollutant and the measure selected, there are more or less maps.
+\paragraph{}
+All of these choices enable us to have a dynamic visualization. Indeed, we maximize information by deleting non-pertinent elements. For example, the user avoids losing time with comparisons between pollutant and measure which may lead to nothing and his eye will not be caught by some gray small maps that do not bring any piece of information.
+
+\subsubsection{The maps coloration}
+\paragraph{}
+The coloration allows a first visualization of the comparison between the pollutant and the measure. But, it is possible to be more specific, by running the mouse over a country on any pollutant- map or measure-map. 
+\newline
+In fact, the name of the country appears and all the years are replaced by the pollutant emission value for this country in the pollutant area and by the measure value for this same country in the measure area.
+\paragraph{}
+Once again, in order to keep only the relevant elements, if we don’t have any data for this country for a specific year, the year is replaced by a blank space.
+\paragraph{}
 Our visualization arrangement and the colored maps allow, at first sight, to have an idea of the correlation between the pollutant and the measure. Then, showing the values for a country in the 24 maps help us have an idea of the evolution of both of them. Visualizing pollutant and measure values together showcases correlation or anti-correlation in the evolution between the pollutant and the measure.
+
+\subsubsection{The data normalization}
 \paragraph{}
-Then, we have chosen to normalize our data because the most populated countries pollute than the least populated countries. If we color the small maps with the untreated data, the legend will be slanted. Then, to solve this problem, we offer two types of data normalization. By default, when the Web Page is loaded, the “population” normalization is selected, but it’s possible to change it with the two buttons radio. When “density” is selected, all of the 24 small maps are updated, as well as the two legends. Conversely, it’s possible to return to “population” normalization selecting the “population” button radio. 
+Then, we have chosen to normalize our data because the most populated countries pollute than the least populated countries. If we color the small maps with the untreated data, the legend will be slanted. 
+\paragraph{}
+Then, to solve this problem, we offer two types of data normalization (see the \autoref{fig:normalization_choice} below). By default, when the Web Page is loaded, the “population” normalization is selected, but it’s possible to change it with the two buttons radio. When “density” is selected, all of the 24 small maps are updated, as well as the two legends. Conversely, it’s possible to return to “population” normalization selecting the “population” radio button. 
+
+\begin{figure}[H]
+ \centering % avoid the use of \begin{center}...\end{center} and use \centering instead (more compact)
+ \includegraphics[width=120px]{choice2}
+ \caption{The normalization selection box. The image is from our visualization.}
+ \label{fig:normalization_choice}
+\end{figure}
+
+
+\subsubsection{The countries selection}
 \paragraph{}
 However, even if we normalize the data, some countries have an outlier value for a pollutant or a measure. Consequently, the legend is slanted and the coloration does not bring an accurate piece of information because one country is red and all the others are yellow. We cannot see in the maps real shades. 
+\paragraph{}
+So, to solve this problem, we offer on the top of the pollutant area, the list of the all countries for which we have some data. By default, when the Web Page is loaded, all cases are checked. If a country has an outlier value for a pollutant-measure couple, it is possible to un-check this country. 
 \newline
-So, to solve this problem, we offer on the top of the pollutant area, the list of the all countries for which we have some data. By default, when the Web Page is loaded, all cases are checked. If a country has an outlier value for a pollutant-measure couple, it is possible to un-check this country. That means that, in the pollutant and measure areas, this country turns grey on all the 24 maps and running the mouse over it does not generates any visual effect.  The 24 maps and the two legends are updated, but this time, they do not take into account this un-checked country. It is possible to see now, a better shade with a legend more accurate.
+That means that, in the pollutant and measure areas, this country turns gray on all the 24 maps and running the mouse over it does not generates any visual effect. The 24 maps and the two legends are updated, but this time, they do not take into account this un-checked country. It is possible to see now, a better shade with a legend more accurate.
+
 \paragraph{}
 To conclude this visualization presentation, we offer a small description and an image of the pollutant selected in top right corner. As the Ammonia is selected by default, we see when the Web Page is loaded, the Ammonia description.
-	
-	\subsection{Choice of data format}
+
+\subsection{Choice of data format}
 	\paragraph{}
 We decided to present 12 maps for one pollutant and 12 maps for one measure. One map is very small to describe precisely 28 countries. We had the choice between NUTS1, NUTS2 and NUTS3 formats.
-	\newline
+\paragraph{}
 NUTS, The Nomenclature of Territorial Units for Statistics, is a geocode standard for referencing the administrative divisions of countries for statistical purposes. The standard was developed by the European Union. There are three levels of NUTS defined: NUTS1, NUTS2 and NUTS3. NUTS1 is the least precise and NUTS3 is the most precise.
-\newline
+\paragraph{}
 In the case of France, NUTS1 stands for France, NUTS2 stands for a region (Bretagne, Normandie, etc …) and NUTS3 stands for a French department (Ain, Aisne, etc …). Not every country has all levels of division, depending on their size. One of the most extreme cases is Luxembourg, each of the three NUTS divisions corresponds to the entire country itself.
-\newline
+\paragraph{}
 We preferred to use NUTS1 because as each map is very small, it is not easy to run the mouse over an area if we use NUTS2 or NUTS3 format (a single area would be too tiny).
 
 	\subsection{Description of pollutants}
@@ -280,9 +325,8 @@ In fact, in the legend, each color represents a value of pollutant in ton per 10
 \subsection{Description of measures }
 
 \paragraph{}
-	We chose 18 measures that we considered relevant regarding the pollutants we selected.
-	
-\paragraph{}
+We chose 18 measures that we considered relevant regarding the pollutants we selected.
+\newline
 There are measures about energy production:
 	\begin{itemize}[parsep=0cm,itemsep=0cm]
 	\item Primary production of electricity
@@ -292,32 +336,24 @@ There are measures about energy production:
 	\item Primary production of coal
 	\item Nuclear heat
 	\end{itemize}
-	
-\paragraph{}	
 There are measures dealing with health:
 	\begin{itemize}[parsep=0cm,itemsep=0cm]
 	\item Cancer death
 	\item Heart diseases deaths
 	\item Length of hospitals stays for lung diseases
-	\end{itemize}
-	
-\paragraph{}
+	\end{itemize}	
 Some measures about agriculture:
 	\begin{itemize}[parsep=0cm,itemsep=0cm]
 	\item Pesticides
 	\item Nitrogen fertilizers
 	\item Potassium fertilizers
 	\item Phosphor fertilizers
-	\end{itemize}
-	
-\paragraph{}
+	\end{itemize}	
 We have some measures on tax prices:
 	\begin{itemize}[parsep=0cm,itemsep=0cm]
 	\item Environmental tax
 	\item Transport tax
-	\end{itemize}
-	
-\paragraph{}
+	\end{itemize}	
 Finally, there are some measures dealing with transport:
 	\begin{itemize}[parsep=0cm,itemsep=0cm]
 	\item Diesel motor cars
@@ -339,9 +375,6 @@ Thus, the computing of the all of the information gives this:
 \end{itemize}
 
 \newpage 
-...
-\newpage 
-
 \section{Evaluation}
 
 \paragraph{}
@@ -391,7 +424,7 @@ We constructed an interaction model that allows a user to quickly observe the ev
 Our interaction model also explores the potential causes and consequences of the emission of certain pollutants. It allowed us to confirm certain intuitions (e.g. use of chemical fertilizers and rejection of ammonia), highlighting with potential visual correlations. The use of color scale and small maps also makes it possible to develop a playful pedagogy, aimed at reaching a wide target audience, including people who are not familiar with pollution issues or children. 
 
 \paragraph{}
-Finally, our interaction model allows the user to compare which countries are the biggest polluters, depending on whether you choose per capita emissions or take into account population density. This may raise the question of the effectiveness of European environmental policies. This can lead to questions about countries that potentially meet certain standards or are lagging behind in the development of their reduction policies.
+Finally, our interaction model allows the user to compare which countries are the biggest polluters, depending on whether you choose per capital emissions or take into account population density. This may raise the question of the effectiveness of European environmental policies. This can lead to questions about countries that potentially meet certain standards or are lagging behind in the development of their reduction policies.
 
 %% if specified like this the section will be committed in review mode
 \acknowledgments{
