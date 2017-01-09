@@ -101,13 +101,14 @@
 
 %% Abstract section.
 \abstract{
-From now on, the media talks about environmental issues on a daily basis. Pollution peaks have become commonplace in large metropolises and air pollution is becoming a subject that is increasingly affecting citizens. As pollution is not only a visual or olfactory discomfort, it is now the main environmental health risk in the world. On average, it causes the premature death of 7 million people worldwide, including 600 000 in Europe and more than 50 000 in France, according to the World Health Organization, the Ministry of the Environment and the Environment. European Environment Agency.
-We propose here a model which allows to visualize the evolution of the emissions of the main harmful pollutants during 12 years and to explore the potential causes and consequences. For instance, does it seems to be an obvious correlation between the fines particles emissions and pulmonary diseases?
+From now on, the media talks about environmental issues on a daily basis. Pollution peaks have become commonplace in large metropolises and air pollution is becoming a subject that is increasingly affecting citizens. As pollution is not only a visual or olfactory discomfort, it turns now the main environmental health risk in the world. On average, it causes the premature death of 7 million people worldwide, including 600 000 in Europe and more than 50 000 in France, according to the World Health Organization, the Ministry of the Environment and the Environment European Environment Agency.
+We propose here a model which allows to visualize the evolution of the emissions of the main harmful pollutants during 12 years and to explore the potential causes, consequences by analyzing the correlations. For instance, does it seems to be an obvious correlation between the fines particles emissions and pulmonary diseases?
 }
 
 %% Keywords that describe your work. Will show as 'Index Terms' in journal
 %% please capitalize first letter and insert punctuation after last keyword
-\keywords{Air pollution, Pollutant, Ammoniac, Sulphur oxides, Non-methane volatil organic compounds, Nitrogen oxides, Particule matters, EU28, Ecology, Health.}
+\keywords{Air pollution, Pollutant, Ammoniac, Sulphur oxides, Non-methane volatil organic compounds, Nitrogen oxides, Particles fines, EU28, Ecology, Small multiple, Small multiple maps, Maps, Data visualization, Geographical data visualization,
+Dataviz, Data visualisation.}
 
 %% ACM Computing Classification System (CCS). 
 %% See <http://www.acm.org/class/1998/> for details.
@@ -121,8 +122,8 @@ We propose here a model which allows to visualize the evolution of the emissions
 %% Uncomment below to include a teaser figure.
 \teaser{
   \centering
-  \includegraphics[width=\linewidth]{teaserView}
-  \caption{Main view of the visualization: 12 small maps of EU28 colored according to ammoniac emissions on the top and 12 small maps of EU28 showing quantity used of Nitrogen fertilizers from 2003 to 2014.}
+  \includegraphics[width=\linewidth]{teaserView2}
+  \caption{Main view of the visualization: 12 small maps of EU28 colored according to Non-methane volatil oraganic compounds emissions on the top and 12 small multiple maps of EU28 showing primary production of energy from 2003 to 2014.}
 	\label{fig:teaser}
 }
 
@@ -163,7 +164,7 @@ As a result, there are regularly many pollution peaks in major European cities, 
 
 
 \paragraph{}
-Taking note of this issue, ce created a model which would have as ambition to inform people on the evolution of the population over the last years. Our model will also have to be able to geolocate (by country) pollution according to the pollutants.
+Taking note of this issue, we created a model which would have as ambition to inform people on the evolution of the population over the last years. Our model will also have to be able to geolocate (by country) pollution according to the pollutants.
 We wanted to highlight the countries that pollute the most, and force us to question why? Is it a function of the sector of activity? Do these countries comply with European ecological standards? Does the European policy on environmental policy therefore have a real interest or should it be reformed?
 
 \paragraph{}
@@ -174,18 +175,18 @@ We thought our model, create our model and developed our visualization in 1 mont
 The model we are proposing has two parts.
 
 \paragraph{}
-The first part is to be able to visualize the evolution of pollution in the European Union countries for 6 pollutants identified by Eurostats as among the most dangerous for the environment and health: Ammonia (NH3), Sulfur Oxides (SOx) Nitrogen Oxides (NOx), Non-methane volatile organic compounds (NMVOC), Fine Particles less than 2.5um (PM2.5), and Fines Particles less than 10um (PM10).
+The first part is to be able to visualize the evolution of pollution in the European Union countries for 6 pollutants identified by Eurostats as among the most dangerous for the environment and health: Ammonia (NH3), Sulfur Oxides (SOx) Nitrogen Oxides (NOx), Non-methane volatile organic compounds (NMVOC), Fine Particles less than \unit{2.5}{\micro\meter} (PM2.5), and Fines Particles less than \unit{10}{\micro\meter}(PM10).
 
 \paragraph{}
 In order to be able to visualize the evolution of the emission of these pollutants, we have developed an interface composed of 12 small maps from the European Union countries to 28 concerning 12 recent years (the data we have of the pollutants range from 1990 to 2014, and these are more complete the longer the time). The user chooses the pollutant from which he wishes to consult changes in the list of 6 specified earlier. Then, each small map (see the \autoref{fig:smallmapammoniac} below) is colored according to a scale of color more or less intensely depending on the amount of pollution rejected per inhabitant. The countries whose data we do not have are colored gray. The color scale is constructed from two minimum and maximum values ​​which are the minimum and maximum rejected pollution values ​​by a country during the 12 years considered.
 
 \paragraph{}
-Thus, the user can observe the evolution of the pollution to compare the countries between two countries or for the same country for two different years. The small maps give him an overview showing the general trend of the evolution of pollution for the 12 years and the pollutant considered. Moreover, the color scale makes it possible to isolate clearly the countries which have a much higher emission than the others (e.g. Ireland in figure 3).
+Thus, the user can observe the evolution of the pollution to compare the countries between two countries or for the same country for two different years. The small maps give him an overview showing the general trend of the evolution of pollution for the 12 years and the pollutant considered. Moreover, the color scale makes it possible to isolate clearly the countries which have a much higher emission than the others (e.g. Ireland in \autoref{fig:smallmapammoniac}).
 
 \begin{figure}[H]
  \centering % avoid the use of \begin{center}...\end{center} and use \centering instead (more compact)
- \includegraphics[width=130px]{smallmap}
- \caption{A visualization of a small map. The image is from our visualisation.}
+ \includegraphics[width=130px]{smallmap2}
+ \caption{A visualization of a small map of ammonia emissions. The image is from our visualisation.}
  \label{fig:smallmapammoniac}
 \end{figure}
 
@@ -200,7 +201,7 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 
 \section{Related Work}
 
-\begin{itemize}
+\begin{itemize}[parsep=0cm,itemsep=0cm]
 \item In his visualization \cite{Boy:2014:TCP}, Boy and Fekete shows C02 emissions in countries around the world as clouds of visual smoke. The visualization is reused here \cite{Mediapart:2014:CPM} as a narrative visualization. The literature in InfoVis (Information Visualization) often states that a narrative visualization (storytelling) can engage the reader in data mining. The visualization allows an exploration in time and the comparison of emission between the different countries. But the reader must take the time to "read the visualization". In addition, it is not possible to directly compare the issue between two years.
 %http://peopleviz.gforge.inria.fr/trunk/data_blog/environment/co2_FR/index_storytelling.php
 
@@ -216,7 +217,7 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 
 \item Here is this website's article \cite{Roger:2013:EWD}, the author explain how to use the NUTS geographical data that we use, some eurostats' data (roughly similar to the format of the measurement data we use) to display crimes in Europe according to density with D3.js. This article helped us to create our visualization.
 
-\item This two blocks using D3.js to display small multiple (\href{http://bl.ocks.org/tomgp/9386620}{block 1} and \href{https://bl.ocks.org/armollica/6314f45890bcaaa45c808b5d2b0c602f}{block 2}) technically helped us to realize our small multiple.
+\item This two blocks using D3.js to display small multiple (\href{http://bl.ocks.org/tomgp/9386620}{block 1} and \href{https://bl.ocks.org/armollica/6314f45890bcaaa45c808b5d2b0c602f}{block 2}) technically helped us to realize our small multiple maps.
 
 \end{itemize}
 
@@ -345,7 +346,7 @@ Thus, the computing of the all of the information gives this:
 
 \paragraph{}
 We evaluated our interaction model by looking at whether known correlations were visually highlighted.
-If one takes Ammonia, which is emitted at 94\% by agriculture, it would seem logical to establish a clear link between the colorings of colors for pollutant emissions and for the total rejection of pesticides. We asked people around us (10 people in total) to make assumptions about looking at the visualization set on the pollutant 'Ammonia' and measure 'Pesticides'. All responded that visualization should, in their opinion, indicate that the more a country released ammonia (per capita), the greater the release of pesticides. We have thus deduced that for some public, our visually was potentially relevant for the linkage between pollutant and measurement.
+If one takes Ammonia, which is emitted at 94\% by agriculture, it would seem logical to establish a clear link between the colorings of colors for pollutant emissions and for the total rejection of pesticides. We asked people around us (10 persons in total) to make assumptions about looking at the visualization set on the pollutant 'Ammonia' and measure 'Pesticides'. All responded that visualization should, in their opinion, indicate that the more a country released ammonia (per capita), the greater the release of pesticides. We have thus deduced that for some public, our visually was potentially relevant for the linkage between pollutant and measurement.
 
 \section{Discussion}
 
@@ -394,8 +395,7 @@ Finally, our interaction model allows the user to compare which countries are th
 
 %% if specified like this the section will be committed in review mode
 \acknowledgments{
-The authors wish to thank your mother and your sister. This work was supported in part by
-a grant from myass.}
+The authors wish to thank Aur\'elien Tabard, Nicolas Bonneel and Romain Vuillermot for their piece of advice and their support during our work.}
 
 %\bibliographystyle{abbrv}
 \bibliographystyle{abbrv-doi}
