@@ -616,7 +616,7 @@ function updateScalesColor(){
                 color.range(['lightgreen', 'darkgreen']);
                 break;
             case "en":
-                color.range(['yellow', 'darkblue']);
+                color.range(['#edf8b1', 'darkblue']);
                 break;
             case "cn":
                 color.range(['pink', 'magenta']);
@@ -640,7 +640,7 @@ function updateScalesColor(){
                 color.range(['pink', 'darkred']);
                 break;
             case "enr":
-                color.range(['yellow', 'darkblue']);
+                color.range(['#edf8b1', 'darkblue']);
                 break;
             case "fN":
                 color.range(['lightgreen', 'darkgreen']);
@@ -652,13 +652,13 @@ function updateScalesColor(){
                 color.range(['lightgreen', 'darkgreen']);
                 break;
             case "tpd":
-                color.range(['yellow', 'darkblue']);
+                color.range(['#edf8b1', 'darkblue']);
                 break;
             case "tgp":
-                color.range(['yellow', 'darkblue']);
+                color.range(['#edf8b1', 'darkblue']);
                 break;
             case "cp":
-                color.range(['yellow', 'darkblue']);
+                color.range(['#edf8b1', 'darkblue']);
                 break;
             case "hs":
                 color.range(['pink', 'purple']);

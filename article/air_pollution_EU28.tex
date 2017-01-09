@@ -170,9 +170,8 @@ We wanted to highlight the countries that pollute the most, and force us to ques
 \paragraph{}
 We thought our model, create our model and developed our visualization in 1 month. So, of course, we did not have time to answer all these questions. Nevertheless, we tried to introduce them by giving visual keys to ask questions such as : does the rejection values ​​of ammonia of the countries of the European Union responds to the same trend as the use of pesticides? In other words, do the values ​​of our data indicate that the more pesticides a country uses, the more ammonia it releases?
 
-
 \paragraph{}
-The model we are proposing has two parts.
+The comparative power of the model we built resides in the use of small multiple maps. Essentially, a small multiple is a series of displays with the same design structure repeated for all the images, arranged in a grid. When a visualization is made of several dimension including time and space, it is a good way to display them all in a single view.
 
 \paragraph{}
 The first part is to be able to visualize the evolution of pollution in the European Union countries for 6 pollutants identified by Eurostats as among the most dangerous for the environment and health: Ammonia (NH3), Sulfur Oxides (SOx) Nitrogen Oxides (NOx), Non-methane volatile organic compounds (NMVOC), Fine Particles less than \unit{2.5}{\micro\meter} (PM2.5), and Fines Particles less than \unit{10}{\micro\meter}(PM10).
@@ -196,6 +195,7 @@ The second part of our model is the exploration of the potential causes and cons
 \paragraph{}
 Thus, by comparing the intensity of the coloration of the two series of small maps, the user can identify if there is a potential link between the pollutant and the measure considered. First, it is possible to observe if over a year the color nuances correspond and potentially indicates a correlation for the target year. Secondly, it is possible to observe whether the evolution trends (growth, decay, stagnation) are connected (similar, or opposite). The goal is to invite the user to wonder but obviously does not affirm the observed link.
 
+
 %% \section{Introduction} %for journal use above \firstsection{..} instead
 
 
@@ -205,7 +205,20 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 \item In his visualization \cite{Boy:2014:TCP}, Boy and Fekete shows C02 emissions in countries around the world as clouds of visual smoke. The visualization is reused here \cite{Mediapart:2014:CPM} as a narrative visualization. The literature in InfoVis (Information Visualization) often states that a narrative visualization (storytelling) can engage the reader in data mining. The visualization allows an exploration in time and the comparison of emission between the different countries. But the reader must take the time to "read the visualization". In addition, it is not possible to directly compare the issue between two years.
 %http://peopleviz.gforge.inria.fr/trunk/data_blog/environment/co2_FR/index_storytelling.php
 
-\item The concept of displaying a serie of small maps is also known as small multiples as popularized by Tufte \cite{Tufte:1983:VDQ}. In his article \cite{Smith:2005:MSM}, Smith show the interest of small multiples maps for geographical and time visualization. He says that multiple small maps may prove useful as a method of data visualization and/or seeking. Furthermore, according to him, small multiples maps have the potential to address the problem of highly dimensional data, and simplify searches for information over time.
+\item Here \cite{Brewer:1994:CUG} , Brewer talks about the adapted colors to use for mapping and visualization. Some of his work is used here href{http://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=3}{Color brewer})" for the design of color scales.
+
+\item The concept of displaying a serie of small maps is also known as small multiple as popularized by Tufte \cite{Tufte:1983:VDQ} and Cleveland \cite{Cleveland:1985:TEG}. Tufte defines the small multiples as "Illustrations of postage-stamp size are indexed by category or a label, sequenced over time like the frames of a movie, or ordered by a quantitative variable not used in the single image itself". According to him, small multiples can show rich, multi-dimensional data without trying to cram all that information into a single, overly-complex chart. In his book \cite{Tufte:1990:ENI}, p.67, he says that "For a wide range of problems in data presentation, small multiples are the best design solution". 
+
+
+\item In his website article \cite{Gemignani:2010:BKV}, Zach Gemignani says about small multiple that :
+	\begin{itemize}
+		\item "They allow for the display of many variables with less risk of confusing your audience."
+		\item "The reader can quickly learn to read an individual chart and apply this knowledge as they scan the rest of the charts. This shifts the reader’s effort from understanding how the chart works to what the data says."
+		\item "Small multiples enable comparison across variables and reveal the range of potential patterns in the charts."
+	\end{itemize}
+
+\item In his article \cite{Smith:2005:MSM}, Smith show the interest of small multiples maps for geographical and time visualization. He says that multiple small maps may prove useful as a method of data visualization and/or seeking. Furthermore, according to him, small multiples maps have the potential to address the problem of highly dimensional data, and simplify searches for information over time.
+
 
 \item In this article \cite{Reimer:2011:SSM}, the authors show how small multiples maps might be useful to complete the task in of comparison of the variation of data values over other variables. They say that small multiples of a geographical map is relevant to obtain to compare different spatial configurations of values.
 
@@ -213,16 +226,12 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 
 \item In this article \cite{Eurostats:2016:VMC}, from the website \href{http://ec.europa.eu/}{Eurostat site} where we picked our datas, a study of the evolution of the pollutants of our visualization is presented with an explanation of the emitting sectors. The format of this kind of article does not have the catchy side that we want to have with our visualization.
 
-\item Here \cite{Brewer:1994:CUG} , Brewer talks about the adapted colors to use for mapping and visualization.
 
 \item Here is this website's article \cite{Roger:2013:EWD}, the author explain how to use the NUTS geographical data that we use, some eurostats' data (roughly similar to the format of the measurement data we use) to display crimes in Europe according to density with D3.js. This article helped us to create our visualization.
 
 \item This two blocks using D3.js to display small multiple (\href{http://bl.ocks.org/tomgp/9386620}{block 1} and \href{https://bl.ocks.org/armollica/6314f45890bcaaa45c808b5d2b0c602f}{block 2}) technically helped us to realize our small multiple maps.
 
 \end{itemize}
-
-\newpage
-
 
 
 \section{Project Description}
