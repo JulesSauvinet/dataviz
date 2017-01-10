@@ -97,8 +97,7 @@ var countriesEU = new Map();
 var countries = [];
 
 /* ----------- création du tooltip qui sera utilisé pour afficher des infos sur les smallMaps ----------- */
-function createTooltip(){
-	tip = d3.tip()
+var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d,date, isPol) {
@@ -106,11 +105,10 @@ function createTooltip(){
         var toDisplay = name +'</br>';
         if (!name)
             console.log(d.properties["NAME"]);
+
         return toDisplay;
     });
-	
-	return tip;
-}
+
 
 /* ----------       fonction pour créer le div du choix de la normalisation des données       ----------- */
 function createNormaDiv() {
@@ -750,11 +748,14 @@ function updatePol() {
     // on a mtn toutes les données nécessaires, on peut donc creer/mettre a jour les fonds de carte des smallMultiples polluants
     var i=0;
     SVGs.each(function(date){
-	
-		var tip = createTooltip();
-		
+
         var map = d3.select(this).selectAll('path')
             .data(data);
+
+
+        //console.log(d3.select(this).node());
+
+        //d3.mouse(SVGs.node()));
 
         map.enter().append("path")
             .attr({
@@ -765,7 +766,17 @@ function updatePol() {
             })
             .on('mouseover', function(d){
                 if (countries.includes(d.properties["NUTS_ID"])) {
-                    tip.show(d, date, true);
+
+                    //tip.show(d, date, true);
+
+                
+
+                    /*tip.style("left", (d3.event.x) + "px")
+                        .style("top", (d3.event.y) + "px");*/
+
+
+                    //toDisplay+= " </br> " + d3.event.pageX + ", " + d3.event.pageY;
+
                     var d2;
                     mesureMap[curMes].forEach(function(mes){
                         if (mes.properties["NUTS_ID"] === d.properties["NUTS_ID"])
@@ -834,6 +845,7 @@ function updatePol() {
                 return "lightgrey";
             }
         });
+
         map.call(tip);
         map.exit().remove();
         i++;
@@ -956,7 +968,6 @@ function updateMes(){
     SVGs2.each(function(date) {
         d3.select(this).selectAll('path').remove();
 
-		var tip = createTooltip();
         var map = d3.select(this).selectAll('path')
             .data(data);
 
@@ -1012,7 +1023,8 @@ function updateMes(){
                 }
             }).on('mouseover', function(d){
                     if (countries.includes(d.properties["NUTS_ID"])) {
-                        tip.show(d, date, false);
+                        //tip.show(d, date, false);
+
                         var d2;
                         polMap[curPol].forEach(function(pol){
                             if (pol["geo"] === d.properties["NUTS_ID"])
@@ -1060,7 +1072,8 @@ function updateMes(){
                       d3.select('.title2'+year).html(year);
                   });
               });
-	  
+
+			  
         map.call(tip);
         map.exit().remove();
     });
@@ -1229,8 +1242,7 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases,
         cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod,hopital_stayed);
 
-	createTooltip();
-	// on affiche les smallMultiples de mesure et de pollution (les mesures avant pour ne pas avoir a faire une MAJ de l'affichage des map polluants)
+    // on affiche les smallMultiples de mesure et de pollution (les mesures avant pour ne pas avoir a faire une MAJ de l'affichage des map polluants)
     updateMes();
     updatePol();
 }
