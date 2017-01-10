@@ -233,6 +233,7 @@ label.notSelected {
     color: lightgray;
 }
 
+
 /* le tooltip quand on survole un pays d'une smallMap */
 .d3-tip {
     line-height: 1.3;

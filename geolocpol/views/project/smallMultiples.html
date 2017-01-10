@@ -6,13 +6,14 @@
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src="https://d3js.org/queue.v1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
 <link rel="stylesheet" href="css/styleviz.css">
 <link rel="icon" href="img/icon1.png">
 
 <body>
 
+<!-- LE TEXTE DE PRESENTATION DE LA VIZU -->
 <section id ="presentation-text">
 
     <h2 id = "presentation-title">Qui sont les plus gros pollueurs parmi l'UE et pourquoi ? </h2>
@@ -28,27 +29,30 @@
 
 </section>
 
+<!-- L'explication de ce qu'est le polluant courant -->
 <div id = "polIllustration"></div>
 
 <div id = "content">
 
-
-
-
+	<!-- Le div du choix des pays -->
     <div id="countriesdiv" ></div>
     
+	<!-- Le div des conteneurs des 2 conteneurs de small maps -->
     <div id = "mapsdiv">
 
-
+	
+			<!-- Le div des small maps de polluants et le titre -->
             <div id = 'map1title' class = "maptitle"></div>
             <div id="maps"></div>
 
             <hr>
 
+			<!-- Le div des small maps de polluants et le titre -->
             <div id = 'map2title' class = "maptitle"></div>
             <div id="maps2"></div>
-            <footer>
 			
+			<!-- Le footer avec la source, et les notes --> 
+            <footer>
 				<div class= "footleft">
 					Source : <a href="http://http://ec.europa.eu/eurostat/data/database">eurostat</a>		
 
@@ -56,9 +60,9 @@
 						</br><sup> (1) </sup>La liste des mesures disponibles changent en fonction du polluant affiché afin de maximiser la pertinence des comparaisons.
 						</br> <sup>(2)</sup>
 						Population : les données de chaque pays sont divisées par sa population.
-						<p style="margin-left:1.0%;">
+						<p style="margin-left:1.2%;">
 							Densité
-							<span style="margin-left:1.5%;">
+							<span style="margin-left:1.4%;">
 							: les données de chaque pays sont divisées par sa population et multipliées par sa densité.
 							<span/>
 						</p>
@@ -71,11 +75,11 @@
 					</span>
 				</div>
 			</footer>
-
-
+			
 
     </div>
 
+	<!-- LE PANNEAU DE DROITE -->
     <div id="settings">
         <!--------------- LEGENDE POLLUANTS ------------------>
         <div id = "polsettings" class = "halfsettings">
@@ -83,19 +87,16 @@
             <div id="pollegend" class = "legend"></div>
         </div>
 
-
         <!--------------- RADIOLIST NORMALISATION ------------------>
         <div id="normalisationdiv"></div>
 
         <!---------------- LEGENDE MESURES ------------------->
         <div id = "messettings" class = "halfsettings">
-
             <div id="mesurediv" class = "choicediv"></div>
             <div id="meslegend" class = "legend"></div>
         </div>
     </div>
-					
-				
+						
 
 </div>
 </body>

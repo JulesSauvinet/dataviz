@@ -1,19 +1,9 @@
 //---------------------------------------------------------- IDEES ----------------------------------------------------------
 
-// ----------- SUPER UTILE -----------
-//TODO trouver les bonnes suggestions (Marine)
-//TODO bien normaliser les unités et préciser exactement a quoi correspond chaque mesure son nom etc (Marine)
-//TODO map + switch sur *1000 ou *10000 (Marine)
-//TODO phrase de pres/intro accrocheur avec explications (Marine + Jules)
-//->https://blogs.mediapart.fr/la-redaction-de-mediapart/blog/180314/co2-la-carte-de-la-pollution-mondiale
-
 // ----------- AMELIORATION -----------
-//TODO faire du design, sur le panneau de droite notamment
 //TODO des graphiques
-//TODO nettoyer le code
 
 //---------------------------------------------------------------------------------------------------------------------------
-
 
 //---------------------------------------------------------- CODE -----------------------------------------------------------
 // valeurs par défaut pour le polluant, la mesure et la normalisation courant(e) sélectionné(e)
@@ -107,7 +97,8 @@ var countriesEU = new Map();
 var countries = [];
 
 /* ----------- création du tooltip qui sera utilisé pour afficher des infos sur les smallMaps ----------- */
-var tip = d3.tip()
+function createTooltip(){
+	tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d,date, isPol) {
@@ -117,7 +108,9 @@ var tip = d3.tip()
             console.log(d.properties["NAME"]);
         return toDisplay;
     });
-
+	
+	return tip;
+}
 
 /* ----------       fonction pour créer le div du choix de la normalisation des données       ----------- */
 function createNormaDiv() {
@@ -757,7 +750,9 @@ function updatePol() {
     // on a mtn toutes les données nécessaires, on peut donc creer/mettre a jour les fonds de carte des smallMultiples polluants
     var i=0;
     SVGs.each(function(date){
-
+	
+		var tip = createTooltip();
+		
         var map = d3.select(this).selectAll('path')
             .data(data);
 
@@ -839,7 +834,6 @@ function updatePol() {
                 return "lightgrey";
             }
         });
-
         map.call(tip);
         map.exit().remove();
         i++;
@@ -962,6 +956,7 @@ function updateMes(){
     SVGs2.each(function(date) {
         d3.select(this).selectAll('path').remove();
 
+		var tip = createTooltip();
         var map = d3.select(this).selectAll('path')
             .data(data);
 
@@ -1065,7 +1060,8 @@ function updateMes(){
                       d3.select('.title2'+year).html(year);
                   });
               });
-
+	  
+        map.call(tip);
         map.exit().remove();
     });
 
@@ -1233,7 +1229,8 @@ function init(error,pollutions,density, population, pesticides, energie, nuclear
     createMesureData(europe, pesticides, energie, nuclear, taxes, transport, heartdiseases,
         cancer, motorcars, enerrenouv, fertiNitro, fertiPhos, fertiPota,tot_petrol_prod,tot_gas_prod,coal_prod,hopital_stayed);
 
-    // on affiche les smallMultiples de mesure et de pollution (les mesures avant pour ne pas avoir a faire une MAJ de l'affichage des map polluants)
+	createTooltip();
+	// on affiche les smallMultiples de mesure et de pollution (les mesures avant pour ne pas avoir a faire une MAJ de l'affichage des map polluants)
     updateMes();
     updatePol();
 }
