@@ -33,7 +33,7 @@
     var direction   = d3TipDirection,
         offset      = d3TipOffset,
         html        = d3TipHTML,
-        rootElement = document.body,
+        rootElement = document.getElementById('mapsdiv'),
         node        = initNode(),
         svg         = null,
         point       = null,
@@ -70,8 +70,8 @@
       while (i--) nodel.classed(directions[i], false)
       coords = directionCallbacks.get(dir).apply(this)
       nodel.classed(dir, true)
-        .style('top', (coords.top + poffset[0]) + scrollTop + 'px')
-        .style('left', (coords.left + poffset[1]) + scrollLeft + 'px')
+        .style('top', (coords.top + poffset[0]) + scrollTop + 5 + 'px')
+        .style('left', (coords.left + poffset[1]) + scrollLeft - 20 + 'px')
 
       return tip
     }

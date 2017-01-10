@@ -767,7 +767,7 @@ function updatePol() {
             .on('mouseover', function(d){
                 if (countries.includes(d.properties["NUTS_ID"])) {
 
-                    //tip.show(d, date, true);
+                    tip.show(d, date, true);
 
                 
 
@@ -1023,7 +1023,7 @@ function updateMes(){
                 }
             }).on('mouseover', function(d){
                     if (countries.includes(d.properties["NUTS_ID"])) {
-                        //tip.show(d, date, false);
+                        tip.show(d, date, false);
 
                         var d2;
                         polMap[curPol].forEach(function(pol){
