@@ -107,16 +107,15 @@ We propose here a model which allows to visualize the evolution of the emissions
 
 %% Keywords that describe your work. Will show as 'Index Terms' in journal
 %% please capitalize first letter and insert punctuation after last keyword
-\keywords{Air pollution, Pollutant, Ammonia, Sulfur oxides, Non-methane volatil organic compounds, Nitrogen oxides, Particles fines, EU28, Ecology, Small multiple, Small multiple maps, Maps, Data visualization, Geographical data visualization,
-Dataviz, Data visualisation.}
+\keywords{Air pollution, Pollutant, Ammonia, Sulfur oxides, Non-methane volatil organic compounds, Nitrogen oxides, Particles fines, EU28, Ecology, Small multiple, Small multiple maps, Maps, Data visualization, Geographical data visualization, Data visualisation.}
 
 %% ACM Computing Classification System (CCS). 
 %% See <http://www.acm.org/class/1998/> for details.
 %% The ``\CCScat'' command takes four arguments.
-\CCScatlist{ % not used in journal version
- \CCScat{Human-centered computing}{Visualization}%
-{Visualization application domains}{Geographic visualization};
-}
+%\CCScatlist{ % not used in journal version
+% \CCScat{Human-centered computing}{Visualization}%
+%{Visualization application domains}{Geographic visualization};
+%}
 
 
 %% Uncomment below to include a teaser figure.
@@ -168,10 +167,10 @@ Taking note of this issue, we created a model which would have as ambition to in
 We wanted to highlight the countries that pollute the most, and force us to question why? Is it a function of the sector of activity? Do these countries comply with European ecological standards? Does the European policy on environmental policy therefore have a real interest or should it be reformed?
 
 \paragraph{}
-We thought our model, create our model and developed our visualization in 1 month. So, of course, we did not have time to answer all these questions. Nevertheless, we tried to introduce them by giving visual keys to ask questions such as : does the rejection values ​​of ammonia of the countries of the European Union responds to the same trend as the use of pesticides? In other words, do the values ​​of our data indicate that the more pesticides a country uses, the more ammonia it releases?
+We thought our model, created our model and developed our visualization in 1 month. So, of course, we did not have time to answer all these questions. Nevertheless, we tried to introduce them by giving visual keys to ask questions such as : does the rejection values ​​of ammonia of the countries of the European Union responds to the same trend as the use of pesticides? In other words, do the values ​​of our data indicate that the more pesticides a country uses, the more ammonia it releases?
 
 \paragraph{}
-The comparative power of the model we built resides in the use of small multiple maps. Essentially, a small multiple is a series of displays with the same design structure repeated for all the images, arranged in a grid. When a visualization is made of several dimension including time and space, it is a good way to display them all in a single view.
+The comparative power of the model we built resides in the use of small multiple maps. Essentially, a small multiple is a series of displays with the same design structure repeated for all the images, arranged in a grid. When a visualization is made of several dimensions including time and space, it is a good way to display them all in a single view.
 
 \paragraph{}
 The first part is to be able to visualize the evolution of pollution in the European Union countries for 6 pollutants identified by Eurostats as among the most dangerous for the environment and health: Ammonia (NH3), Sulfur Oxides (SOx) Nitrogen Oxides (NOx), Non-methane volatile organic compounds (NMVOC), Fine Particles less than \unit{2.5}{\micro\meter} (PM2.5), and Fines Particles less than \unit{10}{\micro\meter}(PM10).
@@ -207,7 +206,7 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 
 \item Here \cite{Brewer:1994:CUG} , Brewer talks about the adapted colors to use for mapping and visualization. Some of his work is used here \href{http://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=3}{Color brewer})" for the design of color scales.
 
-\item The concept of displaying a serie of small maps is also known as small multiple as popularized by Tufte \cite{Tufte:1983:VDQ} and Cleveland \cite{Cleveland:1985:TEG}. Tufte defines the small multiples as "Illustrations of postage-stamp size are indexed by category or a label, sequenced over time like the frames of a movie, or ordered by a quantitative variable not used in the single image itself". According to him, small multiples can show rich, multi-dimensional data without trying to cram all that information into a single, overly-complex chart. In his book \cite{Tufte:1990:ENI}, p.67, he says that "For a wide range of problems in data presentation, small multiples are the best design solution". 
+\item The concept of displaying a series of small maps is also known as small multiple as popularized by Tufte \cite{Tufte:1983:VDQ} and Cleveland \cite{Cleveland:1985:TEG}. Tufte defines the small multiples as "Illustrations of postage-stamp size are indexed by category or a label, sequenced over time like the frames of a movie, or ordered by a quantitative variable not used in the single image itself". According to him, small multiples can show rich, multi-dimensional data without trying to cram all that information into a single, overly-complex chart. In his book \cite{Tufte:1990:ENI}, p.67, he says that "For a wide range of problems in data presentation, small multiples are the best design solution". 
 
 
 \item In his website article \cite{Gemignani:2010:BKV}, Zach Gemignani says about small multiple that :
@@ -227,18 +226,18 @@ Thus, by comparing the intensity of the coloration of the two series of small ma
 \item In this article \cite{Eurostats:2016:VMC}, from the website \href{http://ec.europa.eu/}{Eurostat site} where we picked our datas, a study of the evolution of the pollutants of our visualization is presented with an explanation of the emitting sectors. The format of this kind of article does not have the catchy side that we want to have with our visualization.
 
 
-\item Here is this website's article \cite{Roger:2013:EWD}, the author explain how to use the NUTS geographical data that we use, some eurostats' data (roughly similar to the format of the measurement data we use) to display crimes in Europe according to density with D3.js. This article helped us to create our visualization.
+\item Here is this website's article \cite{Roger:2013:EWD}, the author explain how to use the NUTS geographical data that we use, some Eurostats' data (roughly similar to the format of the measurement data we use) to display crimes in Europe according to density with D3.js. This article helped us to create our visualization.
 
-\item This two blocks using D3.js to display small multiple (\href{http://bl.ocks.org/tomgp/9386620}{block 1} and \href{https://bl.ocks.org/armollica/6314f45890bcaaa45c808b5d2b0c602f}{block 2}) technically helped us to realize our small multiple maps.
+\item These two blocks using D3.js to display small multiple (\href{http://bl.ocks.org/tomgp/9386620}{block 1} and \href{https://bl.ocks.org/armollica/6314f45890bcaaa45c808b5d2b0c602f}{block 2}) technically helped us to realize our small multiple maps.
 
 \end{itemize}
 
 
 \section{Project Description}
-	\subsection{Choice project}
+	\subsection{Project's choice}
 		\subsubsection{Why we have chosen this project}
 		\paragraph{}
-First, we wanted to exhibit atmosphere and water pollutant data for France. But, we had too much pollutant indicators and not sufficiently measures to notice a possibly correlation. In fact, we had  33 atmosphere pollutant indicators and 33 water pollutant indicators and no correlated measure.		
+First, we wanted to exhibit atmosphere and water pollutant data for France. But, we had too many pollutant indicators and not enough measures to notice a possibly correlation. In fact, we had  33 atmosphere pollutant indicators and 33 water pollutant indicators and no correlated measure.		
 		\paragraph{}
 So, we decided to change our course project deciding to exhibit only atmosphere pollutant data, and this time, for the European Union. We also decided to keep only 6 pollutants contrary to France and to search more correlated measures. We wanted to find countries that emit the most. We also wanted to put forward a significant number of correlations with our measure data.		
 		\subsubsection{Where we found our data}
@@ -255,7 +254,7 @@ We found our data in the Eurostat website. This website offers many databases fo
 \item Science, technology, digital society
 \end{itemize}
 \paragraph{}
-All of our data are taken from theses databases. Eurostat offers data files which contain a subsection of databases. So, even if we make use of a piece of a database, it is not necessary to download an entire database, but just a piece of it.
+All of our data are taken from these databases. Eurostat offers data files that contain a subsection of databases. So, even if we make use of a piece of a database, it is not necessary to download an entire database, but just a piece of it.
 	\subsection{Web Page description}
 We organized our Web Page into 3 parts:
 \begin{itemize}[leftmargin=*,parsep=0cm]
@@ -282,7 +281,7 @@ So, we have a dynamic visualization of pollutant emission evolution in time.
 \paragraph{}
 Likewise, in the measure map area, there is a list of measures available, and when an other measure is selected, all the area is updated. 
 \paragraph{}
-The origin of the emission is different for each pollutant, so to maximize the relevance of the comparison between pollutant and measure, we offer a different list of measures for each pollutant. That’s why, when the pollutant changes the list also does.
+The origin of the emission is different for each pollutant, so to maximize the relevance of the comparison between pollutant and measure, we offer a different list of measures for each pollutant. That is why, when the pollutant changes the list also does.
 \paragraph{}
 Moreover, the number of maps for pollutants and measures depends on the data we have. In fact, when we did not have any data for a year, we preferred not to represent the map of this year at all instead of showing a total gray map. We only selected the years for which we had some data for both pollutant and measure. 
 \newline
@@ -302,9 +301,9 @@ Our visualization arrangement and the colored maps allow, at first sight, to hav
 
 \subsubsection{The data normalization}
 \paragraph{}
-Then, we have chosen to normalize our data because the most populated countries pollute than the least populated countries. If we color the small maps with the untreated data, the legend will be slanted. 
+Then, we have chosen to normalize our data because the most populated countries pollute more than the least populated countries. If we color the small maps with the untreated data, the legend will be slanted. 
 \paragraph{}
-Then, to solve this problem, we offer two types of data normalization (see the \autoref{fig:normalization_choice} below). By default, when the Web Page is loaded, the “population” normalization is selected, but it’s possible to change it with the two buttons radio. When “density” is selected, all of the 24 small maps are updated, as well as the two legends. Conversely, it’s possible to return to “population” normalization selecting the “population” radio button. 
+Then, to solve this problem, we offer two types of data normalization (see the \autoref{fig:normalization_choice} below). By default, when the Web Page is loaded, the “population” normalization is selected, but it is possible to change it with the two buttons radio. When “density” is selected, all of the 24 small maps are updated, as well as the two legends. Conversely, it is possible to return to “population” normalization selecting the “population” radio button. 
 
 \begin{figure}[H]
  \centering % avoid the use of \begin{center}...\end{center} and use \centering instead (more compact)
@@ -318,7 +317,7 @@ Then, to solve this problem, we offer two types of data normalization (see the \
 \paragraph{}
 However, even if we normalize the data, some countries have an outlier value for a pollutant or a measure. Consequently, the legend is slanted and the coloration does not bring an accurate piece of information because one country is red and all the others are yellow. We cannot see in the maps real shades. 
 \paragraph{}
-So, to solve this problem, we offer on the top of the pollutant area, the list of the all countries for which we have some data. By default, when the Web Page is loaded, all cases are checked. If a country has an outlier value for a pollutant-measure couple, it is possible to un-check this country. 
+So, to solve this problem, we offer on the top of the pollutant area, the list of the all countries for which we have some data. By default, when the Web Page is loaded, all the cases are checked. If a country has an outlier value for a pollutant-measure couple, it is possible to un-check this country. 
 \newline
 That means that, in the pollutant and measure areas, this country turns gray on all the 24 maps and running the mouse over it does not generates any visual effect. The 24 maps and the two legends are updated, but this time, they do not take into account this un-checked country. It is possible to see now, a better shade with a legend more accurate.
 
@@ -327,7 +326,7 @@ To conclude this visualization presentation, we offer a small description and an
 
 \subsection{Choice of data format}
 	\paragraph{}
-We decided to present 12 maps for one pollutant and 12 maps for one measure. One map is very small to describe precisely 28 countries. We had the choice between NUTS1, NUTS2 and NUTS3 formats.
+We decided to present 12 maps for one pollutant and 12 maps for one measure. One single map is very small to describe precisely 28 countries. We had the choice between NUTS1, NUTS2 and NUTS3 formats.
 \paragraph{}
 NUTS, The Nomenclature of Territorial Units for Statistics, is a geocode standard for referencing the administrative divisions of countries for statistical purposes. The standard was developed by the European Union. There are three levels of NUTS defined: NUTS1, NUTS2 and NUTS3. NUTS1 is the least precise and NUTS3 is the most precise.
 \paragraph{}
@@ -352,7 +351,7 @@ Each pollutant is told in ton in our data files. As we normalize the values by p
 \paragraph{}
 In fact, in the legend, each color represents a value of pollutant in ton per 10000 inhabitants.
 
-\subsection{Description of measures }
+\subsection{Description of measures}
 
 \paragraph{}
 We chose 18 measures that we considered relevant regarding the pollutants we selected.
@@ -393,7 +392,7 @@ Likewise, for pollutant, it is necessary to multiply the normalize value by 1000
 
 	\subsection{The measure suggestion}
 	\paragraph{}
-	To optimize the comparison between these pollutants and these measures, we offer a list of measures for each pollutant. To do so, we first searched for the possible causes and consequences of the emissions of each pollutant and any data which be correlated with it. Then we tried to find adapted measures in our files data, or in the Eurostats’ database.
+	To optimize the comparison between these pollutants and these measures, we offer a list of measures for each pollutant. To do so, we first searched for the possible causes and consequences of the emissions of each pollutant and any data which be correlated with it. Then we tried to find adapted measures in our data files, or in the Eurostats’ database.
 \newline
 Thus, the computing of the all of the information gives this:	
 \begin{itemize}[leftmargin=*,parsep=0cm]
@@ -403,16 +402,15 @@ Thus, the computing of the all of the information gives this:
 	\item For the \unit{10}{\micro\meter} particles and \unit{2.5}{\micro\meter} particles pollutants, we identified that the major sector that produces rejects was car diesel combustion. So, we created a list with Diesel motor cars as a first choice. To see if at least one correlation exists, we add in this list all of our measures dealing with health, this means Cancer death, Heart diseases deaths and Length of hospitals stays for lung diseases. To finish, as particles are a real issue for the government, we add to this same list data about environment and transport taxes.
 	\item For the Sulfur Oxide pollutant, we observed that it was usually created during burning and refining processes, from the sulfur contained in raw materials such as coal, petrol and other ores that contain some metal. That is why we offer, for this pollutant, the same list as for the Nitrogen Oxide pollutant.
 \end{itemize}
-
 \section{Evaluation}
 
 \paragraph{}
 We evaluated our interaction model by looking at whether known correlations were visually highlighted.
-If one takes Ammonia, which is emitted at 94\% by agriculture, it would seem logical to establish a clear link between the colorings of colors for pollutant emissions and for the total rejection of pesticides. We asked people around us (10 persons in total) to make assumptions about looking at the visualization set on the pollutant 'Ammonia' and measure 'Pesticides'. All responded that visualization should, in their opinion, indicate that the more a country released ammonia (per capita), the greater the release of pesticides. We have thus deduced that for some public, our visually was potentially relevant for the linkage between pollutant and measurement.
+If one takes Ammonia, which is emitted at 94\% by agriculture, it would seem logical to establish a clear link between the colorings of colors for pollutant emissions and for the total rejection of pesticides. We asked people around us (10 persons in total) to make assumptions about looking at the visualization set on the pollutant 'Ammonia' and measure 'Pesticides'. All responded that visualization should, in their opinion, indicate that the more a country releases ammonia (per capita), the greater the release of pesticides. We have thus deduced that for some public, our visually was potentially relevant for the linkage between pollutant and measurement.
 
 \section{Discussion}
 
-We will discuss here the potential improvements we have imagined for our visualization and that we have not had time to develop. 
+We will discuss here the potential improvements we have imagined for our visualization and that we had not had time to develop. 
 
 \subsection{Technical points}
 
@@ -426,7 +424,7 @@ First of all, from a technical point of view, it is possible that the visualizat
 In addition, we thought about being able to display graphs of changes in pollution values ​​and the chosen measure of a country for all the years of which we have data available. When the user clicks on a country on a small map, a graphic would appear in a container at the bottom of the visualization, giving an extra visual key to observe the correlation and evolution of the data. 
 
 \paragraph{}
-Moreover, we thought of giving an additional visual key to compare values ​​across all countries, bidding on the information provided by the color scales. When the user clicks on a country, two value tables for all other countries for the current year are displayed for the pollution values ​​and the current measure. Not all users have clear interpretations of the differences between colors, which would have allowed some users to more accurately visualize the targeted country according to the others and thus reach a wider audience. Nevertheless, since the visualization is already rich in the number of visual elements, the added information could also overload the information and obscure the view of the user
+Moreover, we thought about giving an additional visual key to compare values ​​across all countries, bidding on the information provided by the color scales. When the user clicks on a country, two value tables for all other countries for the current year are displayed for the pollution values ​​and the current measure. Not all users have clear interpretations of the differences between colors, which would have allowed some users to more accurately visualize the targeted country according to the others and thus reach a wider audience. Nevertheless, since the visualization is already rich in the number of visual elements, the added information could also overload the information and obscure the view of the user.
 
 
 \subsection{Getting more information}
@@ -441,8 +439,7 @@ We also thought we could add more pollutants. To do this, we would have had to e
 Another idea was to be able to navigate through all the common years available for the polluting / measuring combination with a 12-year sliding beach slider. That would have enabled us to make full use of our data. In addition to this idea of ​​enriching the temporal dimension, we would have liked to be able to propose a monthly time scale in addition to the annual scale to observe with more refinement the peaks of pollution. Unfortunately, no asser data is available today with such a fine time dimension.
 
 \paragraph{}
-Finally, one possibility would have been to use a finer geographical breakdown, such as that proposed by the NUTS2 regional division format) or the NUTS3 format (departmental format). However, the scale of small maps is no longer suitable for reading a visualization with depictions of such fine geographical areas. It would have been necessary to reduce the number of small maps by removing years. It is a compromise to find, providing maximum information without drowning the user, while maintaining legibility and complexity allowing the visualization to remain fast and dynamic for a comfort of use.
-
+Finally, one possibility would have been to use a finer geographical breakdown, such as that proposed by the NUTS2 or the NUTS3 format. However, the scale of small maps is no longer suitable for reading a visualization with depictions of such fine geographical areas. It would have been necessary to reduce the number of small maps by removing years. It is a compromise to find, providing maximum information without drowning the user, while maintaining legibility and complexity allowing the visualization to remain fast and dynamic for a comfort of use.
 
 \section{Conclusion}
 
