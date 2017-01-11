@@ -4,7 +4,6 @@
 
 /* le conteneur basique principal de la page */
 html{
-    -moz-transform: scale(1.1, 1.1); /* Moz-browsers */
     padding: 7px 27px 0 27px;
     /*rappel ordre top right bottom left*/
 }
