@@ -5,14 +5,15 @@
 /* le conteneur basique principal de la page */
 html{
 
-    -moz-transform: scale(0.67, 0.67); /* Moz-browsers */
     zoom: 0.67; /* Other non-webkit browsers */
     zoom: 67%; /* Webkit browsers */
+    -moz-transform: scale(1.00, 1.00); /* Moz-browsers */
+
     padding: 10px 40px 0 40px;
     /*rappel ordre top right bottom left*/
 }
 body, html {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Arial, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #232323;
     background-color: #FBFAF7;
@@ -51,12 +52,15 @@ h4{
     margin: 0px;
 }
 
+ /* la conteneur principal en dessous du texte de presentation */
+#content{
+}
 /* la phrase d'accroche de la vizu */
 #presentation-text{
-    font-family: roboto_slab, serif!important;
+    font-family: roboto_slab, Arial, serif!important;
     position: absolute;
     width: 62%;
-    left: 50px;
+    left: 75px;
     top : 20px;
     font-size: 22px;
     padding: 2px;
@@ -66,7 +70,7 @@ h4{
 
 /* l'explication de quelle polluant est quoi */
 #polIllustration{
-	font-family: roboto_slab, serif!important;
+	font-family: roboto_slab, Arial, serif!important;
     position: absolute;
 	right : 80px;
 	top: 70px;
@@ -94,7 +98,7 @@ h4{
 #mapsdiv{
     flex: 1;
     position: absolute;
-    left: 20px;
+    left: 45px;
     top : 480px;
     width: 76%;
     padding-right : 10px;
@@ -118,9 +122,9 @@ h4{
     margin: 6px;
 	margin-bottom:15px;
     position:absolute;
-    left: 40px;
+    left: 75px;
     top: 390px;
-    width : 75%;
+    width : 72%;
 	text-align:justify;
 }
 
@@ -373,6 +377,8 @@ hr {
     background:#ccc;
     height:1px;
     margin:0 0 20px;
+	width : 90%;
+	margin-left : 45px;
 }
 
 a.header {
