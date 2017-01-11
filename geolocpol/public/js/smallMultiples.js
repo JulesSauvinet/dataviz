@@ -39,7 +39,7 @@ var mesures = ['Morts de cancers', 'Pesticides', 'Production primaire d\'énergi
                'Moteurs de voitures diesel', 'Production primaire d\'énergie renouvelable',
                'Moteurs de voitures pétrole', 'Engrais azotés',
                'Engrais au phosphore','Engrais au potassium','Production primaire de pétrole',
-               'Production primaire de gaz','Production primaire de charbon','Jours d\'hospitalisation pour maladie pulmmonaire'];
+               'Production primaire de gaz','Production primaire de charbon','Jours d\'hospitalisation pour maladie pulmonaire'];
 
 
 // map qui associe une abbréviation a chaque polluant
@@ -52,7 +52,7 @@ var mesNameMap = {'Pesticides' : 'pe', 'Production primaire d\'énergie':'en', '
                     'Moteurs de voitures diesel' : 'mvd', 'Moteurs de voitures pétrole' : 'mvp', 'Production primaire d\'énergie renouvelable' : 'enr',
                     'Engrais azotés' : 'fN','Engrais au phosphore' : 'fPh','Engrais au potassium' : 'fPo',
                     'Production primaire de pétrole' : 'tpd','Production primaire de gaz' : 'tgp',
-                    'Production primaire de charbon' : 'cp', 'Jours d\'hospitalisation pour maladie pulmmonaire' : 'hs'};
+                    'Production primaire de charbon' : 'cp', 'Jours d\'hospitalisation pour maladie pulmonaire' : 'hs'};
 
 // Map qui permet d'associer a chaque polluant, la liste des mesures pour lesquelles
 // il y a une possible correspondance polluant/mesure, on utilise cette map pour afficher
@@ -64,9 +64,9 @@ var correspondanceMap = {'NH3'   : ['Engrais azotés','Engrais au phosphore',
                          'NOX'   : ['Production primaire d\'énergie','Production primaire d\'énergie renouvelable', 'Production primaire de nucleaire',
                                     'Production primaire de gaz','Production primaire de pétrole','Production primaire de charbon'],
                          'PM10'  : ['Moteurs de voitures diesel','Taxe environnementale','Taxe transport','Morts de cancers',
-                                    'Morts de maladies cardiaques','Jours d\'hospitalisation pour maladie pulmmonaire'],
+                                    'Morts de maladies cardiaques','Jours d\'hospitalisation pour maladie pulmonaire'],
                          'PM2_5' : ['Moteurs de voitures diesel','Taxe environnementale','Taxe transport','Morts de cancers',
-                                    'Morts de maladies cardiaques', 'Jours d\'hospitalisation pour maladie pulmmonaire'],
+                                    'Morts de maladies cardiaques', 'Jours d\'hospitalisation pour maladie pulmonaire'],
                          'SOX'   : ['Production primaire de pétrole','Production primaire de nucleaire','Production primaire d\'énergie',
                                     'Production primaire d\'énergie renouvelable','Production primaire de gaz', 'Production de primaire charbon']
                         };
