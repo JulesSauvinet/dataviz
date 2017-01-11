@@ -27,7 +27,7 @@ body, html {
     font-weight: bold;
     font-size: 10px;
     margin-left: 0px;
-	margin-right:6px;
+	margin-right:8px;
 	min-width: 70px!important;
 }
 
@@ -118,7 +118,7 @@ h4{
 #countriesdiv{
     border : 1pt solid lightgrey;
     border-radius : 3px;
-    padding : 6px;
+    padding : 7px;
     margin: 4px;
 	margin-bottom:11px;
     position:absolute;
