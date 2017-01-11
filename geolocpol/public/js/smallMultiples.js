@@ -16,8 +16,8 @@ var unitPolMap = {};
 var unitMesMap = {};
 
 // construction d'une smallMap : dimensions d'1 smallMap
-var mapWidth = 230;
-var mapHeight = 180;
+var mapWidth = 175;
+var mapHeight =135;
 
 // conteneurs des smallMaps de pollution
 var dateJoin,divs,SVGs;
@@ -26,7 +26,7 @@ var dateJoin,divs,SVGs;
 var dateJoin2,divs2,SVGs2;
 
 // projection + path de l'europe d'une small map
-var projection = d3.geo.stereographic().center([3.9,43.0]).scale(375).translate([mapWidth / 2-20, mapHeight / 2+43]);
+var projection = d3.geo.stereographic().center([3.9,43.0]).scale(250).translate([mapWidth / 2, mapHeight / 2+30]);
 var path = d3.geo.path().projection(projection);
 
 // tableau des années parmi lesquelles on va choisir les années pour lesquelles on va afficher les smallMaps
@@ -657,8 +657,8 @@ function updateScalesColor(){
 function updatePolIllustration(){
     var illDiv = d3.select('#polIllustration');
 
-    var heightImg = 120;
-    var widthImg = 120;
+    var heightImg = 90;
+    var widthImg = 90;
     var img = "";
     var def = "";
     switch(curPol){
@@ -688,14 +688,14 @@ function updatePolIllustration(){
                 "l'application de peintures et de vernis, l'imprimerie...";
         break;
         case "PM2_5":
-            heightImg = 180;
-            widthImg = 280;
+            heightImg = 120;
+            widthImg = 180;
             img = "img/pm.png";
             def = "Les particles en suspension PM2.5 sont des particules dont le diamètre est inférieure à 2.5 micromètres. "+ "Elles pénètrent profondément dans l'appareil respiratoire.";
         break;
         case "PM10":
-            heightImg = 180;
-            widthImg = 280;
+            heightImg = 120;
+            widthImg = 180;
             img = "img/pm.png";
             def = "Les particules en suspension PM10 sont des particules dont le diamètre est inférieur à 10 micromètres.";
         break;
@@ -1168,11 +1168,10 @@ function createCountryDiv() {
         .attr("onClick", "updateCountry(this)");
 
     countriesCheckBoxes.append('label')
-        .attr('min-width',50)
         .attr('class','sizelabelcheckcountry')
         .attr('for',function(d,i){ return 'a'+i; })
         .text(function(d) { return countriesEU[d];})
-        .html(function(d) { return countriesEU[d] + "&nbsp"; });
+        .html(function(d) { return countriesEU[d] ; });
 }
 
 /* prototype de suppression d'un element dans un tableau */
