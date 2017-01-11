@@ -16,8 +16,8 @@ var unitPolMap = {};
 var unitMesMap = {};
 
 // construction d'une smallMap : dimensions d'1 smallMap
-var mapWidth = 175;
-var mapHeight =135;
+var mapWidth = 158;
+var mapHeight =121;
 
 // conteneurs des smallMaps de pollution
 var dateJoin,divs,SVGs;
@@ -26,7 +26,7 @@ var dateJoin,divs,SVGs;
 var dateJoin2,divs2,SVGs2;
 
 // projection + path de l'europe d'une small map
-var projection = d3.geo.stereographic().center([3.9,43.0]).scale(250).translate([mapWidth / 2, mapHeight / 2+30]);
+var projection = d3.geo.stereographic().center([3.9,43.0]).scale(250).translate([mapWidth / 2, mapHeight / 2+27]);
 var path = d3.geo.path().projection(projection);
 
 // tableau des années parmi lesquelles on va choisir les années pour lesquelles on va afficher les smallMaps
